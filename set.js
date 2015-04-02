@@ -14,7 +14,14 @@ var Set = React.createClass({
   },
   render: function() {
     var props = this.props;
-    register(props.name, props.children, props.depth);
+
+    var location = props.prepend ?
+      1 :
+      props.append ?
+        2 :
+        0;
+
+    register(props.name, props.children, props.depth, location);
     return false;
   }
 });

@@ -26,7 +26,11 @@ var Get = React.createClass({
     this.subscription();
   },
   render: function() {
-    return this.state.content || false;
+    var content = this.state.content;
+    var length = content.length;
+    if (length === 0) return false;
+    if (length === 1) return content[0] || false;
+    return React.createElement.apply(null, ['div', null].concat(content));
   }
 });
 
