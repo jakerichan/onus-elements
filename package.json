@@ -1,0 +1,23 @@
+{
+  "name": "onus-content",
+  "version": "0.1.0",
+  "description": "register content and render it anywhere in the application",
+  "main": "index.js",
+  "peerDependencies": {
+    "react": "^0.12.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-components/onus-content.git"
+  },
+  "author": "Cameron Bytheway <bytheway.cameron@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-components/onus-content/issues"
+  },
+  "homepage": "https://github.com/react-components/onus-content"
+}
