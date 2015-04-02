@@ -18,7 +18,7 @@ exports.subscribe = function(name, fn) {
   emitter.on(name, subscription);
   fn(findDeepest(name));
   return function() {
-    emitter.removeEventListener(subscription);
+    emitter.removeListener(name, subscription);
   };
 };
 
