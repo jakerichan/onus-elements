@@ -2,5 +2,5 @@
  * Module dependencies
  */
 
-exports.Set = require('./set');
-exports.Get = require('./get');
+exports.SetContent = exports.Set = require('./set');
+exports.GetContent = exports.Get = require('./get');
