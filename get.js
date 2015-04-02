@@ -27,7 +27,7 @@ var Get = React.createClass({
   },
   render: function() {
     var content = this.state.content;
-    var length = content.length;
+    var length = content ? content.length : 0;
     if (length === 0) return false;
     if (length === 1) return content[0] || false;
     return React.createElement.apply(null, ['div', null].concat(content));
