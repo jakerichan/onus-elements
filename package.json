@@ -1,6 +1,6 @@
 {
   "name": "onus-content",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "register content and render it anywhere in the application",
   "main": "index.js",
   "peerDependencies": {
