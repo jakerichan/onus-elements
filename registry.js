@@ -23,6 +23,40 @@ exports.subscribe = function(name, fn) {
 };
 
 /**
+ * Watch the blocks being registered
+ */
+
+exports.watch = function(fn) {
+  var fns = {};
+  var newListener = 'newListener';
+  var removeListener = 'removeListener';
+
+  emitter.on(removeListener, removeListenerFn);
+  emitter.on(newListener, newListenerFn);
+
+  function newListenerFn(name, ref) {
+    var count = EventEmitter.listenerCount(emitter, name);
+    if (count !== 0 || fns[name] || name === newListener || name === removeListener) return;
+    var bound = fns[name] = fn.bind(null, name);
+    emitter.on(name, bound);
+  }
+  function removeListenerFn(name) {
+    var count = EventEmitter.listenerCount(emitter, name);
+    if (count !== 1 || !fns[name] || name === newListener || name === removeListener) return;
+    emitter.removeListener(name, fns[name]);
+    delete fns[name];
+  }
+
+  return function() {
+    emitter.removeListener(removeListener, removeListenerFn);
+    emitter.removeListener(newListener, newListenerFn);
+    for (var name in fns) {
+      emitter.removeListener(name, fns[name]);
+    }
+  };
+};
+
+/**
  * Register content for a named block with a depth
  */
  
