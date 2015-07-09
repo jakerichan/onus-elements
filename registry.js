@@ -27,32 +27,17 @@ exports.subscribe = function(name, fn) {
  */
 
 exports.watch = function(fn) {
-  var fns = {};
-  var newListener = 'newListener';
-  var removeListener = 'removeListener';
-
-  emitter.on(removeListener, removeListenerFn);
-  emitter.on(newListener, newListenerFn);
-
-  function newListenerFn(name, ref) {
-    var count = EventEmitter.listenerCount(emitter, name);
-    if (count !== 0 || fns[name] || name === newListener || name === removeListener) return;
-    var bound = fns[name] = fn.bind(null, name);
-    emitter.on(name, bound);
+  function subscription(name, children) {
+    fn(name, children);
   }
-  function removeListenerFn(name) {
-    var count = EventEmitter.listenerCount(emitter, name);
-    if (count !== 1 || !fns[name] || name === newListener || name === removeListener) return;
-    emitter.removeListener(name, fns[name]);
-    delete fns[name];
+  emitter.on('__register__', subscription);
+
+  for (var name in contents) {
+    fn(name, findDeepest(name));
   }
 
   return function() {
-    emitter.removeListener(removeListener, removeListenerFn);
-    emitter.removeListener(newListener, newListenerFn);
-    for (var name in fns) {
-      emitter.removeListener(name, fns[name]);
-    }
+    emitter.removeListener('__register__', subscription);
   };
 };
 
@@ -62,11 +47,12 @@ exports.watch = function(fn) {
  
 exports.register = function(name, children, depth, location) {
   var content = contents[name] = contents[name] || {};
-
   if (!children) delete content[depth];
   else content[depth] = {c: children, l: location || 0};
  
-  emitter.emit(name, findDeepest(name));
+  var deepest = findDeepest(name);
+  emitter.emit(name, deepest);
+  emitter.emit('__register__', name, deepest);
 };
  
 function findDeepest(name) {
