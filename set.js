@@ -3,16 +3,15 @@
  */
 
 var React = require('react');
+var PropTypes = require('prop-types');
 var register = require('./registry').register;
 
-var Set = React.createClass({
-  componentWillReceiveProps: function(next) {
-    // TODO unregister old names/depths
-  },
-  componentWillUnmount: function() {
-    register(this.props.name, null, this.props.depth);
-  },
-  render: function() {
+class Set extends React.Component {
+  componentWillUnmount() {
+    register(this.props.name, null, this.props.depth)
+  }
+
+  render() {
     var props = this.props;
 
     var location = props.prepend ?
@@ -22,9 +21,16 @@ var Set = React.createClass({
         0;
 
     register(props.name, props.children, props.depth, location);
-    return false;
+    return null;
   }
-});
+}
+
+Set.propTypes = {
+  prepend: PropTypes.bool,
+  append: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  depth: PropTypes.number.isRequired
+};
 
 exports = module.exports = Set;
 exports['default'] = Set;
