@@ -40,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/react-components/onus-content/issues"
   },
-  "homepage": "https://github.com/react-components/onus-content"
+  "homepage": "https://github.com/react-components/onus-content",
+  "dependencies": {
+    "create-react-class": "^15.6.3"
+  }
 }
