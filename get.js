@@ -25,8 +25,8 @@ var Get = createReactClass({
     var self = this;
     // wrap in a set timeout so we don't get warnings about setting state
     // inside of a render function
-    setTimeout(() => {
-      if (this.cancelTimeout) return;
+    setTimeout(function() {
+      if (self.cancelTimeout) return;
       self.setState({ content: newContent });
     });
   },
