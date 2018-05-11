@@ -233,4 +233,30 @@ describe('GetContent / SetContent', () => {
     jest.runAllTimers();
     expect(mountedApp.find(GetContent).text()).toBe('TwoOne');
   })
+
+  it('replaces elements in the same depth', () => {
+    class App extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = { showOne: true, showZero: false }
+      }
+
+      render() {
+        return (
+          <section>
+            <GetContent name='test' />
+            {this.state.showZero ? <SetContent name='test' depth={0}>Zero</SetContent> : null}
+            {this.state.showOne ? <SetContent name='test' depth={0}>One</SetContent> : null}
+          </section>
+        );
+      }
+    }
+
+    mountedApp = mount(<App />)
+    jest.runAllTimers();
+    expect(mountedApp.find(GetContent).text()).toBe('One');
+    mountedApp.setState({ showOne: false, showZero: true })
+    jest.runAllTimers();
+    expect(mountedApp.find(GetContent).text()).toBe('Zero');
+  });
 });

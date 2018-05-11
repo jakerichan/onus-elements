@@ -15,7 +15,7 @@ var Set = createReactClass({
     depth: PropTypes.number.isRequired
   },
   componentWillUnmount: function() {
-    register(this.props.name, null, this.props.depth)
+    register(this.props.name, null, this.props.depth);
   },
   render: function () {
     var props = this.props;
@@ -26,7 +26,10 @@ var Set = createReactClass({
         2 :
         0;
 
-    register(props.name, props.children, props.depth, location);
+    setTimeout(function () {
+      // this lets the previous setContent at the same depth unregister before rendering the next
+      register(props.name, props.children, props.depth, location);
+    });
     return null;
   }
 });
