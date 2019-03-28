@@ -1,14 +1,14 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
-import { SetContent } from '../../../../index';
+import { SetElement } from '../../../../index';
 import Item from './item';
 import list from './list.json';
 
 export default ({ match }) => (
   <div>
-    <SetContent name="heading" depth={1}>
+    <SetElement name="heading" priority={1}>
       <h1>Items</h1>
-    </SetContent>
+    </SetElement>
     <ul>
       {list.map(({ label, id }) => (
         <li key={label}>

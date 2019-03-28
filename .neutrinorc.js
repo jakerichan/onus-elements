@@ -1,6 +1,12 @@
 module.exports = {
   use: [
-    '@neutrinojs/react',
+    ['@neutrinojs/react', {
+      babel: {
+        plugins: [
+          "react-hot-loader/babel"
+        ]
+      }
+    }],
     ['@neutrinojs/jest', {
       collectCoverageFrom: ["index.js"],
       coveragePathIgnorePatterns: [

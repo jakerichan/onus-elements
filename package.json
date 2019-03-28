@@ -1,16 +1,16 @@
 {
-  "name": "onus-content",
-  "version": "0.1.7",
-  "description": "register content and render it anywhere in the application",
+  "name": "onus-elements",
+  "version": "1.0.0",
+  "description": "register elements and render it anywhere in the application",
   "main": "index.js",
   "peerDependencies": {
     "prop-types": ">= 15.0.0",
     "react": ">= 15.0.0"
   },
   "devDependencies": {
-    "@neutrinojs/jest": "^8.1.2",
-    "@neutrinojs/node": "^8.1.2",
-    "@neutrinojs/react": "^8.1.2",
+    "@neutrinojs/jest": "^8.3.0",
+    "@neutrinojs/node": "^8.3.0",
+    "@neutrinojs/react": "^8.3.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.3",
     "enzyme": "^3.3.0",
@@ -18,11 +18,11 @@
     "jest-enzyme": "^6.0.0",
     "neutrino": "^8.1.2",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
+    "react": "^16.8.0",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.2.0",
-    "react-hot-loader": "^4.0.0",
-    "react-router-dom": "^4.2.2",
+    "react-hot-loader": "^4.8.0",
+    "react-router-dom": "^5.0.0",
     "regenerator-runtime": "^0.11.1"
   },
   "scripts": {
@@ -33,14 +33,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-components/onus-content.git"
+    "url": "https://github.com/jakerichan/onus-elements.git"
   },
-  "author": "Cameron Bytheway <bytheway.cameron@gmail.com>",
+  "author": "Jake Richan <jake.richan@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-components/onus-content/issues"
+    "url": "https://github.com/jakerichan/onus-elements/issues"
   },
-  "homepage": "https://github.com/react-components/onus-content",
+  "homepage": "https://github.com/jakerichan/onus-elements",
   "dependencies": {
     "create-react-class": "^15.6.3"
   }

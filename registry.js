@@ -42,13 +42,13 @@ exports.watch = function(fn) {
 };
 
 /**
- * Register content for a named block with a depth
+ * Register content for a named block with a priority
  */
  
-exports.register = function(name, children, depth, location) {
+exports.register = function(name, children, priority, location) {
   var content = contents[name] = contents[name] || {};
-  if (!children) delete content[depth];
-  else content[depth] = {c: children, l: location || 0};
+  if (!children) delete content[priority];
+  else content[priority] = {c: children, l: location || 0};
  
   var deepest = findDeepest(name);
   emitter.emit(name, deepest);

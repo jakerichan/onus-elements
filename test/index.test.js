@@ -1,18 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { GetContent, SetContent } from '../index';
+import { GetElement, SetElement } from '../index';
 import { subscribe } from '../registry'
 
-// Since we use the setTimeout in the GetContent onChange function,
-// we can use fake timers and finish updating with SetContent when ready
+// Since we use the setTimeout in the GetElement onChange function,
+// we can use fake timers and finish updating with SetElement when ready
 jest.useFakeTimers();
 let mountedApp
 let noop = () => {};
 
 const Test = ({ children, ...props }) => (
-  <SetContent name='test' {...props}>
+  <SetElement name='test' {...props}>
     <heading>{children}</heading>
-  </SetContent>
+  </SetElement>
 )
 
 describe('registry', () => {
@@ -25,43 +25,43 @@ describe('registry', () => {
   })
 })
 
-describe('GetContent / SetContent', () => {
+describe('GetElement / SetElement', () => {
   afterEach(() => {
     if (mountedApp) mountedApp.unmount();
   })
 
-  it('inserts contents of SetContent into GetContent', () => {
+  it('inserts children of SetElement into GetElement', () => {
     mountedApp = mount(
       <section>
-        <article className='set-content'>
-        <Test depth={0}>Test</Test>
+        <article className='set-element'>
+        <Test priority={0}>Test</Test>
         </article>
-        <article className='get-content'>
-          <GetContent name='test' />
+        <article className='get-element'>
+          <GetElement name='test' />
         </article>
       </section>
     )
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('Test');
+    expect(mountedApp.find(GetElement).text()).toBe('Test');
   });
 
-  it('uses biggest depth value regardless of order', () => {
+  it('uses biggest priority value regardless of order', () => {
     mountedApp = mount(
       <section>
-        <article className='get-content'>
-          <GetContent name='test' />
+        <article className='get-element'>
+          <GetElement name='test' />
         </article>
-        <Test depth={2}>Two</Test>
-        <Test depth={3}>Three</Test>
-        <Test depth={0}>Zero</Test>
-        <Test depth={1}>One</Test>
+        <Test priority={2}>Two</Test>
+        <Test priority={3}>Three</Test>
+        <Test priority={0}>Zero</Test>
+        <Test priority={1}>One</Test>
       </section>
     )
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('Three');
+    expect(mountedApp.find(GetElement).text()).toBe('Three');
   });
 
-  it('renders next lower depth when the highest unmounts', () => {
+  it('renders next lower priority when the highest unmounts', () => {
     class App extends React.Component {
       constructor(props) {
         super(props)
@@ -71,9 +71,9 @@ describe('GetContent / SetContent', () => {
       render() {
         return (
           <section>
-            <GetContent name='test' />
-            <Test depth={0}>Zero</Test>
-            {this.state.showOne ? <Test depth={1}>One</Test> : null}
+            <GetElement name='test' />
+            <Test priority={0}>Zero</Test>
+            {this.state.showOne ? <Test priority={1}>One</Test> : null}
           </section>
         );
       }
@@ -81,10 +81,10 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('One');
+    expect(mountedApp.find(GetElement).text()).toBe('One');
     mountedApp.setState({ showOne: false })
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('Zero');
+    expect(mountedApp.find(GetElement).text()).toBe('Zero');
   });
 
   it('renders new highest when it mounts', () => {
@@ -97,10 +97,10 @@ describe('GetContent / SetContent', () => {
       render() {
         return (
           <section>
-            <GetContent name='test' />
-            {this.state.showTwo ? <Test depth={2}>Two</Test> : null}
-            <Test depth={0}>Zero</Test>
-            {this.state.showOne ? <Test depth={1}>One</Test> : null}
+            <GetElement name='test' />
+            {this.state.showTwo ? <Test priority={2}>Two</Test> : null}
+            <Test priority={0}>Zero</Test>
+            {this.state.showOne ? <Test priority={1}>One</Test> : null}
           </section>
         );
       }
@@ -108,16 +108,16 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('Zero');
+    expect(mountedApp.find(GetElement).text()).toBe('Zero');
     mountedApp.setState({ showOne: true })
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('One');
+    expect(mountedApp.find(GetElement).text()).toBe('One');
     mountedApp.setState({ showTwo: true })
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('Two');
+    expect(mountedApp.find(GetElement).text()).toBe('Two');
   });
 
-  it('renders multiple GetContent components', () => {
+  it('renders multiple GetElement components', () => {
     class App extends React.Component {
       constructor(props) {
         super(props)
@@ -128,12 +128,12 @@ describe('GetContent / SetContent', () => {
         return (
           <section>
             <div className="first">
-              <GetContent name='test' />
+              <GetElement name='test' />
             </div>
-            <Test depth={0}>Zero</Test>
-            <Test depth={1}>One</Test>
+            <Test priority={0}>Zero</Test>
+            <Test priority={1}>One</Test>
             <div className="second">
-              <GetContent name='test' />
+              <GetElement name='test' />
             </div>
           </section>
         );
@@ -142,12 +142,12 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    mountedApp.find(GetContent).forEach((element) => {
+    mountedApp.find(GetElement).forEach((element) => {
       expect(element.text()).toBe('One');
     })
   })
 
-  it('renders correct content when using multiple SetContent names', () => {
+  it('renders correct element when using multiple SetElement names', () => {
     class App extends React.Component {
       constructor(props) {
         super(props)
@@ -157,13 +157,13 @@ describe('GetContent / SetContent', () => {
       render() {
         return (
           <section>
-            <GetContent name='test' />
-            <GetContent name='foo' />
-            <Test depth={0}>Zero</Test>
-            <Test depth={1}>One</Test>
-            <SetContent name='foo' depth={2}>
+            <GetElement name='test' />
+            <GetElement name='foo' />
+            <Test priority={0}>Zero</Test>
+            <Test priority={1}>One</Test>
+            <SetElement name='foo' priority={2}>
               <span>FooBar</span>
-            </SetContent>
+            </SetElement>
           </section>
         );
       }
@@ -171,7 +171,7 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    mountedApp.find(GetContent).forEach((element) => {
+    mountedApp.find(GetElement).forEach((element) => {
       if (element.prop('name') === 'foo') {
         expect(element.text()).toBe('FooBar');  
       } else {
@@ -180,7 +180,7 @@ describe('GetContent / SetContent', () => {
     })
   })
 
-  it('appends rather than replacing content', () => {
+  it('appends rather than replacing element', () => {
     class App extends React.Component {
       constructor(props) {
         super(props)
@@ -190,10 +190,10 @@ describe('GetContent / SetContent', () => {
       render() {
         return (
           <section>
-            <GetContent name='test' />
-            {this.state.showTwo ? <Test depth={2} append>Two</Test> : null}
-            <Test depth={0}>Zero</Test>
-            {this.state.showOne ? <Test depth={1}>One</Test> : null}
+            <GetElement name='test' />
+            {this.state.showTwo ? <Test priority={2} append>Two</Test> : null}
+            <Test priority={0}>Zero</Test>
+            {this.state.showOne ? <Test priority={1}>One</Test> : null}
           </section>
         );
       }
@@ -201,13 +201,13 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('ZeroTwo');
+    expect(mountedApp.find(GetElement).text()).toBe('ZeroTwo');
     mountedApp.setState({ showOne: true })
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('OneTwo');
+    expect(mountedApp.find(GetElement).text()).toBe('OneTwo');
   })
 
-  it('prepends rather than replacing content', () => {
+  it('prepends rather than replacing element', () => {
     class App extends React.Component {
       constructor(props) {
         super(props)
@@ -217,10 +217,10 @@ describe('GetContent / SetContent', () => {
       render() {
         return (
           <section>
-            <GetContent name='test' />
-            {this.state.showTwo ? <Test depth={2} prepend>Two</Test> : null}
-            <Test depth={0}>Zero</Test>
-            {this.state.showOne ? <Test depth={1}>One</Test> : null}
+            <GetElement name='test' />
+            {this.state.showTwo ? <Test priority={2} prepend>Two</Test> : null}
+            <Test priority={0}>Zero</Test>
+            {this.state.showOne ? <Test priority={1}>One</Test> : null}
           </section>
         );
       }
@@ -228,13 +228,13 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('TwoZero');
+    expect(mountedApp.find(GetElement).text()).toBe('TwoZero');
     mountedApp.setState({ showOne: true })
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('TwoOne');
+    expect(mountedApp.find(GetElement).text()).toBe('TwoOne');
   })
 
-  it('replaces elements in the same depth', () => {
+  it('replaces children in the same priority', () => {
     class App extends React.Component {
       constructor(props) {
         super(props)
@@ -244,9 +244,9 @@ describe('GetContent / SetContent', () => {
       render() {
         return (
           <section>
-            <GetContent name='test' />
-            {this.state.showZero ? <SetContent name='test' depth={0}>Zero</SetContent> : null}
-            {this.state.showOne ? <SetContent name='test' depth={0}>One</SetContent> : null}
+            <GetElement name='test' />
+            {this.state.showZero ? <SetElement name='test' priority={0}>Zero</SetElement> : null}
+            {this.state.showOne ? <SetElement name='test' priority={0}>One</SetElement> : null}
           </section>
         );
       }
@@ -254,9 +254,9 @@ describe('GetContent / SetContent', () => {
 
     mountedApp = mount(<App />)
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('One');
+    expect(mountedApp.find(GetElement).text()).toBe('One');
     mountedApp.setState({ showOne: false, showZero: true })
     jest.runAllTimers();
-    expect(mountedApp.find(GetContent).text()).toBe('Zero');
+    expect(mountedApp.find(GetElement).text()).toBe('Zero');
   });
 });

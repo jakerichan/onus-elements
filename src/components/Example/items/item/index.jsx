@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetContent, SetContent } from '../../../../../index';
+import { GetElement, SetElement } from '../../../../../index';
 import list from '../list.json';
 
 export default ({ match }) => {
@@ -7,11 +7,11 @@ export default ({ match }) => {
 
   return (
     <div>
-      <SetContent name='heading' depth={2}>
+      <SetElement name='heading' priority={2}>
         <h1>{item.label}</h1>
-      </SetContent>
+      </SetElement>
 
-      <GetContent name='heading' />
+      <GetElement name='heading' />
       <p>{item.description}</p>
       <hr />
     </div>

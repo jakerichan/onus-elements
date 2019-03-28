@@ -1,20 +1,20 @@
-# onus-content
-[![npm Version](https://img.shields.io/npm/v/onus-content.svg)](https://www.npmjs.com/package/onus-content) [![License](https://img.shields.io/npm/l/onus-content.svg)](https://www.npmjs.com/package/onus-content) 
+# onus-elements
+[![npm Version](https://img.shields.io/npm/v/onus-elements.svg)](https://www.npmjs.com/package/onus-elements) [![License](https://img.shields.io/npm/l/onus-elements.svg)](https://www.npmjs.com/package/onus-elements) 
 
-Register content and render it anywhere in the application
+Register elements and render it anywhere in the application
 
 ## Installation
 ```bash
-yarn add onus-content
+yarn add onus-elements
 ```
 or
 ```bash
-npm i --save onus-content
+npm i --save onus-elements
 ```
 
 ## Usage
 ```js
-import { GetContent, SetContent } from 'onus-content'
+import { GetElement, SetElement } from 'onus-elements'
 
 const list = [
   {
@@ -37,9 +37,9 @@ const list = [
 const Home = () => (
   <section>
     {/* This will show on root path */}
-    <SetContent name='heading' depth={0}>
+    <SetElement name='heading' priority={0}>
       <h1>Home</h1>
-    </SetContent>
+    </SetElement>
   </section>
 );
 
@@ -49,9 +49,9 @@ const Item = ({ match }) => {
   return (
     <article>
       {/* This will show on path /items/:itemLabel */}
-      <SetContent name='heading' depth={2}>
+      <SetElement name='heading' priority={2}>
         <h1>{item.label}</h1>
-      </SetContent>
+      </SetElement>
 
       <p>{item.description}</p>
 
@@ -63,9 +63,9 @@ const Item = ({ match }) => {
 const Items = ({ match }) => (
   <section>
     {/* This will show on path /items */}
-    <SetContent name='heading' depth={1}>
+    <SetElement name='heading' priority={1}>
       <h1>Items</h1>
-    </SetContent>
+    </SetElement>
     <ul>
       {list.map(({ label, id }) => (
         <li key={id}>
@@ -83,8 +83,8 @@ const Items = ({ match }) => (
 const App = () => (
   <BrowserRouter>
     <section>
-    {/* The children of the highest depth SetContent will replace  the GetContent with matching name */}
-      <GetContent name='heading' />
+    {/* The children of the highest priority SetElement will replace  the GetElement with matching name */}
+      <GetElement name='heading' />
       <ul>
         <li>
           <Link to='/'>Home</Link>
@@ -104,7 +104,7 @@ const App = () => (
 ```
 
 ## Props
-#### GetContent
+#### GetElement
 <table>
   <thead>
     <tr>
@@ -119,12 +119,12 @@ const App = () => (
       <td>name</td>
       <td>String</td>
       <td>[required]</td>
-      <td>Unique name that will be matched with SetContent</td>
+      <td>Unique name that will be matched with SetElement</td>
     </tr>
   </tbody>
 </table>
 
-#### SetContent
+#### SetElement
 <table>
   <thead>
     <tr>
@@ -139,10 +139,10 @@ const App = () => (
       <td>name</td>
       <td>String</td>
       <td>[required]</td>
-      <td>Unique name that will be matched with GetContent</td>
+      <td>Unique name that will be matched with GetElement</td>
     </tr>
     <tr>
-      <td>depth</td>
+      <td>priority</td>
       <td>Number</td>
       <td>[required]</td>
       <td>Priority to render children, highest wins</td>
@@ -151,13 +151,13 @@ const App = () => (
       <td>append</td>
       <td>Boolean</td>
       <td>false</td>
-      <td>Rather than replacing matching GetContent, it will be appended to it's current children</td>
+      <td>Rather than replacing matching GetElement, it will be appended to it's current children</td>
     </tr>
     <tr>
       <td>prepend</td>
       <td>Boolean</td>
       <td>false</td>
-      <td>Rather than replacing matching GetContent, it will be prepended to it's current children</td>
+      <td>Rather than replacing matching GetElement, it will be prepended to it's current children</td>
     </tr>
   </tbody>
 </table>
@@ -171,6 +171,6 @@ yarn test
 yarn build
 ```
 ## Start Example
-```
+```bash
 yarn start
 ```

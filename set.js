@@ -12,10 +12,10 @@ var Set = createReactClass({
     prepend: PropTypes.bool,
     append: PropTypes.bool,
     name: PropTypes.string.isRequired,
-    depth: PropTypes.number.isRequired
+    priority: PropTypes.number.isRequired
   },
   componentWillUnmount: function() {
-    register(this.props.name, null, this.props.depth);
+    register(this.props.name, null, this.props.priority);
   },
   render: function () {
     var props = this.props;
@@ -27,8 +27,8 @@ var Set = createReactClass({
         0;
 
     setTimeout(function () {
-      // this lets the previous setContent at the same depth unregister before rendering the next
-      register(props.name, props.children, props.depth, location);
+      // this lets the previous SetElement at the same priority unregister before rendering the next
+      register(props.name, props.children, props.priority, location);
     });
     return null;
   }

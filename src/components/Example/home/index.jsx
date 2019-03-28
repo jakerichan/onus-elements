@@ -1,11 +1,11 @@
 import React from 'react';
-import { SetContent } from '../../../../index';
+import { SetElement } from '../../../../index';
 
 export default () => (
   <section>
-    <SetContent name="heading" depth={0}>
+    <SetElement name="heading" priority={0}>
       <h1>Home</h1>
-    </SetContent>
+    </SetElement>
     <img alt="egg" src="https://media.giphy.com/media/aTITCEZO53aeY/giphy.gif" />
   </section>
 );
