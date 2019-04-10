@@ -1,19 +1,24 @@
 # onus-elements
+
 [![npm Version](https://img.shields.io/npm/v/onus-elements.svg)](https://www.npmjs.com/package/onus-elements) [![License](https://img.shields.io/npm/l/onus-elements.svg)](https://www.npmjs.com/package/onus-elements) 
 
 Register elements and render it anywhere in the application
 
 ## Installation
+
 ```bash
 yarn add onus-elements
 ```
+
 or
+
 ```bash
 npm i --save onus-elements
 ```
 
 ## Usage
-```js
+
+```jsx
 import { GetElement, SetElement } from 'onus-elements'
 
 const list = [
@@ -104,73 +109,41 @@ const App = () => (
 ```
 
 ## Props
-#### GetElement
-<table>
-  <thead>
-    <tr>
-      <th>Prop</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>name</td>
-      <td>String</td>
-      <td>[required]</td>
-      <td>Unique name that will be matched with SetElement</td>
-    </tr>
-  </tbody>
-</table>
 
-#### SetElement
-<table>
-  <thead>
-    <tr>
-      <th>Prop</th>
-      <th>Type</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>name</td>
-      <td>String</td>
-      <td>[required]</td>
-      <td>Unique name that will be matched with GetElement</td>
-    </tr>
-    <tr>
-      <td>priority</td>
-      <td>Number</td>
-      <td>[required]</td>
-      <td>Priority to render children, highest wins</td>
-    </tr>
-    <tr>
-      <td>append</td>
-      <td>Boolean</td>
-      <td>false</td>
-      <td>Rather than replacing matching GetElement, it will be appended to it's current children</td>
-    </tr>
-    <tr>
-      <td>prepend</td>
-      <td>Boolean</td>
-      <td>false</td>
-      <td>Rather than replacing matching GetElement, it will be prepended to it's current children</td>
-    </tr>
-  </tbody>
-</table>
+### GetElement
+
+#### Used as placeholder for where you want content to be rendered
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| name | String | **Required** | Unique name that will be matched with SetElement |
+
+### SetElement
+
+#### Used to set the content to be rendered inside the GetContent component
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| name      | String  | **Required** | Unique name that will be matched with GetElement     |
+| priority  | Number  | **Required** | Priority to render children, highest wins            |
+| append    | Boolean | undefined  | Append children to currently rendered content        |
+| prepend   | Boolean | undefined  | Prepended children to currently rendered content     |
+| withProps | Object  | undefined  | Apply additional props to currently rendered element |
 
 ## Testing
+
 ```bash
 yarn test
 ```
+
 ## Build Example
+
 ```bash
 yarn build
 ```
+
 ## Start Example
+
 ```bash
 yarn start
 ```
