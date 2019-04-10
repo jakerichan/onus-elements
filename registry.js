@@ -1,7 +1,7 @@
 /**
  * Module dependencies
  */
-
+var React = require('react');
 var EventEmitter = require('events').EventEmitter;
  
 var contents = {};
@@ -45,12 +45,24 @@ exports.watch = function(fn) {
  * Register content for a named block with a priority
  */
  
-exports.register = function(name, children, priority, location) {
+exports.register = function(props, location) {
+  var name = props.name;
+  var children = props.children;
+  var priority = props.priority;
+  var withProps = props.withProps;
   var content = contents[name] = contents[name] || {};
-  if (!children) delete content[priority];
-  else content[priority] = {c: children, l: location || 0};
- 
+  if (!children && !withProps) {
+    delete content[priority];
+  } else {
+    if (withProps) {
+      var currentDeepest = findDeepest(name)[0];
+      children = !currentDeepest ? children : React.cloneElement(currentDeepest, withProps);
+    }
+
+    content[priority] = {c: children, l: location || 0};
+  }
   var deepest = findDeepest(name);
+
   emitter.emit(name, deepest);
   emitter.emit('__register__', name, deepest);
 };

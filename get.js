@@ -1,7 +1,3 @@
-/**
- * Module dependencies
- */
-
 var React = require('react');
 var PropTypes = require('prop-types');
 var createReactClass = require('create-react-class')
@@ -35,6 +31,7 @@ var Get = createReactClass({
     var length = content ? content.length : 0;
     if (length === 0) return null;
     if (length === 1 && !Array.isArray(content[0])) return content[0] || null;
+
     return React.createElement.apply(null, ['div', null].concat(content));
   }
 });

@@ -259,4 +259,72 @@ describe('GetElement / SetElement', () => {
     jest.runAllTimers();
     expect(mountedApp.find(GetElement).text()).toBe('Zero');
   });
+
+  it('sets previous priority element with additional props using withProps', () => {
+    class App extends React.Component {
+
+      render() {
+        return (
+          <section>
+            <GetElement name='withPropsTest' />
+            <SetElement name='withPropsTest' priority={0}><span id='target'>Zero</span></SetElement>
+            <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />
+          </section>
+        );
+      }
+    }
+
+    mountedApp = mount(<App />)
+    jest.runAllTimers();
+    expect(mountedApp.find(GetElement).text()).toBe('Zero');
+    // jest.runAllTimers();
+    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
+  })
+
+  it('sets previous priority component with additional props using withProps', () => {
+    const Label = (props) => <span {...props} id="target">Zero</span>
+    class App extends React.Component {
+
+      render() {
+        return (
+          <section>
+            <GetElement name='withPropsTest' />
+            <SetElement name='withPropsTest' priority={0}><Label /></SetElement>
+            <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />
+          </section>
+        );
+      }
+    }
+
+    mountedApp = mount(<App />)
+    jest.runAllTimers();
+    expect(mountedApp.find(GetElement).text()).toBe('Zero');
+    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
+  })
+
+  it('maintains order using withProps', () => {
+    class App extends React.Component {
+      state = {
+        showTwo: false
+      }
+      render() {
+        const { showTwo } = this.state;
+        return (
+          <section>
+            <GetElement name='withPropsTest' />
+            <SetElement name='withPropsTest' priority={0}><span id="target">Zero</span></SetElement>
+            <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />
+            {showTwo && <SetElement name='withPropsTest' priority={2}><span id="target">Two</span></SetElement>}
+          </section>
+        );
+      }
+    }
+
+    mountedApp = mount(<App />)
+    jest.runAllTimers();
+    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
+    mountedApp.setState({ showTwo: true })
+    jest.runAllTimers();
+    expect(mountedApp.find(GetElement).html()).toBe('<span id="target">Two</span>')
+  })
 });

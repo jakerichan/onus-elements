@@ -1,7 +1,3 @@
-/**
- * Module dependencies
- */
-
 var React = require('react');
 var PropTypes = require('prop-types');
 var createReactClass = require('create-react-class')
@@ -12,10 +8,11 @@ var Set = createReactClass({
     prepend: PropTypes.bool,
     append: PropTypes.bool,
     name: PropTypes.string.isRequired,
-    priority: PropTypes.number.isRequired
+    priority: PropTypes.number.isRequired,
+    withProps: PropTypes.object
   },
   componentWillUnmount: function() {
-    register(this.props.name, null, this.props.priority);
+    register(Object.assign({}, this.props, { children: null }));
   },
   render: function () {
     var props = this.props;
@@ -28,7 +25,7 @@ var Set = createReactClass({
 
     setTimeout(function () {
       // this lets the previous SetElement at the same priority unregister before rendering the next
-      register(props.name, props.children, props.priority, location);
+      register(props, location);
     });
     return null;
   }
