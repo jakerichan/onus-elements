@@ -327,4 +327,29 @@ describe('GetElement / SetElement', () => {
     jest.runAllTimers();
     expect(mountedApp.find(GetElement).html()).toBe('<span id="target">Two</span>')
   })
+
+  it('removes component withProps when unmounted', () => {
+    class App extends React.Component {
+      state = {
+        showWithProps: true
+      }
+      render() {
+        const { showWithProps } = this.state;
+        return (
+          <section>
+            <GetElement name='withPropsTest' />
+            <SetElement name='withPropsTest' priority={0}><span id="target">Zero</span></SetElement>
+            {showWithProps && <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />}
+          </section>
+        );
+      }
+    }
+
+    mountedApp = mount(<App />)
+    jest.runAllTimers();
+    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
+    mountedApp.setState({ showWithProps: false })
+    jest.runAllTimers();
+    expect(mountedApp.find(GetElement).html()).toBe('<span id="target">Zero</span>')
+  })
 });

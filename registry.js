@@ -51,15 +51,14 @@ exports.register = function(props, location) {
   var priority = props.priority;
   var withProps = props.withProps;
   var content = contents[name] = contents[name] || {};
-  if (!children && !withProps) {
-    delete content[priority];
-  } else {
-    if (withProps) {
-      var currentDeepest = findDeepest(name)[0];
-      children = !currentDeepest ? children : React.cloneElement(currentDeepest, withProps);
-    }
-
+  if (withProps) {
+    var currentDeepest = findDeepest(name)[0];
+    children = !currentDeepest ? children : React.cloneElement(currentDeepest, withProps);
+  }
+  if (children) {
     content[priority] = {c: children, l: location || 0};
+  } else {
+    delete content[priority];
   }
   var deepest = findDeepest(name);
 

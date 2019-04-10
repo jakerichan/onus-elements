@@ -12,7 +12,7 @@ var Set = createReactClass({
     withProps: PropTypes.object
   },
   componentWillUnmount: function() {
-    register(Object.assign({}, this.props, { children: null }));
+    register(Object.assign({}, this.props, { children: null, withProps: null }));
   },
   render: function () {
     var props = this.props;
