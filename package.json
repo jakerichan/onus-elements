@@ -1,47 +1,31 @@
 {
   "name": "onus-elements",
+  "description": "Separate DOM position from rendering position.",
   "version": "1.1.1",
-  "description": "register elements and render it anywhere in the application",
   "main": "index.js",
-  "peerDependencies": {
-    "prop-types": ">= 15.0.0",
-    "react": ">= 15.0.0"
+  "files": ["build"],
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "test": "jest",
+    "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src test"
   },
   "devDependencies": {
-    "@neutrinojs/jest": "^8.3.0",
-    "@neutrinojs/node": "^8.3.0",
-    "@neutrinojs/react": "^8.3.0",
-    "babel-core": "^6.26.0",
-    "babel-jest": "^22.4.3",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "jest-enzyme": "^6.0.0",
-    "neutrino": "^8.3.0",
-    "prop-types": "^15.6.1",
-    "react": "^16.8.0",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.8.0",
-    "react-hot-loader": "^4.8.0",
-    "react-router-dom": "^5.0.0",
-    "regenerator-runtime": "^0.11.1"
-  },
-  "scripts": {
-    "build": "neutrino build",
-    "start": "neutrino start",
-    "lint": "neutrino lint",
-    "test": "neutrino test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jakerichan/onus-elements.git"
-  },
-  "author": "Jake Richan <jake.richan@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jakerichan/onus-elements/issues"
-  },
-  "homepage": "https://github.com/jakerichan/onus-elements",
-  "dependencies": {
-    "create-react-class": "^15.6.3"
+    "@neutrinojs/jest": "^9.0.0-rc.3",
+    "@neutrinojs/react-components": "^9.0.0-rc.3",
+    "@neutrinojs/standardjs": "^9.0.0-rc.3",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@testing-library/react": "^9.2.0",
+    "eslint": "^5",
+    "eslint-plugin-react-hooks": "^2.1.1",
+    "jest": "^24",
+    "neutrino": "^9.0.0-rc.3",
+    "prop-types": "^15",
+    "react": "^16",
+    "react-dom": "^16",
+    "webpack": "^4",
+    "webpack-cli": "^3",
+    "webpack-dev-server": "^3"
   }
 }

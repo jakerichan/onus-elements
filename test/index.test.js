@@ -1,54 +1,46 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { GetElement, SetElement } from '../index';
-import { subscribe } from '../registry'
-
-// Since we use the setTimeout in the GetElement onChange function,
-// we can use fake timers and finish updating with SetElement when ready
-jest.useFakeTimers();
-let mountedApp
-let noop = () => {};
+import React from 'react'
+import { render, cleanup } from '@testing-library/react'
+import GetElement from '../src/components/GetElement'
+import SetElement from '../src/components/SetElement'
+import { subscribe } from '../src/utils/registry'
 
 const Test = ({ children, ...props }) => (
   <SetElement name='test' {...props}>
-    <heading>{children}</heading>
+    <header>{children}</header>
   </SetElement>
 )
 
 describe('registry', () => {
-  describe("subscribe", () => {
-    it("returns function", () => {
-      const subscription = subscribe("foo", noop);
-      expect(subscription).toBeInstanceOf(Function);
-      subscription();
-    });
+  describe('subscribe', () => {
+    it('returns function', () => {
+      const subscription = subscribe('foo', jest.fn())
+      expect(subscription).toBeInstanceOf(Function)
+      subscription()
+    })
   })
 })
 
 describe('GetElement / SetElement', () => {
-  afterEach(() => {
-    if (mountedApp) mountedApp.unmount();
-  })
+  afterEach(cleanup)
 
   it('inserts children of SetElement into GetElement', () => {
-    mountedApp = mount(
+    const { getByTestId } = render(
       <section>
-        <article className='set-element'>
-        <Test priority={0}>Test</Test>
+        <article data-testid='set-element'>
+          <Test priority={0}>Test</Test>
         </article>
-        <article className='get-element'>
+        <article data-testid='get-element'>
           <GetElement name='test' />
         </article>
       </section>
     )
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Test');
-  });
+    expect(getByTestId('get-element')).toHaveTextContent('Test')
+  })
 
   it('uses biggest priority value regardless of order', () => {
-    mountedApp = mount(
+    const { getByTestId } = render(
       <section>
-        <article className='get-element'>
+        <article data-testid='get-element'>
           <GetElement name='test' />
         </article>
         <Test priority={2}>Two</Test>
@@ -57,299 +49,211 @@ describe('GetElement / SetElement', () => {
         <Test priority={1}>One</Test>
       </section>
     )
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Three');
-  });
+    expect(getByTestId('get-element')).toHaveTextContent('Three')
+  })
 
   it('renders next lower priority when the highest unmounts', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: true }
-      }
+    const App = ({ showOne }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+        <Test priority={0}>Zero</Test>
+        {showOne ? <Test priority={1}>One</Test> : null}
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='test' />
-            <Test priority={0}>Zero</Test>
-            {this.state.showOne ? <Test priority={1}>One</Test> : null}
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('One');
-    mountedApp.setState({ showOne: false })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Zero');
-  });
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('Zero')
+    cleanup()
+    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
+    expect(getShowOneByTestId('get-element')).toHaveTextContent('One')
+  })
 
   it('renders new highest when it mounts', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: false, showTwo: false }
-      }
+    const App = ({ showOne, showTwo }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+        {showTwo ? <Test priority={2}>Two</Test> : null}
+        <Test priority={0}>Zero</Test>
+        {showOne ? <Test priority={1}>One</Test> : null}
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='test' />
-            {this.state.showTwo ? <Test priority={2}>Two</Test> : null}
-            <Test priority={0}>Zero</Test>
-            {this.state.showOne ? <Test priority={1}>One</Test> : null}
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Zero');
-    mountedApp.setState({ showOne: true })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('One');
-    mountedApp.setState({ showTwo: true })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Two');
-  });
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('Zero')
+    cleanup()
+    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
+    expect(getShowOneByTestId('get-element')).toHaveTextContent('One')
+    cleanup()
+    const { getByTestId: getShowTwoByTestId } = render(<App showTwo />)
+    expect(getShowTwoByTestId('get-element')).toHaveTextContent('Two')
+  })
 
   it('renders multiple GetElement components', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: false, showTwo: false }
-      }
+    const App = () => (
+      <section>
+        <div data-testid='first'>
+          <GetElement name='test' />
+        </div>
+        <Test priority={0}>Zero</Test>
+        <Test priority={1}>One</Test>
+        <div data-testid='second'>
+          <GetElement name='test' />
+        </div>
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <div className="first">
-              <GetElement name='test' />
-            </div>
-            <Test priority={0}>Zero</Test>
-            <Test priority={1}>One</Test>
-            <div className="second">
-              <GetElement name='test' />
-            </div>
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    mountedApp.find(GetElement).forEach((element) => {
-      expect(element.text()).toBe('One');
-    })
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('first')).toHaveTextContent('One')
+    expect(getByTestId('second')).toHaveTextContent('One')
   })
 
   it('renders correct element when using multiple SetElement names', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: false, showTwo: false }
-      }
+    const App = () => (
+      <section>
+        <div data-testid='test'>
+          <GetElement name='test' />
+        </div>
+        <div data-testid='foo'>
+          <GetElement name='foo' />
+        </div>
+        <Test priority={0}>Zero</Test>
+        <Test priority={1}>One</Test>
+        <SetElement name='foo' priority={2}>
+          <span>FooBar</span>
+        </SetElement>
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='test' />
-            <GetElement name='foo' />
-            <Test priority={0}>Zero</Test>
-            <Test priority={1}>One</Test>
-            <SetElement name='foo' priority={2}>
-              <span>FooBar</span>
-            </SetElement>
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    mountedApp.find(GetElement).forEach((element) => {
-      if (element.prop('name') === 'foo') {
-        expect(element.text()).toBe('FooBar');  
-      } else {
-        expect(element.text()).toBe('One');
-      }
-    })
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('foo')).toContainHTML('<span>FooBar</span>')
+    expect(getByTestId('test')).toHaveTextContent('One')
   })
 
   it('appends rather than replacing element', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: false, showTwo: true }
-      }
+    const App = ({ showOne }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+        <Test priority={2} append>Two</Test>
+        <Test priority={0}>Zero</Test>
+        {showOne ? <Test priority={1}>One</Test> : null}
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='test' />
-            {this.state.showTwo ? <Test priority={2} append>Two</Test> : null}
-            <Test priority={0}>Zero</Test>
-            {this.state.showOne ? <Test priority={1}>One</Test> : null}
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('ZeroTwo');
-    mountedApp.setState({ showOne: true })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('OneTwo');
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('ZeroTwo')
+    cleanup()
+    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
+    expect(getShowOneByTestId('get-element')).toHaveTextContent('OneTwo')
   })
 
   it('prepends rather than replacing element', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: false, showTwo: true }
-      }
+    const App = ({ showOne }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+        <Test priority={2} prepend>Two</Test>
+        <Test priority={0}>Zero</Test>
+        {showOne ? <Test priority={1}>One</Test> : null}
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='test' />
-            {this.state.showTwo ? <Test priority={2} prepend>Two</Test> : null}
-            <Test priority={0}>Zero</Test>
-            {this.state.showOne ? <Test priority={1}>One</Test> : null}
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('TwoZero');
-    mountedApp.setState({ showOne: true })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('TwoOne');
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('TwoZero')
+    cleanup()
+    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
+    expect(getShowOneByTestId('get-element')).toHaveTextContent('TwoOne')
   })
 
   it('replaces children in the same priority', () => {
-    class App extends React.Component {
-      constructor(props) {
-        super(props)
-        this.state = { showOne: true, showZero: false }
-      }
+    const App = ({ showZero }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+        {showZero ? <SetElement name='test' priority={0}>Zero</SetElement> : null}
+        {!showZero ? <SetElement name='test' priority={0}>One</SetElement> : null}
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='test' />
-            {this.state.showZero ? <SetElement name='test' priority={0}>Zero</SetElement> : null}
-            {this.state.showOne ? <SetElement name='test' priority={0}>One</SetElement> : null}
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('One');
-    mountedApp.setState({ showOne: false, showZero: true })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Zero');
-  });
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('One')
+    cleanup()
+    const { getByTestId: getShowZeroByTestId } = render(<App showZero />)
+    expect(getShowZeroByTestId('get-element')).toHaveTextContent('Zero')
+  })
 
   it('sets previous priority element with additional props using withProps', () => {
-    class App extends React.Component {
+    const App = () => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='withPropsTest' />
+        </div>
+        <SetElement name='withPropsTest' priority={0}><span id='target'>Zero</span></SetElement>
+        <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar' }} />
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='withPropsTest' />
-            <SetElement name='withPropsTest' priority={0}><span id='target'>Zero</span></SetElement>
-            <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Zero');
-    // jest.runAllTimers();
-    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element').children[0]).toHaveClass('bar')
   })
 
   it('sets previous priority component with additional props using withProps', () => {
-    const Label = (props) => <span {...props} id="target">Zero</span>
-    class App extends React.Component {
+    const Label = (props) => <span {...props} id='target'>Zero</span>
+    const App = () => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='withPropsTest' />
+        </div>
+        <SetElement name='withPropsTest' priority={0}><Label /></SetElement>
+        <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar' }} />
+      </section>
+    )
 
-      render() {
-        return (
-          <section>
-            <GetElement name='withPropsTest' />
-            <SetElement name='withPropsTest' priority={0}><Label /></SetElement>
-            <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />
-          </section>
-        );
-      }
-    }
-
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).text()).toBe('Zero');
-    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toContainHTML('<span class="bar" id="target">Zero</span>')
   })
 
   it('maintains order using withProps', () => {
-    class App extends React.Component {
-      state = {
-        showTwo: false
-      }
-      render() {
-        const { showTwo } = this.state;
-        return (
-          <section>
-            <GetElement name='withPropsTest' />
-            <SetElement name='withPropsTest' priority={0}><span id="target">Zero</span></SetElement>
-            <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />
-            {showTwo && <SetElement name='withPropsTest' priority={2}><span id="target">Two</span></SetElement>}
-          </section>
-        );
-      }
-    }
+    const App = ({ showTwo }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='withPropsTest' />
+        </div>
+        <SetElement name='withPropsTest' priority={0}><span id='target'>Zero</span></SetElement>
+        <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar' }} />
+        {showTwo && <SetElement name='withPropsTest' priority={2}><span id='target'>Two</span></SetElement>}
+      </section>
+    )
 
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
-    mountedApp.setState({ showTwo: true })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).html()).toBe('<span id="target">Two</span>')
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toContainHTML('<span id="target" class="bar">Zero</span>')
+    cleanup()
+    const { getByTestId: getShowTwoByTestId } = render(<App showTwo />)
+    expect(getShowTwoByTestId('get-element')).toContainHTML('<span id="target">Two</span>')
   })
 
   it('removes component withProps when unmounted', () => {
-    class App extends React.Component {
-      state = {
-        showWithProps: true
-      }
-      render() {
-        const { showWithProps } = this.state;
-        return (
-          <section>
-            <GetElement name='withPropsTest' />
-            <SetElement name='withPropsTest' priority={0}><span id="target">Zero</span></SetElement>
-            {showWithProps && <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar'}} />}
-          </section>
-        );
-      }
-    }
+    const App = ({ showWithProps }) => (
+      <section>
+        <div data-testid='get-element'>
+          <GetElement name='withPropsTest' />
+        </div>
+        <SetElement name='withPropsTest' priority={0}><span id='target'>Zero</span></SetElement>
+        {showWithProps && <SetElement name='withPropsTest' priority={1} withProps={{ className: 'bar' }} />}
+      </section>
+    )
 
-    mountedApp = mount(<App />)
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).html()).toBe('<span id="target" class="bar">Zero</span>')
-    mountedApp.setState({ showWithProps: false })
-    jest.runAllTimers();
-    expect(mountedApp.find(GetElement).html()).toBe('<span id="target">Zero</span>')
+    const { getByTestId: getWithPropsByTestId } = render(<App showWithProps />)
+    expect(getWithPropsByTestId('get-element')).toContainHTML('<span id="target" class="bar">Zero</span>')
+    cleanup()
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toContainHTML('<span id="target">Zero</span>')
   })
-});
+})

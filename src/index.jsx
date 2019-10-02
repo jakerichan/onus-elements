@@ -1,9 +1,17 @@
-import { render } from 'react-dom';
-import { hot } from 'react-hot-loader/root'
-import Example from './components/Example';
+import React from 'react'
+import { render } from 'react-dom'
+import SetElement from './components/SetElement'
+import GetElement from './components/GetElement'
 
-const root = document.getElementById('root');
-const App = () => render(<Example />, document.getElementById('root'));
-
-export default hot(App);
-App();
+render((
+  <section>
+    <header>
+      <GetElement name='header' />
+    </header>
+    <footer>
+      <SetElement name='header' priority={0}>
+        <h1>Home</h1>
+      </SetElement>
+    </footer>
+  </section>
+), document.getElementById('root'))
