@@ -1,30 +1,22 @@
+const standard = require('@neutrinojs/standardjs');
+const reactComponents = require('@neutrinojs/react-components');
+const jest = require('@neutrinojs/jest');
+
 module.exports = {
+  options: {
+    root: __dirname,
+  },
   use: [
-    ['@neutrinojs/react', {
-      babel: {
-        plugins: [
-          "react-hot-loader/babel"
-        ]
+    standard({
+      eslint: {
+        baseConfig: {
+          plugins: ['react-hooks']
+        }
       }
-    }],
-    ['@neutrinojs/jest', {
-      collectCoverageFrom: ["index.js"],
-      coveragePathIgnorePatterns: [
-        "/node_modules/",
-        "/build/",
-        "/src/"
-      ],
-      setupTestFrameworkScriptFile: '<rootDir>/test/setup.js',
-      setupFiles: [
-        '<rootDir>/test/shim.js'
-      ]
-    }]
+    }),
+    reactComponents(),
+    jest({
+      setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
+    }),
   ],
-  env: {
-    NODE_ENV: {
-      test: (neutrino) => neutrino.config.module
-        .rule('compile')
-        .use('babel')
-    }
-  }
 };
