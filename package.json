@@ -1,9 +1,11 @@
 {
   "name": "onus-elements",
   "description": "Separate DOM position from rendering position.",
-  "version": "1.1.1",
+  "version": "2.0.0-0",
   "main": "index.js",
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
