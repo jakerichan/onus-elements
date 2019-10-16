@@ -167,8 +167,8 @@ describe('GetElement / SetElement', () => {
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
-        {showZero ? <SetElement name='test' priority={0}>Zero</SetElement> : null}
-        {!showZero ? <SetElement name='test' priority={0}>One</SetElement> : null}
+        {showZero ? <SetElement name='test' priority={0}><span>Zero</span></SetElement> : null}
+        {!showZero ? <SetElement name='test' priority={0}><span>One</span></SetElement> : null}
       </CanaryProvider>
     )
 
