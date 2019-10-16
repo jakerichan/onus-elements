@@ -19,9 +19,9 @@ npm i --save onus-elements
 ## Usage
 
 ```jsx
-import { GetElement, SetElement } from 'onus-elements'
+import { GetElement, SetElement, OnusElementsProvider } from 'onus-elements'
 
-<section>
+<OnusElementsProvider>
   <header>
     <GetElement name='header' />
   </header>
@@ -36,7 +36,7 @@ import { GetElement, SetElement } from 'onus-elements'
       </span>
     </SetElement>
   </footer>
-</section>
+</OnusElementsProvider>
 ```
 
 ## Props
@@ -55,12 +55,11 @@ import { GetElement, SetElement } from 'onus-elements'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| children  | Element | Fragment | Children to render in GetElement with a matching name     |
-| name      | String  | **Required** | Unique name that will be matched with GetElement     |
-| priority  | Number  | **Required** | Priority to render children, highest wins            |
+| children  | Element | Fragment | Children to render in GetElement with a matching name  |
+| name      | String  | **Required** | Unique name that will be matched with GetElement   |
+| priority  | Number  | **Required** | Priority to render children, highest wins          |
 | append    | Boolean | undefined  | Append children to currently rendered content        |
 | prepend   | Boolean | undefined  | Prepended children to currently rendered content     |
-| withProps | Object  | undefined  | Apply additional props to currently rendered element |
 
 ## Testing
 

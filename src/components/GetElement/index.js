@@ -1,10 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { subscribe } from '../../utils/registry'
+import { Context } from '../OnusElementsProvider'
 
 const GetElement = ({ name }) => {
+  const { subscribe } = useContext(Context)
   const [ content = null, setContent ] = useState(null)
-  useEffect(() => subscribe(name, setContent), [name])
+  useEffect(() => subscribe(name, setContent), [name, subscribe])
 
   return <Fragment>{content}</Fragment>
 }

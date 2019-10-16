@@ -1,18 +1,23 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { register, unregister, POSITION_APPEND, POSITION_DEFAULT, POSITION_PREPEND } from '../../utils/registry'
+import {
+  Context,
+  POSITION_APPEND,
+  POSITION_DEFAULT,
+  POSITION_PREPEND
+} from '../OnusElementsProvider'
 
 const childrenDefault = <Fragment />
-const SetElement = ({ children = childrenDefault, prepend, append, priority, name, withProps }) => {
+const SetElement = ({ children = childrenDefault, prepend, append, priority, name }) => {
   let location = append ? POSITION_APPEND : POSITION_DEFAULT
   if (prepend) location = POSITION_PREPEND
-
+  const { register, unregister } = useContext(Context)
   useEffect(() => {
-    register({ children, name, priority, withProps }, location)
+    register({ children, name, priority }, location)
     return () => {
       unregister(name, priority)
     }
-  }, [children, location, name, priority, withProps])
+  }, [children, location, name, priority, register, unregister])
 
   return null
 }
@@ -22,8 +27,7 @@ SetElement.propTypes = {
   prepend: PropTypes.bool,
   append: PropTypes.bool,
   name: PropTypes.string.isRequired,
-  priority: PropTypes.number.isRequired,
-  withProps: PropTypes.object
+  priority: PropTypes.number.isRequired
 }
 
 export default SetElement

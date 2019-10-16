@@ -1,10 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
+import Provider from './components/OnusElementsProvider'
 import SetElement from './components/SetElement'
 import GetElement from './components/GetElement'
 
 render((
-  <section>
+  <Provider>
     <header>
       <GetElement name='header' />
     </header>
@@ -13,5 +14,5 @@ render((
         <h1>Home</h1>
       </SetElement>
     </footer>
-  </section>
+  </Provider>
 ), document.getElementById('root'))

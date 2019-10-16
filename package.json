@@ -14,6 +14,10 @@
     "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src test",
     "prepublishOnly": "yarn test && yarn build"
   },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
   "devDependencies": {
     "@neutrinojs/jest": "^9.0.0-rc.3",
     "@neutrinojs/react-components": "^9.0.0-rc.3",
