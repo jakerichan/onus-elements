@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from '@testing-library/react'
-import CanaryProvider from '../src/components/OnusElementsProvider'
+import OnusElementsProvider from '../src/components/OnusElementsProvider'
 import GetElement from '../src/components/GetElement'
 import SetElement from '../src/components/SetElement'
 
@@ -13,23 +13,36 @@ const Test = ({ children, ...props }) => (
 describe('GetElement / SetElement', () => {
   afterEach(cleanup)
 
+  it('GetContent can live without a SetElement', () => {
+    const App = ({ showZero }) => (
+      <OnusElementsProvider>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+      </OnusElementsProvider>
+    )
+
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toBeVisible()
+  })
+
   it('inserts children of SetElement into GetElement', () => {
     const { getByTestId } = render(
-      <CanaryProvider>
+      <OnusElementsProvider>
         <article data-testid='set-element'>
           <Test priority={0}>Test</Test>
         </article>
         <article data-testid='get-element'>
           <GetElement name='test' />
         </article>
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
     expect(getByTestId('get-element')).toHaveTextContent('Test')
   })
 
   it('uses biggest priority value regardless of order', () => {
     const { getByTestId } = render(
-      <CanaryProvider>
+      <OnusElementsProvider>
         <article data-testid='get-element'>
           <GetElement name='test' />
         </article>
@@ -37,20 +50,20 @@ describe('GetElement / SetElement', () => {
         <Test priority={3}>Three</Test>
         <Test priority={0}>Zero</Test>
         <Test priority={1}>One</Test>
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
     expect(getByTestId('get-element')).toHaveTextContent('Three')
   })
 
   it('renders next lower priority when the highest unmounts', () => {
     const App = ({ showOne }) => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -62,14 +75,14 @@ describe('GetElement / SetElement', () => {
 
   it('renders new highest when it mounts', () => {
     const App = ({ showOne, showTwo }) => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
         {showTwo ? <Test priority={2}>Two</Test> : null}
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -84,7 +97,7 @@ describe('GetElement / SetElement', () => {
 
   it('renders multiple GetElement components', () => {
     const App = () => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='first'>
           <GetElement name='test' />
         </div>
@@ -93,7 +106,7 @@ describe('GetElement / SetElement', () => {
         <div data-testid='second'>
           <GetElement name='test' />
         </div>
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -103,7 +116,7 @@ describe('GetElement / SetElement', () => {
 
   it('renders correct element when using multiple SetElement names', () => {
     const App = () => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='test'>
           <GetElement name='test' />
         </div>
@@ -115,7 +128,7 @@ describe('GetElement / SetElement', () => {
         <SetElement name='foo' priority={2}>
           <span>FooBar</span>
         </SetElement>
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -125,14 +138,14 @@ describe('GetElement / SetElement', () => {
 
   it('appends rather than replacing element', () => {
     const App = ({ showOne }) => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
         <Test priority={2} append>Two</Test>
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -144,14 +157,14 @@ describe('GetElement / SetElement', () => {
 
   it('prepends rather than replacing element', () => {
     const App = ({ showOne }) => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
         <Test priority={2} prepend>Two</Test>
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -163,13 +176,13 @@ describe('GetElement / SetElement', () => {
 
   it('replaces children in the same priority', () => {
     const App = ({ showZero }) => (
-      <CanaryProvider>
+      <OnusElementsProvider>
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
         {showZero ? <SetElement name='test' priority={0}><span>Zero</span></SetElement> : null}
         {!showZero ? <SetElement name='test' priority={0}><span>One</span></SetElement> : null}
-      </CanaryProvider>
+      </OnusElementsProvider>
     )
 
     const { getByTestId } = render(<App />)
@@ -183,20 +196,20 @@ describe('GetElement / SetElement', () => {
     const { getByTestId } = render(
       <section>
         <article>
-          <CanaryProvider>
+          <OnusElementsProvider>
             <article data-testid='get-element-1'>
               <GetElement name='test' />
             </article>
             <Test priority={1}>One</Test>
-          </CanaryProvider>
+          </OnusElementsProvider>
         </article>
         <article>
-          <CanaryProvider>
+          <OnusElementsProvider>
             <article data-testid='get-element-2'>
               <GetElement name='test' />
             </article>
             <Test priority={1}>Two</Test>
-          </CanaryProvider>
+          </OnusElementsProvider>
         </article>
       </section>
     )
