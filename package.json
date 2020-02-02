@@ -1,7 +1,7 @@
 {
   "name": "onus-elements",
   "description": "Separate DOM position from rendering position.",
-  "version": "2.0.1",
+  "version": "2.0.2-4",
   "main": "index.js",
   "files": [
     "build"
@@ -15,22 +15,22 @@
     "prepublishOnly": "yarn test && yarn build"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">16.8.0",
+    "react-dom": ">16.8.0"
   },
   "devDependencies": {
-    "@neutrinojs/jest": "^9.0.0-rc.3",
-    "@neutrinojs/react-components": "^9.0.0-rc.3",
-    "@neutrinojs/standardjs": "^9.0.0-rc.3",
-    "@testing-library/jest-dom": "^4.1.0",
-    "@testing-library/react": "^9.2.0",
+    "@neutrinojs/jest": "^9.1.0",
+    "@neutrinojs/react-components": "^9.1.0",
+    "@neutrinojs/standardjs": "^9.1.0",
+    "@testing-library/jest-dom": "^5.1.0",
+    "@testing-library/react": "^9.4.0",
     "eslint": "^5",
-    "eslint-plugin-react-hooks": "^2.1.1",
-    "jest": "^24",
-    "neutrino": "^9.0.0-rc.3",
-    "prop-types": "^15",
-    "react": "^16",
-    "react-dom": "^16",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "jest": "^25",
+    "neutrino": "^9.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "webpack": "^4",
     "webpack-cli": "^3",
     "webpack-dev-server": "^3"

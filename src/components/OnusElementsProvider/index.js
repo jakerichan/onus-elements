@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { EventEmitter } from 'events'
 import Context from './Context'
 
@@ -89,8 +90,8 @@ class OnusElementsProvider extends Component {
     return Object.keys(content).sort().reduce((acc, k) => {
       var { l: location, c: children } = content[k]
       if (location === POSITION_DEFAULT) acc = children
-      if (location === POSITION_PREPEND) acc = <Fragment>{children}{acc}</Fragment>
-      if (location === POSITION_APPEND) acc = <Fragment>{acc}{children}</Fragment>
+      if (location === POSITION_PREPEND) acc = <>{children}{acc}</>
+      if (location === POSITION_APPEND) acc = <>{acc}{children}</>
       return acc
     }, [])
   }
@@ -102,11 +103,16 @@ class OnusElementsProvider extends Component {
         register: this.register,
         subscribe: this.subscribe,
         unregister: this.unregister
-      }}>
+      }}
+      >
         {children}
       </Context.Provider>
     )
   }
+}
+
+OnusElementsProvider.propTypes = {
+  children: PropTypes.node
 }
 
 export { Context }

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
   Context,
@@ -7,7 +7,7 @@ import {
   POSITION_PREPEND
 } from '../OnusElementsProvider'
 
-const childrenDefault = <Fragment />
+const childrenDefault = <></>
 const SetElement = ({ children = childrenDefault, prepend, append, priority, name }) => {
   let location = append ? POSITION_APPEND : POSITION_DEFAULT
   if (prepend) location = POSITION_PREPEND
