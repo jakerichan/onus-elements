@@ -15,8 +15,8 @@
     "prepublishOnly": "yarn test && yarn build"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
   },
   "devDependencies": {
     "@neutrinojs/jest": "^9.0.0-rc.3",
@@ -29,8 +29,8 @@
     "jest": "^24",
     "neutrino": "^9.0.0-rc.3",
     "prop-types": "^15",
-    "react": "^16",
-    "react-dom": "^16",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "webpack": "^4",
     "webpack-cli": "^3",
     "webpack-dev-server": "^3"
