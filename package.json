@@ -1,7 +1,7 @@
 {
   "name": "onus-elements",
   "description": "Separate DOM position from rendering position.",
-  "version": "2.0.2-4",
+  "version": "2.1.0",
   "main": "index.js",
   "files": [
     "build"
