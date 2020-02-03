@@ -1,3 +1,3 @@
-import * as onusElements from './build'
-export default onusElements
-export * from './build'
+const onusElements = require('./build')
+
+module.exports = onusElements
