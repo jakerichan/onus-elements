@@ -1,7 +1,7 @@
 {
   "name": "onus-elements",
   "description": "Separate DOM position from rendering position.",
-  "version": "2.0.2-0",
+  "version": "2.0.2-1",
   "main": "index.js",
   "files": [
     "build"
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }
