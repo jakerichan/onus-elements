@@ -1,7 +1,7 @@
 {
   "name": "onus-elements",
   "description": "Separate DOM position from rendering position.",
-  "version": "2.0.2-2",
+  "version": "2.0.2-3",
   "main": "index.js",
   "files": [
     "build"
@@ -14,6 +14,10 @@
     "lint": "eslint --cache --format codeframe --ext mjs,jsx,js src test",
     "prepublishOnly": "yarn test && yarn build"
   },
+  "peerDependencies": {
+    "react": ">16.8.0",
+    "react-dom": ">16.8.0"
+  },
   "devDependencies": {
     "@neutrinojs/jest": "^9.1.0",
     "@neutrinojs/react-components": "^9.1.0",
@@ -24,13 +28,11 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "jest": "^25",
     "neutrino": "^9.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "webpack": "^4",
     "webpack-cli": "^3",
     "webpack-dev-server": "^3"
-  },
-  "dependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
   }
 }
