@@ -28,11 +28,13 @@
     "eslint-plugin-react-hooks": "^2.1.1",
     "jest": "^24",
     "neutrino": "^9.0.0-rc.3",
-    "prop-types": "^15",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "webpack": "^4",
     "webpack-cli": "^3",
     "webpack-dev-server": "^3"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
