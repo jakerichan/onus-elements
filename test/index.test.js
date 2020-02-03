@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react'
 import { render, cleanup } from '@testing-library/react'
 import OnusElementsProvider from '../src/components/OnusElementsProvider'
