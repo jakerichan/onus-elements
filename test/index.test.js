@@ -5,17 +5,40 @@ import { render, cleanup } from '@testing-library/react'
 import OnusElementsProvider from '../src/components/OnusElementsProvider'
 import GetElement from '../src/components/GetElement'
 import SetElement from '../src/components/SetElement'
+import useSetElement from '../src/components/useSetElement'
 
-const Test = ({ children, ...props }) => (
-  <SetElement name='test' {...props}>
-    <header>{children}</header>
-  </SetElement>
-)
+const Test = ({ children, name = 'test', ...props }) => {
+  useSetElement({
+    ...props,
+    name: name + '--hook'
+  }, children)
+  return (
+    <SetElement name={name} {...props}>
+      <header>{children}</header>
+    </SetElement>
+  )
+}
 
 describe('GetElement / SetElement', () => {
   afterEach(cleanup)
 
-  it('GetContent can live without a SetElement', () => {
+  it('GetElement accepts children as a default', () => {
+    const App = ({ showZero }) => (
+      <OnusElementsProvider>
+        <div data-testid='get-element'>
+          <GetElement name='test'>Default</GetElement>
+        </div>
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook'>Default</GetElement>
+        </div>
+      </OnusElementsProvider>
+    )
+    const { getByTestId } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('Default')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Default')
+  })
+
+  it('GetElement can live without a SetElement', () => {
     const App = ({ showZero }) => (
       <OnusElementsProvider>
         <div data-testid='get-element'>
@@ -29,7 +52,7 @@ describe('GetElement / SetElement', () => {
   })
 
   it('inserts children of SetElement into GetElement', () => {
-    const { getByTestId } = render(
+    const App = () => (
       <OnusElementsProvider>
         <article data-testid='set-element'>
           <Test priority={0}>Test</Test>
@@ -37,9 +60,14 @@ describe('GetElement / SetElement', () => {
         <article data-testid='get-element'>
           <GetElement name='test' />
         </article>
+        <article data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </article>
       </OnusElementsProvider>
     )
+    const { getByTestId } = render(<App />)
     expect(getByTestId('get-element')).toHaveTextContent('Test')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Test')
   })
 
   it('uses biggest priority value regardless of order', () => {
@@ -48,6 +76,9 @@ describe('GetElement / SetElement', () => {
         <article data-testid='get-element'>
           <GetElement name='test' />
         </article>
+        <article data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </article>
         <Test priority={2}>Two</Test>
         <Test priority={3}>Three</Test>
         <Test priority={0}>Zero</Test>
@@ -55,24 +86,29 @@ describe('GetElement / SetElement', () => {
       </OnusElementsProvider>
     )
     expect(getByTestId('get-element')).toHaveTextContent('Three')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Three')
   })
 
   it('renders next lower priority when the highest unmounts', () => {
-    const App = ({ showOne }) => (
+    const App = ({ children }) => (
       <OnusElementsProvider>
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </div>
         <Test priority={0}>Zero</Test>
-        {showOne ? <Test priority={1}>One</Test> : null}
+        {children}
       </OnusElementsProvider>
     )
 
-    const { getByTestId } = render(<App />)
+    const { getByTestId, rerender } = render(<App />)
     expect(getByTestId('get-element')).toHaveTextContent('Zero')
-    cleanup()
-    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
-    expect(getShowOneByTestId('get-element')).toHaveTextContent('One')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
+    rerender(<App><Test priority={1}>One</Test></App>)
+    expect(getByTestId('get-element')).toHaveTextContent('One')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('One')
   })
 
   it('renders new highest when it mounts', () => {
@@ -81,20 +117,24 @@ describe('GetElement / SetElement', () => {
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </div>
         {showTwo ? <Test priority={2}>Two</Test> : null}
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
       </OnusElementsProvider>
     )
 
-    const { getByTestId } = render(<App />)
+    const { getByTestId, rerender } = render(<App />)
     expect(getByTestId('get-element')).toHaveTextContent('Zero')
-    cleanup()
-    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
-    expect(getShowOneByTestId('get-element')).toHaveTextContent('One')
-    cleanup()
-    const { getByTestId: getShowTwoByTestId } = render(<App showTwo />)
-    expect(getShowTwoByTestId('get-element')).toHaveTextContent('Two')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
+    rerender(<App showOne />)
+    expect(getByTestId('get-element')).toHaveTextContent('One')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('One')
+    rerender(<App showTwo />)
+    expect(getByTestId('get-element')).toHaveTextContent('Two')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Two')
   })
 
   it('renders multiple GetElement components', () => {
@@ -103,10 +143,16 @@ describe('GetElement / SetElement', () => {
         <div data-testid='first'>
           <GetElement name='test' />
         </div>
+        <div data-testid='first--hook'>
+          <GetElement name='test--hook' />
+        </div>
         <Test priority={0}>Zero</Test>
         <Test priority={1}>One</Test>
         <div data-testid='second'>
           <GetElement name='test' />
+        </div>
+        <div data-testid='second--hook'>
+          <GetElement name='test--hook' />
         </div>
       </OnusElementsProvider>
     )
@@ -114,6 +160,8 @@ describe('GetElement / SetElement', () => {
     const { getByTestId } = render(<App />)
     expect(getByTestId('first')).toHaveTextContent('One')
     expect(getByTestId('second')).toHaveTextContent('One')
+    expect(getByTestId('first--hook')).toHaveTextContent('One')
+    expect(getByTestId('second--hook')).toHaveTextContent('One')
   })
 
   it('renders correct element when using multiple SetElement names', () => {
@@ -144,17 +192,21 @@ describe('GetElement / SetElement', () => {
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </div>
         <Test priority={2} append>Two</Test>
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
       </OnusElementsProvider>
     )
 
-    const { getByTestId } = render(<App />)
+    const { getByTestId, rerender } = render(<App />)
     expect(getByTestId('get-element')).toHaveTextContent('ZeroTwo')
-    cleanup()
-    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
-    expect(getShowOneByTestId('get-element')).toHaveTextContent('OneTwo')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('ZeroTwo')
+    rerender(<App showOne />)
+    expect(getByTestId('get-element')).toHaveTextContent('OneTwo')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('OneTwo')
   })
 
   it('prepends rather than replacing element', () => {
@@ -163,17 +215,21 @@ describe('GetElement / SetElement', () => {
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </div>
         <Test priority={2} prepend>Two</Test>
         <Test priority={0}>Zero</Test>
         {showOne ? <Test priority={1}>One</Test> : null}
       </OnusElementsProvider>
     )
 
-    const { getByTestId } = render(<App />)
+    const { getByTestId, rerender } = render(<App />)
     expect(getByTestId('get-element')).toHaveTextContent('TwoZero')
-    cleanup()
-    const { getByTestId: getShowOneByTestId } = render(<App showOne />)
-    expect(getShowOneByTestId('get-element')).toHaveTextContent('TwoOne')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('TwoZero')
+    rerender(<App showOne />)
+    expect(getByTestId('get-element')).toHaveTextContent('TwoOne')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('TwoOne')
   })
 
   it('replaces children in the same priority', () => {
@@ -182,16 +238,20 @@ describe('GetElement / SetElement', () => {
         <div data-testid='get-element'>
           <GetElement name='test' />
         </div>
-        {showZero ? <SetElement name='test' priority={0}><span>Zero</span></SetElement> : null}
-        {!showZero ? <SetElement name='test' priority={0}><span>One</span></SetElement> : null}
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </div>
+        {showZero ? <Test priority={0}><span>Zero</span></Test> : null}
+        {!showZero ? <Test priority={0}><span>One</span></Test> : null}
       </OnusElementsProvider>
     )
 
-    const { getByTestId } = render(<App />)
+    const { getByTestId, rerender } = render(<App />)
     expect(getByTestId('get-element')).toHaveTextContent('One')
-    cleanup()
-    const { getByTestId: getShowZeroByTestId } = render(<App showZero />)
-    expect(getShowZeroByTestId('get-element')).toHaveTextContent('Zero')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('One')
+    rerender(<App showZero />)
+    expect(getByTestId('get-element')).toHaveTextContent('Zero')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
   })
 
   it('renders two providers separately', () => {
@@ -202,6 +262,9 @@ describe('GetElement / SetElement', () => {
             <article data-testid='get-element-1'>
               <GetElement name='test' />
             </article>
+            <article data-testid='get-element-1-hook'>
+              <GetElement name='test--hook' />
+            </article>
             <Test priority={1}>One</Test>
           </OnusElementsProvider>
         </article>
@@ -210,6 +273,9 @@ describe('GetElement / SetElement', () => {
             <article data-testid='get-element-2'>
               <GetElement name='test' />
             </article>
+            <article data-testid='get-element-2-hook'>
+              <GetElement name='test--hook' />
+            </article>
             <Test priority={1}>Two</Test>
           </OnusElementsProvider>
         </article>
@@ -217,5 +283,7 @@ describe('GetElement / SetElement', () => {
     )
     expect(getByTestId('get-element-1')).toHaveTextContent('One')
     expect(getByTestId('get-element-2')).toHaveTextContent('Two')
+    expect(getByTestId('get-element-1-hook')).toHaveTextContent('One')
+    expect(getByTestId('get-element-2-hook')).toHaveTextContent('Two')
   })
 })

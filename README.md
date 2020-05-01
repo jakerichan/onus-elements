@@ -48,6 +48,7 @@ import { GetElement, SetElement, OnusElementsProvider } from 'onus-elements'
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | name | String | **Required** | Unique name that will be matched with SetElement |
+| children | Node | _undefined_ | Default content to render if nothing else has been provided |
 
 ### SetElement
 
@@ -55,11 +56,24 @@ import { GetElement, SetElement, OnusElementsProvider } from 'onus-elements'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| children  | Element | Fragment | Children to render in GetElement with a matching name  |
+| children  | Node | Fragment | Children to render in GetElement with a matching name  |
 | name      | String  | **Required** | Unique name that will be matched with GetElement   |
 | priority  | Number  | **Required** | Priority to render children, highest wins          |
 | append    | Boolean | undefined  | Append children to currently rendered content        |
 | prepend   | Boolean | undefined  | Prepended children to currently rendered content     |
+
+### useSetElement
+
+#### Hook to set the onus element at the top of your component
+
+|       | Name     | Type    | Default | Description |
+|-------| -------- | ------  | ------- | ----------- |
+| Param | Options  | Object  | **Required** | Describes the element to set  |
+|    ↳ | name     | String  | **Required** | _Same as SetElement `name`_   |
+|    ↳ | priority | Number  | **Required** | _Same as SetElement `priority`_ |
+|    ↳ | append   | Boolean | undefined  | _Same as SetElement `append`_ |
+|    ↳ | prepend  | Boolean | undefined  | _Same as SetElement `prepend`_ |
+| Param | node  | Node    | null | Children to render in the GetElement with a matching name  |
 
 ## Testing
 

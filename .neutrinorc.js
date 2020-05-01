@@ -16,7 +16,7 @@ module.exports = {
     }),
     reactComponents(),
     jest({
-      setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
-    }),
+      setupFilesAfterEnv: ['<rootDir>/test/setup.js']
+    })
   ],
 };

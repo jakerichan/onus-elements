@@ -1,3 +1,5 @@
 import { createContext } from 'react'
 
-export default createContext({})
+const Context = createContext({})
+export default Context
+export const Provider = Context.Provider

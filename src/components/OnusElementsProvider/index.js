@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { EventEmitter } from 'events'
-import Context from './Context'
-
-export const POSITION_PREPEND = 2
-export const POSITION_APPEND = 1
-export const POSITION_DEFAULT = 0
+import Context, { Provider } from './Context'
+import { POSITION_APPEND, POSITION_PREPEND, POSITION_DEFAULT } from '../utils'
 
 class OnusElementsProvider extends Component {
   constructor (props) {
@@ -86,7 +83,8 @@ class OnusElementsProvider extends Component {
   }
 
   findDeepest = (name) => {
-    const content = this.contents[name] = this.contents[name] || {}
+    const content = this.contents[name]
+    if (!content) return null
     return Object.keys(content).sort().reduce((acc, k) => {
       var { l: location, c: children } = content[k]
       if (location === POSITION_DEFAULT) acc = children
@@ -99,14 +97,15 @@ class OnusElementsProvider extends Component {
   render () {
     const { children } = this.props
     return (
-      <Context.Provider value={{
-        register: this.register,
-        subscribe: this.subscribe,
-        unregister: this.unregister
-      }}
+      <Provider
+        value={{
+          register: this.register,
+          subscribe: this.subscribe,
+          unregister: this.unregister
+        }}
       >
         {children}
-      </Context.Provider>
+      </Provider>
     )
   }
 }

@@ -1,29 +1,26 @@
 import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Context,
-  POSITION_APPEND,
-  POSITION_DEFAULT,
-  POSITION_PREPEND
-} from '../OnusElementsProvider'
+import { Context } from '../OnusElementsProvider'
+import { getLocation } from '../utils'
 
-const childrenDefault = <></>
-const SetElement = ({ children = childrenDefault, prepend, append, priority, name }) => {
-  let location = append ? POSITION_APPEND : POSITION_DEFAULT
-  if (prepend) location = POSITION_PREPEND
+const SetElement = ({ children = <></>, prepend, append, priority, name }) => {
+  const location = getLocation({ append, prepend })
   const { register, unregister } = useContext(Context)
+
+  if (!register) console.error('Onus Elements context not found. `OnusElementsProvider` is required')
+
   useEffect(() => {
+    if (!register) return
     register({ children, name, priority }, location)
     return () => {
       unregister(name, priority)
     }
   }, [children, location, name, priority, register, unregister])
-
   return null
 }
 
 SetElement.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
   prepend: PropTypes.bool,
   append: PropTypes.bool,
   name: PropTypes.string.isRequired,
