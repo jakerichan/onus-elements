@@ -1,4 +1,4 @@
-import { useEffect, useContext, useCallback } from 'react'
+import { useEffect, useContext } from 'react'
 import { Context } from '../OnusElementsProvider'
 import { getLocation } from '../utils'
 
@@ -10,17 +10,13 @@ const useSetElement = (options, content = null) => {
   const { append, prepend, priority, name } = options
   const location = getLocation({ append, prepend })
 
-  const registerNode = useCallback(children => {
+  useEffect(() => {
     if (!register) return
 
-    register({ children, name, priority }, location)
+    register({ children: content, name, priority }, location)
 
     return () => { unregister(name, priority) }
-  }, [location, name, priority, register, unregister])
-
-  useEffect(() => {
-    registerNode(content)
-  }, [content, registerNode])
+  }, [content, location, name, priority, register, unregister])
 }
 
 export default useSetElement

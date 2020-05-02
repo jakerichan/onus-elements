@@ -103,12 +103,12 @@ describe('GetElement / SetElement', () => {
       </OnusElementsProvider>
     )
 
-    const { getByTestId, rerender } = render(<App />)
-    expect(getByTestId('get-element')).toHaveTextContent('Zero')
-    expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
-    rerender(<App><Test priority={1}>One</Test></App>)
+    const { getByTestId, rerender } = render(<App><Test priority={1}>One</Test></App>)
     expect(getByTestId('get-element')).toHaveTextContent('One')
     expect(getByTestId('get-element-hook')).toHaveTextContent('One')
+    rerender(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('Zero')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
   })
 
   it('renders new highest when it mounts', () => {
