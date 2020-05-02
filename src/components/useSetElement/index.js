@@ -1,9 +1,8 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext, useCallback } from 'react'
 import { Context } from '../OnusElementsProvider'
 import { getLocation } from '../utils'
 
 const useSetElement = (options, content = null) => {
-  const [node, setNode] = useState(content)
   const { register, unregister } = useContext(Context)
   if (!register) console.error('Onus Elements context not found. `OnusElementsProvider` is required')
   if (!options) console.error('useSetElement requires options as a first argument')
@@ -11,19 +10,17 @@ const useSetElement = (options, content = null) => {
   const { append, prepend, priority, name } = options
   const location = getLocation({ append, prepend })
 
-  useEffect(() => {
+  const registerNode = useCallback(children => {
     if (!register) return
-    register({ children: node, name, priority }, location)
-    return () => {
-      unregister(name, priority)
-    }
-  }, [node, location, name, priority, register, unregister])
+
+    register({ children, name, priority }, location)
+
+    return () => { unregister(name, priority) }
+  }, [location, name, priority, register, unregister])
 
   useEffect(() => {
-    setNode(content)
-  }, [content])
-
-  return setNode
+    registerNode(content)
+  }, [content, registerNode])
 }
 
 export default useSetElement
