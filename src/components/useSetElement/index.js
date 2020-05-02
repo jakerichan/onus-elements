@@ -19,6 +19,10 @@ const useSetElement = (options, content = null) => {
     }
   }, [node, location, name, priority, register, unregister])
 
+  useEffect(() => {
+    setNode(content)
+  }, [content])
+
   return setNode
 }
 

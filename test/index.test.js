@@ -254,6 +254,27 @@ describe('GetElement / SetElement', () => {
     expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
   })
 
+  it('renders new children with prop update', () => {
+    const App = ({ children }) => (
+      <OnusElementsProvider>
+        <div data-testid='get-element'>
+          <GetElement name='test' />
+        </div>
+        <div data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </div>
+        <Test priority={0}>{children}</Test>
+      </OnusElementsProvider>
+    )
+
+    const { getByTestId, rerender } = render(<App />)
+    expect(getByTestId('get-element')).toHaveTextContent('')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('')
+    rerender(<App>Zero</App>)
+    expect(getByTestId('get-element')).toHaveTextContent('Zero')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Zero')
+  })
+
   it('renders two providers separately', () => {
     const { getByTestId } = render(
       <section>
