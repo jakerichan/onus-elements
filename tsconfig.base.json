@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@onus-elements/core": ["libs/onus-core/src/index.ts"],
+      "@onus-elements/react": ["libs/onus-react/src/index.ts"],
+      "onus-elements": ["libs/onus-elements/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

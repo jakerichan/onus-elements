@@ -1,4 +1,11 @@
 {
   "version": 2,
-  "projects": {}
+  "projects": {
+    "angular-sandbox": "apps/angular-sandbox",
+    "angular-sandbox-e2e": "apps/angular-sandbox-e2e",
+    "onus-core": "libs/onus-core",
+    "onus-react": "libs/onus-react",
+    "react-sandbox": "apps/react-sandbox",
+    "react-sandbox-e2e": "apps/react-sandbox-e2e"
+  }
 }
