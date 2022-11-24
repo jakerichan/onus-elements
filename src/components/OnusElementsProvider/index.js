@@ -4,6 +4,14 @@ import { EventEmitter } from 'events'
 import Context, { Provider } from './Context'
 import { POSITION_APPEND, POSITION_PREPEND, POSITION_DEFAULT } from '../utils'
 
+const sortNumbers = (aStr, bStr) => {
+  const a = aStr * 1
+  const b = bStr * 1
+  if (a > b) return 1
+  if (a < b) return -1
+  return 0
+}
+
 class OnusElementsProvider extends Component {
   constructor (props) {
     super(props)
@@ -56,7 +64,6 @@ class OnusElementsProvider extends Component {
   register = ({ name, children, priority }, location = POSITION_DEFAULT) => {
     const content = this.contents[name] = this.contents[name] || {}
     content[priority] = { c: children, l: location }
-
     this.triggerDeepest(name)
   }
 
@@ -66,8 +73,8 @@ class OnusElementsProvider extends Component {
    * @param {number} priority | determines the instance to remove
   */
   unregister = (name, priority) => {
-    const content = this.contents[name] = this.contents[name] || {}
-    delete content[priority]
+    const content = this.contents[name]
+    if (content) delete content[priority]
     this.triggerDeepest(name)
   }
 
@@ -85,13 +92,15 @@ class OnusElementsProvider extends Component {
   findDeepest = (name) => {
     const content = this.contents[name]
     if (!content) return null
-    return Object.keys(content).sort().reduce((acc, k) => {
-      var { l: location, c: children } = content[k]
-      if (location === POSITION_DEFAULT) acc = children
-      if (location === POSITION_PREPEND) acc = <>{children}{acc}</>
-      if (location === POSITION_APPEND) acc = <>{acc}{children}</>
-      return acc
-    }, [])
+    return Object.keys(content)
+      .sort(sortNumbers)
+      .reduce((acc, k) => {
+        var { l: location, c: children } = content[k]
+        if (location === POSITION_DEFAULT) acc = children
+        if (location === POSITION_PREPEND) acc = <>{children}{acc}</>
+        if (location === POSITION_APPEND) acc = <>{acc}{children}</>
+        return acc
+      }, [])
   }
 
   render () {
