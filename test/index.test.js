@@ -88,6 +88,43 @@ describe('GetElement / SetElement', () => {
     expect(getByTestId('get-element')).toHaveTextContent('Three')
     expect(getByTestId('get-element-hook')).toHaveTextContent('Three')
   })
+  it('uses double digit priority values appropriately', () => {
+    const { getByTestId } = render(
+      <OnusElementsProvider>
+        <article data-testid='get-element'>
+          <GetElement name='test' />
+        </article>
+        <article data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </article>
+        <Test priority={12}>Twelve</Test>
+        <Test priority={3}>Three</Test>
+        <Test priority={0}>Zero</Test>
+        <Test priority={1}>One</Test>
+      </OnusElementsProvider>
+    )
+    expect(getByTestId('get-element')).toHaveTextContent('Twelve')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Twelve')
+  })
+  
+  it('extreme priority values work', () => {
+    const { getByTestId } = render(
+      <OnusElementsProvider>
+        <article data-testid='get-element'>
+          <GetElement name='test' />
+        </article>
+        <article data-testid='get-element-hook'>
+          <GetElement name='test--hook' />
+        </article>
+        <Test priority={1332949343}>Huge</Test>
+        <Test priority={3}>Three</Test>
+        <Test priority={0}>Zero</Test>
+        <Test priority={1}>One</Test>
+      </OnusElementsProvider>
+    )
+    expect(getByTestId('get-element')).toHaveTextContent('Huge')
+    expect(getByTestId('get-element-hook')).toHaveTextContent('Huge')
+  })
 
   it('renders next lower priority when the highest unmounts', () => {
     const App = ({ children }) => (
