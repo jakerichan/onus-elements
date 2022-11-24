@@ -15,7 +15,8 @@ const GetElement = ({ name, children = null }: GetElementProps) => {
     subscribe(name, setContent)
   }, [name, subscribe])
 
-  return content || children
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{content || children}</>
 }
 
 GetElement.propTypes = {

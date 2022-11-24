@@ -55,9 +55,11 @@
         "style": "css"
       },
       "library": {
-        "style": "css",
+        "style": "none",
         "unitTestRunner": "jest",
-        "linter": "eslint"
+        "linter": "eslint",
+        "compiler": "babel",
+        "format": "esm,umd,cjs"
       }
     }
   },
@@ -69,5 +71,5 @@
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
     }
   },
-  "defaultProject": "admin"
+  "defaultProject": "onus-react"
 }

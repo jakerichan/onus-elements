@@ -8,6 +8,7 @@ export default {
       { jsc: { transform: { react: { runtime: 'automatic' } } } },
     ],
   },
+  setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/onus-react',
 };
