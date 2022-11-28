@@ -4,8 +4,9 @@ import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Link, Outlet } from "react-router-dom";
 import styles from '../app.module.css'
 
-const gf = new GiphyFetch('API KEY GOES HERE')
+const gf = new GiphyFetch(process.env.NX_GIPHY_API_KEY as string)
 
+console.log({ API_KEY: process.env.NX_GIPHY_API_KEY})
 
 const Nested = ({ name }: { name: string }) => {
   useSetElement({
