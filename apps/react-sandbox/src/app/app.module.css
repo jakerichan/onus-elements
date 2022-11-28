@@ -1,1 +1,13 @@
 /* Your styles goes here. */
+.breadcrumb {
+  display: flex;
+}
+.breadcrumb-item:last-of-type::after {
+  content: "";
+}
+.breadcrumb-item::after {
+  content: "/";
+  display: inline-block;
+  position: relative;
+  margin: 0px 3px;
+}

@@ -52,7 +52,11 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "react-sandbox:build",
-        "hmr": true
+        "hmr": true,
+        "https": true,
+        "headers": {
+          "Access-Control-Allow-Origin": "*"
+        }
       },
       "configurations": {
         "development": {

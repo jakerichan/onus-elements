@@ -1,30 +1,23 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
-
 import { Route, Routes, Link } from 'react-router-dom';
-
-import { OnusReact } from '@onus-elements/onus-react';
+import { OnusElementsProvider, GetElement } from '@onus-elements/react';
+import styles from './app.module.css'
+import Home from './pages/Home';
+import Page2 from './pages/Page2';
+import Nested from './pages/Nested';
 
 export function App() {
   return (
-    <>
-      <NxWelcome title="react-sandbox" />
-      <div />
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
+    <OnusElementsProvider>
+      <h1>
+        <GetElement name='header' />
+      </h1>
+      <div className={styles.breadcrumb}>
+        <GetElement name='breadcrumb' />
+      </div>
       <div role="navigation">
         <ul>
           <li>
             <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/onus-react">OnusReact</Link>
           </li>
           <li>
             <Link to="/page-2">Page 2</Link>
@@ -34,25 +27,19 @@ export function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route path="/onus-react" element={<OnusReact />} />
+          element={<Home />}
+        >
+        </Route>
         <Route
           path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
+          element={<Page2 />}
+        >
+          <Route path='nested' element={<Nested key='nested' name='nested' />} />
+          <Route path='custom' element={<Nested key='custom' name='custom' />} />
+          <Route path='third' element={<Nested key='third' name='third' />} />
+        </Route>
       </Routes>
-      {/* END: routes */}
-    </>
+    </OnusElementsProvider>
   );
 }
 

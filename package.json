@@ -20,6 +20,8 @@
     "@angular/cli": "~15.0.0",
     "@angular/compiler-cli": "~15.0.0",
     "@angular/language-service": "~15.0.0",
+    "@giphy/js-fetch-api": "^4.4.0",
+    "@giphy/react-components": "^6.2.0",
     "@nrwl/angular": "^15.2.1",
     "@nrwl/cli": "15.2.1",
     "@nrwl/cypress": "15.2.1",

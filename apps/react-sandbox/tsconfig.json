@@ -8,12 +8,13 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
   "files": [],
   "include": [],
+  "composite": true,
   "references": [
     {
       "path": "./tsconfig.app.json"
