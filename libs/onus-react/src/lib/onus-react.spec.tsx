@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
-
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { render, cleanup } from '@testing-library/react'
 import OnusElementsProvider from './OnusElementsProvider'
 import GetElement from './GetElement'

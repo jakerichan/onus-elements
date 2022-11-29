@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
 import { Context } from '../OnusElementsProvider'
 import { GetElementProps } from '../../types'
 
@@ -17,11 +16,6 @@ const GetElement = ({ name, children = null }: GetElementProps) => {
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{content || children}</>
-}
-
-GetElement.propTypes = {
-  children: PropTypes.node,
-  name: PropTypes.string.isRequired
 }
 
 export default GetElement
