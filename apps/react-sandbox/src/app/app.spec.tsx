@@ -22,6 +22,6 @@ describe('App', () => {
       </BrowserRouter>
     );
 
-    expect(getByText(/Welcome react-sandbox/gi)).toBeTruthy();
+    expect(getByText(/react-sandbox/gi)).toBeTruthy();
   });
 });
