@@ -45,7 +45,7 @@
       "executor": "nx:run-commands",
       "outputs": [],
       "options": {
-        "command": "npx semantic-release-plus --extends ./libs/onus-react/release.config.js",
+        "command": "npx semantic-release-plus --extends ./libs/onus-react/release.config.js ",
         "parallel": false
       }
     }
