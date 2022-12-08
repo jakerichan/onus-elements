@@ -3,10 +3,10 @@
   display: flex;
 }
 .breadcrumb-item:last-of-type::after {
-  content: "";
+  content: '';
 }
 .breadcrumb-item::after {
-  content: "/";
+  content: '/';
   display: inline-block;
   position: relative;
   margin: 0px 3px;
