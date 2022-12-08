@@ -4,7 +4,7 @@ const name = '@onus-elements/react';
 const srcRoot = 'libs/onus-react';
 
 module.exports = {
-  extends: './release.config.base.js',
+  extends: 'release.config.base.js',
   branches: ['main'],
   pkgRoot: `dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
