@@ -20,6 +20,7 @@ const sortNumbers = (aStr: string, bStr: string) => {
   return 0;
 };
 
+// This wrapper is required to be wrapped around any usage of OnusElements
 class OnusElementsProvider extends Component<PropsWithChildren> {
   private contents: ContentsObject = {};
 
