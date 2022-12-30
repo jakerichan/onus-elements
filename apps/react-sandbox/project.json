@@ -7,9 +7,9 @@
     "build": {
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "defaultConfiguration": "development",
       "options": {
-        "compiler": "babel",
+        "compiler": "swc",
         "outputPath": "dist/apps/react-sandbox",
         "index": "apps/react-sandbox/src/index.html",
         "baseHref": "/",
@@ -29,7 +29,7 @@
           "extractLicenses": false,
           "optimization": false,
           "sourceMap": true,
-          "vendorChunk": true
+          "vendorChunk": false
         },
         "production": {
           "fileReplacements": [

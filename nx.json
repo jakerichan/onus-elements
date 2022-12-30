@@ -25,6 +25,10 @@
   "targetDependencies": {
     "build": [
       {
+        "target": "tsc:gen",
+        "projects": "self"
+      },
+      {
         "target": "build",
         "projects": "dependencies"
       }

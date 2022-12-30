@@ -4,7 +4,7 @@ import { GetElementProps } from '../../types';
 
 const GetElement = ({ name, children = null }: GetElementProps) => {
   const { subscribe } = useContext(Context);
-  const [content = null, setContent] = useState(null);
+  const [content, setContent] = useState([]);
   if (!subscribe) {
     console.error(
       'Onus Elements context not found. `OnusElementsProvider` is required',
@@ -17,8 +17,9 @@ const GetElement = ({ name, children = null }: GetElementProps) => {
     subscribe(name, setContent);
   }, [name, subscribe]);
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{content || children}</>;
+  const getContent = () => (content.length ? content : children);
+
+  return <>{getContent()}</>;
 };
 
 export default GetElement;

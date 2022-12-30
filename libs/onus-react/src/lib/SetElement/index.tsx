@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
+import { getLocation } from '@onus-elements/core';
 import { Context } from '../OnusElementsProvider';
-import { getLocation } from '../utils';
 import { SetElementProps } from '../../types';
 
 const SetElement = ({

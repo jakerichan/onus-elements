@@ -1,5 +1,11 @@
 {
   "name": "@onus-elements/core",
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "commonjs",
+  "types": "./types/index.d.ts",
+  "files": [
+    "CHANGELOG.md",
+    "src",
+    "types"
+  ]
 }
