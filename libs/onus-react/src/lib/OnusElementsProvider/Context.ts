@@ -1,5 +1,5 @@
+import { Register, Subscribe, Unregister } from '@onus-elements/core/types';
 import { createContext } from 'react';
-import { Register, Subscribe, Unregister } from '../../types';
 
 const warn = (name?: string) => {
   console.warn('Onus-Element provider not found. Called from:', name);
@@ -13,13 +13,17 @@ export interface OnusElementsContext {
 
 const Context = createContext({
   subscribe: (name) => {
-    warn(name);
+    warn(`GetElement named ${name}`);
     return warn;
   },
   register: (entry, position) =>
-    warn(`register: ${entry.name}, position: ${position}`),
+    warn(
+      `SetElement or useSetElement named ${entry.name}, position ${position}`
+    ),
   unregister: (name, priority) =>
-    warn(`unregister: ${name}, priority: ${priority}`),
+    warn(
+      `Unmounting a SetElement or useSetElement named ${name}, priority: ${priority}`
+    ),
 } as OnusElementsContext);
 export default Context;
 export const Provider = Context.Provider;

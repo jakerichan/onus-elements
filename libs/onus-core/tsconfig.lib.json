@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../dist/libs/onus-core/types",
     "declaration": true,
+    "composite": true,
     "types": ["node"]
   },
   "include": ["**/*.ts"],

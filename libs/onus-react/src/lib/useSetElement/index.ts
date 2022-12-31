@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
+import { getLocation } from '@onus-elements/core';
 import { UseSetElement } from '../../types';
 import { Context } from '../OnusElementsProvider';
-import { getLocation } from '../utils';
 
 const useSetElement: UseSetElement = (options, content = null) => {
   const { register, unregister } = useContext(Context);

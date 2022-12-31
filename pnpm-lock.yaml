@@ -32,6 +32,7 @@ importers:
       '@nrwl/esbuild': ^15.3.0
       '@nrwl/eslint-plugin-nx': ^15.3.0
       '@nrwl/jest': ^15.3.0
+      '@nrwl/js': ^15.3.0
       '@nrwl/linter': ^15.3.0
       '@nrwl/nx-cloud': ^15.0.2
       '@nrwl/react': ^15.3.0
@@ -79,8 +80,8 @@ importers:
       lint-staged: ^13.1.0
       nx: 15.3.0
       prettier: ^2.5.1
-      react: 18.2.0
-      react-dom: 18.2.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
       react-refresh: ^0.14.0
       react-router-dom: 6.4.1
       react-test-renderer: 18.2.0
@@ -89,11 +90,13 @@ importers:
       semantic-release: ^19.0.0
       semantic-release-npm-github-publish: ^1.5.4
       semantic-release-plus: ^20.0.0
+      swc-loader: ^0.2.3
       ts-jest: 28.0.5
       ts-node: 10.9.1
       tslib: ^2.3.0
       typescript: ^4.8.2
       url-loader: ^4.1.1
+      webpack: ^5.75.0
       zone.js: ~0.11.4
     dependencies:
       '@angular/animations': 15.0.1_@angular+core@15.0.1
@@ -136,6 +139,7 @@ importers:
       '@nrwl/esbuild': 15.3.0_3bvwrso33p4xfu2likuqkwlccq
       '@nrwl/eslint-plugin-nx': 15.3.0_32rqzulztq354fh2czppzgk3ei
       '@nrwl/jest': 15.3.0_z25rzrfx35glw544yzvizh5yhq
+      '@nrwl/js': 15.3.0_jy67wo2vcpz7fkpa4trkt7pzcm
       '@nrwl/linter': 15.3.0_6q2igz7uwsdocbgiekpogdd4hy
       '@nrwl/nx-cloud': 15.0.2
       '@nrwl/react': 15.3.0_jy67wo2vcpz7fkpa4trkt7pzcm
@@ -143,7 +147,7 @@ importers:
       '@nrwl/web': 15.3.0_qwpaypri26pvlj4kxfoevvu3x4
       '@nrwl/webpack': 15.3.0_suqkfkaubgoqr5at76nknzgccq
       '@nrwl/workspace': 15.3.0_sxc4onasvg7aztl3z7bllcslry
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_react-refresh@0.14.0
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_xsftmjzvfioxqs4ify53ibh7ay
       '@svgr/webpack': 6.5.1
       '@swc/cli': 0.1.57_@swc+core@1.3.19
       '@swc/core': 1.3.19
@@ -185,10 +189,12 @@ importers:
       semantic-release: 19.0.5
       semantic-release-npm-github-publish: 1.5.4_semantic-release@19.0.5
       semantic-release-plus: 20.0.0_semantic-release@19.0.5
+      swc-loader: 0.2.3_a7dehehzlg4obffjljtjigk7jq
       ts-jest: 28.0.5_6hjyukqh3mzgzm2lb5tg63o5jy
       ts-node: 10.9.1_d7thhcaxdkvbxowyyz3l7ruciu
       typescript: 4.9.3
-      url-loader: 4.1.1
+      url-loader: 4.1.1_webpack@5.75.0
+      webpack: 5.75.0_3npv2qiwyz2zwrnhecimcxjyxa
 
   libs/onus-core:
     specifiers: {}
@@ -6116,7 +6122,7 @@ packages:
       typescript: 4.9.3
     dev: true
 
-  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_react-refresh@0.14.0:
+  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_xsftmjzvfioxqs4ify53ibh7ay:
     resolution:
       {
         integrity: sha512-j0Ya0hCFZPd4x40qLzbhGsh9TMtdb+CJQiso+WxLOPNasohq9cc5SNUcwsZaRH6++Xh91Xkm/xHCkuIiIu0LUA==,
@@ -6155,6 +6161,7 @@ packages:
       react-refresh: 0.14.0
       schema-utils: 3.1.1
       source-map: 0.7.4
+      webpack: 5.75.0_3npv2qiwyz2zwrnhecimcxjyxa
     dev: true
 
   /@remix-run/router/1.0.1:
@@ -22728,6 +22735,19 @@ packages:
       stable: 0.1.8
     dev: true
 
+  /swc-loader/0.2.3_a7dehehzlg4obffjljtjigk7jq:
+    resolution:
+      {
+        integrity: sha512-D1p6XXURfSPleZZA/Lipb3A8pZ17fP4NObZvFCDjK/OKljroqDpPmsBdTraWhVBqUNpcWBQY1imWdoPScRlQ7A==,
+      }
+    peerDependencies:
+      '@swc/core': ^1.2.147
+      webpack: '>=2'
+    dependencies:
+      '@swc/core': 1.3.19
+      webpack: 5.75.0_3npv2qiwyz2zwrnhecimcxjyxa
+    dev: true
+
   /symbol-observable/1.0.1:
     resolution:
       {
@@ -23719,7 +23739,7 @@ packages:
       }
     dev: true
 
-  /url-loader/4.1.1:
+  /url-loader/4.1.1_webpack@5.75.0:
     resolution:
       {
         integrity: sha512-3BTV812+AVHHOJQO8O5MkWgZ5aosP7GnROJwvzLS9hWDj00lZ6Z0wNak423Lp9PBZN05N+Jk/N5Si8jRAlGyWA==,
@@ -23735,6 +23755,7 @@ packages:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.1.1
+      webpack: 5.75.0_3npv2qiwyz2zwrnhecimcxjyxa
     dev: true
 
   /url-parse/1.5.10:
