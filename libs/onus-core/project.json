@@ -26,12 +26,13 @@
         "tsConfig": "libs/onus-core/tsconfig.types.json"
       }
     },
-    "publish": {
+    "release": {
       "executor": "nx:run-commands",
+      "outputs": [],
       "options": {
-        "command": "node tools/scripts/publish.mjs onus-core {args.ver} {args.tag}"
-      },
-      "dependsOn": ["build"]
+        "command": "npx semantic-release --extends ./libs/onus-core/release.config.js ",
+        "parallel": false
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
