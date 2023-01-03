@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "type": "commonjs",
   "types": "./types/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "CHANGELOG.md",
     "src",
