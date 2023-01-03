@@ -1,4 +1,4 @@
-# @@onus-elements/react
+# @onus-elements/react
 
 [![npm Version](https://img.shields.io/npm/v/@onus-elements/react.svg)](https://www.npmjs.com/package/@onus-elements/react) [![License](https://img.shields.io/npm/l/@onus-elements/react.svg)](https://www.npmjs.com/package/@onus-elements/react)
 
