@@ -6,7 +6,7 @@ const srcRoot = 'libs/onus-react';
 module.exports = {
   extends: 'release.config.base.js',
   branches: ['main'],
-  pkgRoot: `dist/${srcRoot}`,
+  pkgRoot: srcRoot,
   tagFormat: name + '-v${version}',
   commitPaths: [`${srcRoot}/*`],
   plugins: [
@@ -15,6 +15,7 @@ module.exports = {
     [
       '@semantic-release/changelog',
       {
+        changelogTitle: name,
         changelogFile: `${srcRoot}/CHANGELOG.md`,
       },
     ],
@@ -22,7 +23,7 @@ module.exports = {
     [
       '@semantic-release/git',
       {
-        assets: [`${srcRoot}/package.json`, `${srcRoot}/CHANGLOG.md`],
+        assets: [`dist/${srcRoot}`, `${srcRoot}/CHANGLOG.md`],
         message:
           `release(version): Release ${name} ` +
           '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',

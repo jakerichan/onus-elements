@@ -4,49 +4,6 @@
   "sourceRoot": "apps/react-sandbox/src",
   "projectType": "application",
   "targets": {
-    "build": {
-      "executor": "@nrwl/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "development",
-      "options": {
-        "compiler": "swc",
-        "outputPath": "dist/apps/react-sandbox",
-        "index": "apps/react-sandbox/src/index.html",
-        "baseHref": "/",
-        "main": "apps/react-sandbox/src/main.tsx",
-        "polyfills": "apps/react-sandbox/src/polyfills.ts",
-        "tsConfig": "apps/react-sandbox/tsconfig.app.json",
-        "assets": [
-          "apps/react-sandbox/src/favicon.ico",
-          "apps/react-sandbox/src/assets"
-        ],
-        "styles": ["apps/react-sandbox/src/styles.css"],
-        "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
-      },
-      "configurations": {
-        "development": {
-          "extractLicenses": false,
-          "optimization": false,
-          "sourceMap": true,
-          "vendorChunk": false
-        },
-        "production": {
-          "fileReplacements": [
-            {
-              "replace": "apps/react-sandbox/src/environments/environment.ts",
-              "with": "apps/react-sandbox/src/environments/environment.prod.ts"
-            }
-          ],
-          "optimization": true,
-          "outputHashing": "all",
-          "sourceMap": false,
-          "namedChunks": false,
-          "extractLicenses": true,
-          "vendorChunk": false
-        }
-      }
-    },
     "serve": {
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
