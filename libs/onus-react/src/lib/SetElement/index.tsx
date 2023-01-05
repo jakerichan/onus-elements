@@ -1,7 +1,7 @@
-import { useEffect, useContext } from 'react';
-import { getLocation } from '@onus-elements/core';
-import { Context } from '../OnusElementsProvider';
-import { SetElementProps } from '../../types';
+import { useEffect, useContext } from 'react'
+import { getLocation } from '@onus-elements/core'
+import { Context } from '../OnusElementsProvider'
+import { SetElementProps } from '../../types'
 
 const SetElement = ({
   children = null,
@@ -10,22 +10,22 @@ const SetElement = ({
   priority,
   name,
 }: SetElementProps) => {
-  const location = getLocation({ append, prepend });
-  const { register, unregister } = useContext(Context);
+  const location = getLocation({ append, prepend })
+  const { register, unregister } = useContext(Context)
 
   if (!register)
     console.error(
       'Onus Elements context not found. `OnusElementsProvider` is required'
-    );
+    )
 
   useEffect(() => {
-    if (!register) return;
-    register({ children, name, priority }, location);
+    if (!register) return
+    register({ children, name, priority }, location)
     return () => {
-      unregister(name, priority);
-    };
-  }, [children, location, name, priority, register, unregister]);
-  return null;
-};
+      unregister(name, priority)
+    }
+  }, [children, location, name, priority, register, unregister])
+  return null
+}
 
-export default SetElement;
+export default SetElement

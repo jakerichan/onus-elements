@@ -1,2 +1,2 @@
-export { OnusCore } from './lib/onus-core';
-export * from './utils';
+export { OnusCore } from './lib/onus-core'
+export * from './utils'

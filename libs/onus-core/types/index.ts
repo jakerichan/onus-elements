@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react'
 
 enum RenderPosition {
   Prepend = 2,
@@ -7,61 +7,61 @@ enum RenderPosition {
 }
 
 interface ContentEntry {
-  l: RenderPosition;
-  c: unknown;
+  l: RenderPosition
+  c: unknown
 }
 
 interface ContentPriority {
-  [key: string]: ContentEntry;
+  [key: string]: ContentEntry
 }
 
 interface ContentsObject {
-  [key: string]: ContentPriority;
+  [key: string]: ContentPriority
 }
 
 interface OnusEntry {
-  priority: number;
+  priority: number
 }
 
 interface GetLocationOptions {
-  append?: boolean;
-  prepend?: boolean;
+  append?: boolean
+  prepend?: boolean
 }
-export type GetLocation = (options: GetLocationOptions) => number;
+export type GetLocation = (options: GetLocationOptions) => number
 
-export type Watch = (callback: CallableFunction) => CallableFunction;
+export type Watch = (callback: CallableFunction) => CallableFunction
 
 export type Subscribe = (
   name: string,
   callbackFunction: CallableFunction
-) => CallableFunction;
+) => CallableFunction
 
 export interface RegisterableEntry {
-  name: string;
-  children: unknown;
-  priority: number;
+  name: string
+  children: unknown
+  priority: number
 }
 
 export type Register = (
   entry: RegisterableEntry,
   position: RenderPosition
-) => void;
+) => void
 
-export type Unregister = (name: string, priority: number) => void;
+export type Unregister = (name: string, priority: number) => void
 
-export type TriggerDeepest = (name: string) => void;
+export type TriggerDeepest = (name: string) => void
 
-export type FindDeepest = (name: string) => unknown[];
+export type FindDeepest = (name: string) => unknown[]
 
 export interface GetElementProps extends PropsWithChildren {
-  name: string;
+  name: string
 }
 
 export interface SetElementOptions {
-  name: string;
-  priority: number;
-  prepend?: boolean;
-  append?: boolean;
+  name: string
+  priority: number
+  prepend?: boolean
+  append?: boolean
 }
 
 export interface SetElementProps extends PropsWithChildren, SetElementOptions {}
@@ -69,7 +69,7 @@ export interface SetElementProps extends PropsWithChildren, SetElementOptions {}
 export type UseSetElement = (
   options: SetElementOptions,
   content: unknown
-) => void;
+) => void
 
 export {
   ContentEntry,
@@ -77,4 +77,4 @@ export {
   ContentsObject,
   RenderPosition,
   OnusEntry,
-};
+}

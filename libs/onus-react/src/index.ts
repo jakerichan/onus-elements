@@ -1,1 +1,1 @@
-export * from './lib/onus-react';
+export * from './lib/onus-react'

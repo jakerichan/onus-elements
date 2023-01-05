@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events';
-import { POSITION_APPEND, POSITION_PREPEND, POSITION_DEFAULT } from '../utils';
+import { EventEmitter } from 'events'
+import { POSITION_APPEND, POSITION_PREPEND, POSITION_DEFAULT } from '../utils'
 import {
   ContentsObject,
   FindDeepest,
@@ -8,23 +8,23 @@ import {
   TriggerDeepest,
   Unregister,
   Watch,
-} from '../../types';
+} from '../../types'
 
 const sortByPriority = (aStr: string, bStr: string) => {
-  const a = Number(aStr);
-  const b = Number(bStr);
-  if (a > b) return 1;
-  if (a < b) return -1;
-  return 0;
-};
+  const a = Number(aStr)
+  const b = Number(bStr)
+  if (a > b) return 1
+  if (a < b) return -1
+  return 0
+}
 
 export class OnusCore {
-  private contents: ContentsObject = {};
-  private emitter = new EventEmitter();
+  private contents: ContentsObject = {}
+  private emitter = new EventEmitter()
 
   getRegistry = (name: string): unknown => {
-    return this.contents[name];
-  };
+    return this.contents[name]
+  }
 
   /**
    * subscribe - Subscribe to a named content block
@@ -34,14 +34,14 @@ export class OnusCore {
 
   subscribe: Subscribe = (name, callback) => {
     const subscription = (children: unknown) => {
-      callback(children);
-    };
-    this.emitter.on(name, subscription);
-    callback(this.findDeepest(name));
+      callback(children)
+    }
+    this.emitter.on(name, subscription)
+    callback(this.findDeepest(name))
     return () => {
-      this.emitter.removeListener(name, subscription);
-    };
-  };
+      this.emitter.removeListener(name, subscription)
+    }
+  }
 
   /**
    * watch - Watch the blocks being registered
@@ -50,18 +50,18 @@ export class OnusCore {
    */
   watch: Watch = (callback: CallableFunction) => {
     function subscription(name: string, children: unknown) {
-      callback(name, children);
+      callback(name, children)
     }
-    this.emitter.on('__register__', subscription);
+    this.emitter.on('__register__', subscription)
 
     for (const name in this.contents) {
-      callback(name, this.findDeepest(name));
+      callback(name, this.findDeepest(name))
     }
 
     return () => {
-      this.emitter.removeListener('__register__', subscription);
-    };
-  };
+      this.emitter.removeListener('__register__', subscription)
+    }
+  }
 
   /**
    * register - Register content for a named block with a priority
@@ -73,10 +73,10 @@ export class OnusCore {
     { name, children, priority },
     location = POSITION_DEFAULT
   ) => {
-    const content = (this.contents[name] = this.contents[name] || {});
-    content[priority] = { c: children, l: location };
-    this.triggerDeepest(name);
-  };
+    const content = (this.contents[name] = this.contents[name] || {})
+    content[priority] = { c: children, l: location }
+    this.triggerDeepest(name)
+  }
 
   /**
    * unregister - Remove element from registry
@@ -84,33 +84,33 @@ export class OnusCore {
    * @param {number} priority | determines the instance to remove
    */
   unregister: Unregister = (name, priority) => {
-    const content = this.contents[name];
-    if (content) delete content[priority];
-    this.triggerDeepest(name);
-  };
+    const content = this.contents[name]
+    if (content) delete content[priority]
+    this.triggerDeepest(name)
+  }
 
   /**
    * Trigger the deepest element to render
    * @param {string} name | name of the element to find highest priority of and trigger rendering
    */
   private triggerDeepest: TriggerDeepest = (name) => {
-    const deepest = this.findDeepest(name);
+    const deepest = this.findDeepest(name)
 
-    this.emitter.emit(name, deepest);
-    this.emitter.emit('__register__', name, deepest);
-  };
+    this.emitter.emit(name, deepest)
+    this.emitter.emit('__register__', name, deepest)
+  }
 
   private findDeepest: FindDeepest = (name) => {
-    const content = this.contents[name];
-    if (!content) return [];
+    const content = this.contents[name]
+    if (!content) return []
     return Object.keys(content)
       .sort(sortByPriority)
       .reduce((acc: unknown[], k: string) => {
-        const { l: location, c: children } = content[k];
-        if (location === POSITION_APPEND) return [...acc, children];
-        if (location === POSITION_PREPEND) return [children, ...acc];
-        if (location === POSITION_DEFAULT) return [children];
-        return acc;
-      }, []);
-  };
+        const { l: location, c: children } = content[k]
+        if (location === POSITION_APPEND) return [...acc, children]
+        if (location === POSITION_PREPEND) return [children, ...acc]
+        if (location === POSITION_DEFAULT) return [children]
+        return acc
+      }, [])
+  }
 }
