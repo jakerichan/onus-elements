@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 
-const name = '@onus-elements/core';
-const srcRoot = 'libs/onus-core';
+const name = '@onus-elements/core'
+const srcRoot = 'libs/onus-core'
 
 module.exports = {
   extends: 'release.config.base.js',
@@ -30,4 +30,4 @@ module.exports = {
       },
     ],
   ],
-};
+}
