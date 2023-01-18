@@ -1,11 +1,11 @@
 {
   "name": "@onus-elements/react",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "publishConfig": {
     "access": "public"
   },
   "module": "./index.js",
-  "main": "./index.cjs",
+  "main": "./index.js",
   "type": "module",
   "types": "./src/index.d.ts",
   "dependencies": {},
