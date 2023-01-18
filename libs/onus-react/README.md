@@ -19,26 +19,33 @@ npm i --save onus-elements
 ## Usage
 
 ```jsx
-import { GetElement, SetElement, OnusElementsProvider } from 'onus-elements';
-
-<OnusElementsProvider>
+import { GetElement, SetElement, OnusElementsProvider } from 'onus-elements'
+;<OnusElementsProvider>
   <header>
-    <GetElement name="header" />
+    <GetElement name='header' />
   </header>
   <footer>
-    <SetElement name="header" priority={0}>
-      <a href="/">Home</a>
+    <SetElement name='header' priority={0}>
+      <a href='/'>Home</a>
     </SetElement>
     // These can be rendered anywhere in your application, and it will appear where
     GetElement lives in the DOM
-    <SetElement name="header" priority={1} append>
+    <SetElement name='header' priority={1} append>
       <span>
-        > <a href="/breadcrumb">Breadcrumb</a>
+        > <a href='/breadcrumb'>Breadcrumb</a>
       </span>
     </SetElement>
   </footer>
-</OnusElementsProvider>;
+</OnusElementsProvider>
 ```
+
+### Note
+
+When inspecting the element using the React Dev Tools, you will notice the GetElement component rendered in your application. That GetElement will render a Fragement with a "key" prop using the pattern `name:priority:index` where:
+
+- `name` is the name of the content you want to render
+- `priority` is the deepest applied number (provided by the SetElement)
+- `index` increments when there multiple sources for the same depth (via append or prepend)
 
 ## Props
 

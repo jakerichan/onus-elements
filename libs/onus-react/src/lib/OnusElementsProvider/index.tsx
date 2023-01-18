@@ -25,6 +25,8 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
   unregister: Unregister = (name, priority) =>
     this.onusCore.unregister(name, priority)
 
+  getPriorityForName = (name: string) => this.onusCore.getPriorityForName(name)
+
   override render(): React.ReactNode {
     const { children } = this.props
     return (
@@ -34,6 +36,7 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
             register: this.register,
             subscribe: this.subscribe,
             unregister: this.unregister,
+            getPriorityForName: this.getPriorityForName,
           } as OnusElementsContext
         }
       >

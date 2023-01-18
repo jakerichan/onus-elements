@@ -9,6 +9,7 @@ export interface OnusElementsContext {
   subscribe: Subscribe
   register: Register
   unregister: Unregister
+  getPriorityForName: (name: string) => number
 }
 
 const Context = createContext({
@@ -24,6 +25,7 @@ const Context = createContext({
     warn(
       `Unmounting a SetElement or useSetElement named ${name}, priority: ${priority}`
     ),
+  getPriorityForName: () => -1,
 } as OnusElementsContext)
 export default Context
 export const Provider = Context.Provider

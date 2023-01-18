@@ -2,6 +2,7 @@ import { EventEmitter } from 'events'
 import { POSITION_APPEND, POSITION_PREPEND, POSITION_DEFAULT } from '../utils'
 import {
   ContentsObject,
+  ContentPriority,
   FindDeepest,
   Register,
   Subscribe,
@@ -18,16 +19,31 @@ const sortByPriority = (aStr: string, bStr: string) => {
   return 0
 }
 
+const buildContentStack =
+  (content: ContentPriority) => (acc: unknown[], k: string) => {
+    const { l: location, c: children } = content[k]
+    if (location === POSITION_APPEND) return [...acc, children]
+    if (location === POSITION_PREPEND) return [children, ...acc]
+    if (location === POSITION_DEFAULT) return [children]
+    return acc
+  }
 export class OnusCore {
   private contents: ContentsObject = {}
   private emitter = new EventEmitter()
 
+  /**
+   * @name getRegistry
+   * @description returns the priority registry for a name
+   * @param name Name of the content
+   * @returns {ContentsObject} all priorities of the contents registered to that name
+   */
   getRegistry = (name: string): unknown => {
     return this.contents[name]
   }
 
   /**
-   * subscribe - Subscribe to a named content block
+   * @name subscribe
+   * @description Subscribe to a named content block
    * @param {string} name | name of the element to subscribe to
    * @param {function} callback | function to call when element is found
    */
@@ -44,7 +60,8 @@ export class OnusCore {
   }
 
   /**
-   * watch - Watch the blocks being registered
+   * @name watch
+   * @description Watch the blocks being registered
    * @param {function} callback |  fucntion to call when element is registered
    * @returns {function} cleanup function to remove event listener
    */
@@ -64,7 +81,8 @@ export class OnusCore {
   }
 
   /**
-   * register - Register content for a named block with a priority
+   * @name register
+   * @description Register content for a named block with a priority
    * @param {object} props | the props passed to SetElement
    * @param {number} location | POSITION_PREPEND, POSITION_APPEND, or POSITION_DEFAULT
    */
@@ -79,7 +97,8 @@ export class OnusCore {
   }
 
   /**
-   * unregister - Remove element from registry
+   * @name unregister
+   * @description Remove element from registry
    * @param {string} name | name of the element to remove
    * @param {number} priority | determines the instance to remove
    */
@@ -90,7 +109,20 @@ export class OnusCore {
   }
 
   /**
-   * Trigger the deepest element to render
+   * @name getPriorityForName
+   * @description Returns the highest priority number regestered for a given name
+   * @param name the name of the content
+   * @returns {number} highets priority for given content. Returns -1 when name is not registered
+   */
+  getPriorityForName = (name: string) => {
+    const content = this.contents[name]
+    if (!content) return -1
+    return Number(Object.keys(content).sort(sortByPriority).pop())
+  }
+
+  /**
+   * @name triggerDeepest
+   * @description Trigger the deepest element to render
    * @param {string} name | name of the element to find highest priority of and trigger rendering
    */
   private triggerDeepest: TriggerDeepest = (name) => {
@@ -100,17 +132,17 @@ export class OnusCore {
     this.emitter.emit('__register__', name, deepest)
   }
 
+  /**
+   * @name findDeepest
+   * @description Finds the deepest set of a given content name, including any "appended" or "prepended" items
+   * @param name The name of the content object
+   * @returns The deepest "set" of content registered
+   */
   private findDeepest: FindDeepest = (name) => {
     const content = this.contents[name]
     if (!content) return []
     return Object.keys(content)
       .sort(sortByPriority)
-      .reduce((acc: unknown[], k: string) => {
-        const { l: location, c: children } = content[k]
-        if (location === POSITION_APPEND) return [...acc, children]
-        if (location === POSITION_PREPEND) return [children, ...acc]
-        if (location === POSITION_DEFAULT) return [children]
-        return acc
-      }, [])
+      .reduce(buildContentStack(content), [])
   }
 }

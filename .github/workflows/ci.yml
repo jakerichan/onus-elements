@@ -102,7 +102,7 @@ jobs:
 
       - name: build
         run: |
-          npx nx affected --target build --parallel 3 --exclude
+          npx nx affected --target build --parallel 3 --exclude=angular-sandbox,react-sandbox
 
       - name: Release
         if: ${{ success() && (github.event_name != 'pull_request' || github.event.action == 'closed' && github.event.pull_request.merged == true) }}

@@ -57,8 +57,9 @@
     "@nrwl/react": {
       "application": {
         "style": "css",
-        "unitTestRunner": "jest",
         "linter": "eslint",
+        "bundler": "webpack",
+        "unitTestRunner": "jest",
         "babel": true
       },
       "component": {
@@ -66,8 +67,8 @@
       },
       "library": {
         "style": "none",
-        "unitTestRunner": "jest",
         "linter": "eslint",
+        "unitTestRunner": "jest",
         "compiler": "babel",
         "format": "esm,umd,cjs"
       }

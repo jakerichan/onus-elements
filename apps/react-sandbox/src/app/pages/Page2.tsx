@@ -1,5 +1,5 @@
 import { SetElement, useSetElement } from '@onus-elements/react'
-import { Link, Outlet, useLocation, useMatch } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import styles from '../app.module.css'
 
 const Page2 = () => {
@@ -14,9 +14,6 @@ const Page2 = () => {
     </Link>
   )
 
-  const result = useMatch('/path-2')
-  const location = useLocation()
-  console.log(result, location)
   return (
     <div>
       <aside>Sub navigation</aside>
