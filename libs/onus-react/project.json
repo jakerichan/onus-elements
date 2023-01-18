@@ -16,7 +16,7 @@
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "swc",
-        "format": ["esm", "umd", "cjs"],
+        "format": ["esm"],
         "assets": [
           {
             "glob": "libs/onus-react/README.md",

@@ -14,7 +14,7 @@
         "assets": ["libs/onus-core/*.md"],
         "platform": "browser",
         "deleteOutputPath": false,
-        "format": ["esm", "cjs"]
+        "format": ["esm"]
       }
     },
     "tsc:gen": {
