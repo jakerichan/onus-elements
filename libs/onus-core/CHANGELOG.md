@@ -1,5 +1,12 @@
 @onus-elements/core
 
+## [1.2.1](https://github.com/jakerichan/onus-elements/compare/@onus-elements/core-v1.2.0...@onus-elements/core-v1.2.1) (2023-01-18)
+
+
+### Bug Fixes
+
+* move core utils into utils file - triggering release ([762a121](https://github.com/jakerichan/onus-elements/commit/762a12177b5c1d943a5c3dbe52543beb56b2f8e5))
+
 # [1.2.0](https://github.com/jakerichan/onus-elements/compare/@onus-elements/core-v1.1.0...@onus-elements/core-v1.2.0) (2023-01-18)
 
 
