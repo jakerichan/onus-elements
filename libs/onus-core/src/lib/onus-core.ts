@@ -1,8 +1,7 @@
 import { EventEmitter } from 'events'
-import { POSITION_APPEND, POSITION_PREPEND, POSITION_DEFAULT } from '../utils'
+import { POSITION_DEFAULT, sortByPriority, buildContentStack } from '../utils'
 import {
   ContentsObject,
-  ContentPriority,
   FindDeepest,
   Register,
   Subscribe,
@@ -11,22 +10,6 @@ import {
   Watch,
 } from '../../types'
 
-const sortByPriority = (aStr: string, bStr: string) => {
-  const a = Number(aStr)
-  const b = Number(bStr)
-  if (a > b) return 1
-  if (a < b) return -1
-  return 0
-}
-
-const buildContentStack =
-  (content: ContentPriority) => (acc: unknown[], k: string) => {
-    const { l: location, c: children } = content[k]
-    if (location === POSITION_APPEND) return [...acc, children]
-    if (location === POSITION_PREPEND) return [children, ...acc]
-    if (location === POSITION_DEFAULT) return [children]
-    return acc
-  }
 export class OnusCore {
   private contents: ContentsObject = {}
   private emitter = new EventEmitter()
