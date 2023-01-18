@@ -4,4 +4,4 @@ module.exports = {
     'npx nx affected --target test --uncommitted',
     'npx nx format:write --uncommitted',
   ],
-};
+}
