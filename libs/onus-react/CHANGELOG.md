@@ -1,5 +1,12 @@
 @onus-elements/react
 
+# [2.3.0](https://github.com/jakerichan/onus-elements/compare/@onus-elements/react-v2.2.1...@onus-elements/react-v2.3.0) (2023-01-19)
+
+
+### Features
+
+* wrote function doc for buildContentStack - triggering release ([04ccec3](https://github.com/jakerichan/onus-elements/commit/04ccec3bf9d8911edf6036346bcff74e1d7ec670))
+
 ## [2.2.1](https://github.com/jakerichan/onus-elements/compare/@onus-elements/react-v2.2.0...@onus-elements/react-v2.2.1) (2023-01-18)
 
 
