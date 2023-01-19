@@ -10,6 +10,12 @@ export const getLocation: GetLocation = ({ append, prepend }) => {
   return POSITION_DEFAULT
 }
 
+/**
+ * @name sortByPriority
+ * @param aStr
+ * @param bStr
+ * @returns {number (-1|0|1)}
+ */
 export const sortByPriority = (aStr: string, bStr: string) => {
   const a = Number(aStr)
   const b = Number(bStr)

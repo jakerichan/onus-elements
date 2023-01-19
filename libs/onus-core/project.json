@@ -17,15 +17,6 @@
         "format": ["esm"]
       }
     },
-    "tsc:gen": {
-      "executor": "@nrwl/js:tsc",
-      "options": {
-        "deleteOutputPath": true,
-        "main": "libs/onus-core/src/index.ts",
-        "outputPath": "dist/libs/onus-core",
-        "tsConfig": "libs/onus-core/tsconfig.types.json"
-      }
-    },
     "release": {
       "executor": "nx:run-commands",
       "outputs": [],

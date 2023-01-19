@@ -9,7 +9,7 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "libs/onus-react/dist",
+        "outputPath": "dist/libs/onus-react",
         "tsConfig": "libs/onus-react/tsconfig.lib.json",
         "project": "libs/onus-react/package.json",
         "entryFile": "libs/onus-react/src/index.ts",
