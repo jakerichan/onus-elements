@@ -18,6 +18,12 @@ export const sortByPriority = (aStr: string, bStr: string) => {
   return 0
 }
 
+/**
+ * @name buildContentStack
+ * @description Function that when called with a ContentPriority object, will return a reducer function
+ * @param content The content object with priority as the keys and content objects as values
+ * @returns {Function} reducer function to compile the deepest content with anything prepended or appended
+ */
 export const buildContentStack =
   (content: ContentPriority) => (acc: unknown[], k: string) => {
     const { l: location, c: children } = content[k]
