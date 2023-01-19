@@ -1,5 +1,13 @@
 @onus-elements/react
 
+## [2.3.1](https://github.com/jakerichan/onus-elements/compare/@onus-elements/react-v2.3.0...@onus-elements/react-v2.3.1) (2023-01-19)
+
+
+### Bug Fixes
+
+* fixing release dist folder config ([8851dbe](https://github.com/jakerichan/onus-elements/commit/8851dbea16462d72219e712aaeb47f45f7801e82))
+* need to publish only the dist folder ([87b67bc](https://github.com/jakerichan/onus-elements/commit/87b67bc5368d5ce20e87a20967def61ab428f156))
+
 # [2.3.0](https://github.com/jakerichan/onus-elements/compare/@onus-elements/react-v2.2.1...@onus-elements/react-v2.3.0) (2023-01-19)
 
 
