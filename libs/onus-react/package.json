@@ -1,6 +1,6 @@
 {
   "name": "@onus-elements/react",
-  "version": "2.3.0",
+  "version": "0.0.1",
   "publishConfig": {
     "access": "public"
   },
