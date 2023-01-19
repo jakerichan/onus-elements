@@ -1,5 +1,12 @@
 @onus-elements/core
 
+## [1.3.2](https://github.com/jakerichan/onus-elements/compare/@onus-elements/core-v1.3.1...@onus-elements/core-v1.3.2) (2023-01-19)
+
+
+### Bug Fixes
+
+* fixing release dist folder config ([8851dbe](https://github.com/jakerichan/onus-elements/commit/8851dbea16462d72219e712aaeb47f45f7801e82))
+
 ## [1.3.1](https://github.com/jakerichan/onus-elements/compare/@onus-elements/core-v1.3.0...@onus-elements/core-v1.3.1) (2023-01-19)
 
 
