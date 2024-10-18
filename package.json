@@ -5,9 +5,10 @@
     "preinstall": "npx only-allow yarn",
     "start:react": "nx serve react-sandbox",
     "start:angular": "nx serve angular-sandbox",
-    "build": "nx build",
-    "lint": "nx lint",
-    "test": "nx test",
+    "build": "yarn nx affected -t build",
+    "typecheck": "yarn nx affected -t typecheck",
+    "lint": "yarn nx affected -t lint",
+    "test": "yarn nx affected -t test",
     "prepare": "husky install"
   },
   "config": {
@@ -75,7 +76,6 @@
     "eslint-plugin-cypress": "2.15.2",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "husky": "^8.0.0",

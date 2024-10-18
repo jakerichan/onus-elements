@@ -5,10 +5,10 @@
 ## Installing
 
 ```
-npm install @onus-elements/core
+yarn add @onus-elements/core
 ```
 
-or replace `npm` with your dependency management tool of choice
+or replace `yarn` with your dependency management tool of choice
 
 ## Usage
 
