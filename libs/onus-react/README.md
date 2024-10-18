@@ -7,35 +7,51 @@ Separate DOM position from rendering position. Like Portals, but better because 
 ## Installation
 
 ```bash
-yarn add onus-elements
-```
-
-or
-
-```bash
-npm i --save onus-elements
+yarn add @onus-elements/react
+# or npm i --save @onus-elements/react
 ```
 
 ## Usage
 
+Breadcrumb example
 ```jsx
-import { GetElement, SetElement, OnusElementsProvider } from 'onus-elements'
+import { GetElement, SetElement, OnusElementsProvider } from '@onus-elements/react'
 ;<OnusElementsProvider>
   <header>
-    <GetElement name='header' />
-  </header>
-  <footer>
-    <SetElement name='header' priority={0}>
+    <GetElement name='breadcrumb'>
       <a href='/'>Home</a>
-    </SetElement>
-    // These can be rendered anywhere in your application, and it will appear where
-    GetElement lives in the DOM
-    <SetElement name='header' priority={1} append>
-      <span>
-        > <a href='/breadcrumb'>Breadcrumb</a>
-      </span>
-    </SetElement>
-  </footer>
+    </GetElement>
+  </header>
+  <main>
+    // These can be rendered anywhere in your application, and it will be placed inside the GetElement with the matching name
+    // In this case, we have navigated to the "people" page
+    <PeoplePage>
+      <SetElement name='breadcrumb' priority={1} append>
+        <span>
+          / <a href='/people'>people</a>
+        </span>
+      </SetElement>
+      // renders in GetElement as links -> Home / people
+    </PeoplePage>
+    // Nested route after you select a person
+    <PersonDetail>
+      <SetElement name='breadcrumb' priority={2} append>
+        <span>
+          / <a href={`/people/${personId}`}>John Doe</a>
+        </span>
+      </SetElement>
+      // renders in GetElement as links -> Home / people / John Doe
+    </PersonDetail>
+    // Nested route after you select a person
+    <PersonDetail>
+      <SetElement name='breadcrumb' priority={2} append>
+        <span>
+          / <a href={`/people/${personId}/edit`}>Edit</a>
+        </span>
+      </SetElement>
+    </PersonDetail>
+    // renders in GetElement as links -> Home / people / John Doe / Edit
+  </main>
 </OnusElementsProvider>
 ```
 
@@ -103,4 +119,4 @@ yarn start
 
 ## Running unit tests
 
-Run `nx test onus-react` to execute the unit tests via [Jest](https://jestjs.io).
+Run `yarn nx test onus-react` to execute the unit tests via [Jest](https://jestjs.io).

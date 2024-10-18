@@ -1,10 +1,11 @@
 import { Component, PropsWithChildren } from 'react'
 import { OnusCore } from '@onus-elements/core'
-import { Register, Subscribe, Unregister } from '@onus-elements/core/types'
-import Context, { Provider, OnusElementsContext } from './Context'
+import type { OnusCore as OnusCoreType } from '@onus-elements/core'
+import type { Register, Subscribe, Unregister } from '@onus-elements/core'
+import Context, { type OnusElementsContext } from './Context'
 
 interface OnusElementsProviderProps extends PropsWithChildren {
-  core: OnusCore
+  core: OnusCoreType
 }
 
 // This wrapper is required to be wrapped around any usage of OnusElements
@@ -30,7 +31,7 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
   override render(): React.ReactNode {
     const { children } = this.props
     return (
-      <Provider
+      <Context.Provider
         value={
           {
             register: this.register,
@@ -41,7 +42,7 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
         }
       >
         {children}
-      </Provider>
+      </Context.Provider>
     )
   }
 }

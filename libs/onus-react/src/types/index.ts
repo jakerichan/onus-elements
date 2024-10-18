@@ -1,6 +1,7 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 export interface GetElementProps extends PropsWithChildren {
   name: string
+  children?: ReactNode
 }
 
 export interface SetElementOptions {
@@ -13,6 +14,6 @@ export interface SetElementOptions {
 export interface SetElementProps extends PropsWithChildren, SetElementOptions {}
 
 export type UseSetElement = (
-  options: SetElementOptions,
+  config: SetElementOptions,
   content: unknown
 ) => void

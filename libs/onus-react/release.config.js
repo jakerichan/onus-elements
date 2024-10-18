@@ -5,7 +5,7 @@ const srcRoot = 'libs/onus-react'
 
 module.exports = {
   extends: 'release.config.base.js',
-  branches: ['main'],
+  branches: ['main', 'next'],
   pkgRoot: `dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [`${srcRoot}/*`],
@@ -25,8 +25,8 @@ module.exports = {
       {
         assets: [`${srcRoot}/CHANGELOG.md`, `${srcRoot}/package.json`],
         message:
-          `release(version): Release ${name} ` +
-          '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+          `release(version): Release ${name} `
+          + '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
     ],
   ],

@@ -9,100 +9,27 @@ on:
 env:
   HUSKY: 0
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   main:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
-    strategy:
-      matrix:
-        node-version: [18]
-        npm-version: [9]
-        pnpm-version: [7]
     steps:
-      - name: Checkout [Pull Request]
-        uses: actions/checkout@v3
-        if: ${{ github.event_name == 'pull_request' }}
+      - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-
-      - name: Checkout [Default Branch]
-        uses: actions/checkout@v3
-        if: ${{ github.event_name != 'pull_request' }}
+      - uses: actions/setup-node@v3
         with:
-          persist-credentials: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+          node-version: 20
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: ${{ github.base_ref }}
+      - uses: nrwl/nx-set-shas@v4
 
-      - name: Detect package manager
-        id: package_manager
-        run: |
-          echo "::set-output name=name::$([[ -f ./yarn.lock ]] && echo "yarn" || ([[ -f ./pnpm-lock.yaml ]] && echo "pnpm") || echo "npm")"
-
-      - name: Set node/npm/yarn versions using volta
-        uses: volta-cli/action@v3
-        with:
-          node-version: '${{ matrix.node-version }}'
-          npm-version: '${{ matrix.npm-version }}'
-
-      - name: Install PNPM
-        if: steps.package_manager.outputs.name == 'pnpm'
-        uses: pnpm/action-setup@v2
-        with:
-          version: '${{ matrix.pnpm-version }}'
-
-      - name: Print node/npm/yarn/pnpm versions
-        id: versions
-        run: |
-          node_ver=$( node --version )
-          yarn_ver=$( yarn --version || true )
-          pnpm_ver=$( pnpm --version || true )
-          echo "Node: ${node_ver:1}"
-          echo "NPM: $(npm --version )"
-          if [[ $yarn_ver != '' ]]; then echo "Yarn: $yarn_ver"; fi
-          if [[ $pnpm_ver != '' ]]; then echo "PNPM: $pnpm_ver"; fi
-          echo "::set-output name=node_version::${node_ver:1}"
-
-      - name: Use the node_modules cache if available [pnpm]
-        if: steps.package_manager.outputs.name == 'pnpm'
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
-
-      - name: Install dependencies
-        run: |
-          if [ "${{ steps.package_manager.outputs.name == 'yarn' }}" == "true" ]; then
-            echo "Running yarn install --frozen-lockfile"
-            yarn install --frozen-lockfile
-          elif [ "${{ steps.package_manager.outputs.name == 'pnpm' }}" == "true" ]; then
-            echo "Running pnpm install --frozen-lockfile"
-            pnpm install --frozen-lockfile
-          else
-            echo "Running npm ci"
-            npm ci
-          fi
-
-      - name: Quality check
-        run: |
-          npx nx workspace-lint
-          npx nx format:check
-          npx nx affected --target lint --parallel 3
-          npx nx affected --target test --parallel 3 --ci --code-coverage
-
-      - name: build
-        run: |
-          npx nx affected --target build --parallel 3 --exclude=angular-sandbox,react-sandbox
+      - run: npx nx affected -t lint test typecheck
+      - run: yarn build --parallel 3 --exclude=react-sandbox
 
       - name: Release
         if: ${{ success() && (github.event_name != 'pull_request' || github.event.action == 'closed' && github.event.pull_request.merged == true) }}

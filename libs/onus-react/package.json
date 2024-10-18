@@ -1,12 +1,14 @@
 {
   "name": "@onus-elements/react",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "peerDependencies": {
-    "@onus-elements/core": "^1.0",
     "react": ">=17.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@onus-elements/core": "workspace:^"
+  }
 }
