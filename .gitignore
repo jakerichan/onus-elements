@@ -61,3 +61,6 @@ Thumbs.db
 
 # End of https://www.toptal.com/developers/gitignore/api/yarn
 
+
+.nx/cache
+.nx/workspace-data

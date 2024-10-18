@@ -8,7 +8,7 @@ import {
   TriggerDeepest,
   Unregister,
   Watch,
-} from '../../types'
+} from '../types'
 
 export class OnusCore {
   private contents: ContentsObject = {}

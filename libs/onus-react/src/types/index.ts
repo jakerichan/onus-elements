@@ -14,6 +14,6 @@ export interface SetElementOptions {
 export interface SetElementProps extends PropsWithChildren, SetElementOptions {}
 
 export type UseSetElement = (
-  options: SetElementOptions,
+  config: SetElementOptions,
   content: unknown
 ) => void

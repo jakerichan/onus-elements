@@ -1,4 +1,4 @@
-import { ContentPriority, GetLocation } from '../../types'
+import { ContentPriority, GetLocation } from '../types'
 
 export const POSITION_PREPEND = 2
 export const POSITION_APPEND = 1

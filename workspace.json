@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "projects": {
-    "onus-core": "libs/onus-core",
-    "onus-react": "libs/onus-react",
-    "react-sandbox": "apps/react-sandbox",
-    "react-sandbox-e2e": "apps/react-sandbox-e2e"
-  }
-}

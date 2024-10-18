@@ -1,4 +1,4 @@
-import { Register, Subscribe, Unregister } from '@onus-elements/core/types'
+import type { Register, Subscribe, Unregister } from '@onus-elements/core'
 import { createContext } from 'react'
 
 const warn = (name?: string) => {
@@ -12,7 +12,7 @@ export interface OnusElementsContext {
   getPriorityForName: (name: string) => number
 }
 
-const Context = createContext({
+const Context = createContext<OnusElementsContext>({
   subscribe: (name) => {
     warn(`GetElement named ${name}`)
     return warn
@@ -26,6 +26,6 @@ const Context = createContext({
       `Unmounting a SetElement or useSetElement named ${name}, priority: ${priority}`
     ),
   getPriorityForName: () => -1,
-} as OnusElementsContext)
+})
+
 export default Context
-export const Provider = Context.Provider

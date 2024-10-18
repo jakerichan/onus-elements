@@ -17,7 +17,7 @@ const useSetElement: UseSetElement = (options, content = null) => {
   const location = getLocation({ append, prepend })
 
   useEffect(() => {
-    if (!register) return
+    if (!register) return null
 
     register({ children: content, name, priority }, location)
 

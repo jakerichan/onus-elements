@@ -3,7 +3,7 @@ import { Context } from '../OnusElementsProvider'
 import { GetElementProps } from '../../types'
 
 const GetElement = ({ name, children = null }: GetElementProps) => {
-  const { subscribe, getPriorityForName } = useContext(Context)
+  const { subscribe } = useContext(Context)
   const [content, setContent] = useState<ReactNode[]>([])
   if (!subscribe) {
     console.error(
