@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext, Fragment } from 'react'
+import { useState, useEffect, useContext, ReactNode } from 'react'
 import { Context } from '../OnusElementsProvider'
 import { GetElementProps } from '../../types'
 
 const GetElement = ({ name, children = null }: GetElementProps) => {
   const { subscribe, getPriorityForName } = useContext(Context)
-  const [content, setContent] = useState([])
+  const [content, setContent] = useState<ReactNode[]>([])
   if (!subscribe) {
     console.error(
       'Onus Elements context not found. `OnusElementsProvider` is required',
@@ -19,11 +19,7 @@ const GetElement = ({ name, children = null }: GetElementProps) => {
 
   const getContent = () =>
     content.length
-      ? content.map((e, i) => (
-          <Fragment key={`${name}:${getPriorityForName(name)}:${i}`}>
-            {e}
-          </Fragment>
-        ))
+      ? content
       : children
 
   return <>{getContent()}</>

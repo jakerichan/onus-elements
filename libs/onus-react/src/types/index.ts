@@ -1,6 +1,7 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 export interface GetElementProps extends PropsWithChildren {
   name: string
+  children: ReactNode
 }
 
 export interface SetElementOptions {
