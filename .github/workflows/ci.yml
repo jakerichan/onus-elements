@@ -9,71 +9,32 @@ on:
 env:
   HUSKY: 0
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   main:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
-    strategy:
-      matrix:
-        node-version: [22]
-        npm-version: [10]
     steps:
-      - name: Checkout [Pull Request]
-        uses: actions/checkout@v3
-        if: ${{ github.event_name == 'pull_request' }}
+      - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-
-      - name: Checkout [Default Branch]
-        uses: actions/checkout@v3
-        if: ${{ github.event_name != 'pull_request' }}
+      - uses: actions/setup-node@v3
         with:
-          persist-credentials: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+          node-version: 20
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      # This line enables distribution
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
+      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
+      - run: yarn ci
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: ${{ github.base_ref }}
+      - uses: nrwl/nx-set-shas@v4
 
-      - name: Detect package manager
-        id: package_manager
-        run: |
-          echo "::set-output name=name::$([[ -f ./yarn.lock ]] && echo "yarn" || ([[ -f ./pnpm-lock.yaml ]] && echo "pnpm") || echo "npm")"
-
-      - name: Set node/npm/yarn versions using volta
-        uses: volta-cli/action@v3
-        with:
-          node-version: '${{ matrix.node-version }}'
-          npm-version: '${{ matrix.npm-version }}'
-
-      - name: Print node/npm/yarn versions
-        id: versions
-        run: |
-          node_ver=$( node --version )
-          yarn_ver=$( yarn --version || true )
-          echo "Node: ${node_ver:1}"
-          echo "NPM: $(npm --version )"
-          if [[ $yarn_ver != '' ]]; then echo "Yarn: $yarn_ver"; fi
-          echo "::set-output name=node_version::${node_ver:1}"
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Quality check
-        run: |
-          yarn lint
-          yarn typecheck
-          yarn test
-
-      - name: build
-        run: |
-          yarn build --parallel 3 --exclude=react-sandbox
+      - run: npx nx-cloud record -- nx format:check
+      - run: npx nx affected -t lint test typecheck
+      - run: yarn build --parallel 3 --exclude=react-sandbox
 
       - name: Release
         if: ${{ success() && (github.event_name != 'pull_request' || github.event.action == 'closed' && github.event.pull_request.merged == true) }}
