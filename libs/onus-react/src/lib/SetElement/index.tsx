@@ -19,7 +19,7 @@ const SetElement = ({
     )
 
   useEffect(() => {
-    if (!register) return null
+    if (!register) return undefined
     register({ children, name, priority }, location)
     return () => {
       unregister(name, priority)

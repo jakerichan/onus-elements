@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactNode } from 'react'
 export interface GetElementProps extends PropsWithChildren {
   name: string
-  children: ReactNode
+  children?: ReactNode
 }
 
 export interface SetElementOptions {

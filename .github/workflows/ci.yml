@@ -25,14 +25,9 @@ jobs:
           node-version: 20
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      # This line enables distribution
-      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
-      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-      - run: yarn ci
 
       - uses: nrwl/nx-set-shas@v4
 
-      - run: npx nx-cloud record -- nx format:check
       - run: npx nx affected -t lint test typecheck
       - run: yarn build --parallel 3 --exclude=react-sandbox
 
