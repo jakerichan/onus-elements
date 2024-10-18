@@ -43,7 +43,9 @@
     "typecheck": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["tsc -p tsconfig.lib.json --noEmit"],
+        "commands": [
+          "tsc -p tsconfig.lib.json --noEmit"
+        ],
         "cwd": "{projectRoot}",
         "forwardAllArgs": false
       }

@@ -43,10 +43,14 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "release": {
-      "dependsOn": ["^release"]
+      "dependsOn": [
+        "^release"
+      ]
     },
     "e2e": {
       "cache": true
@@ -71,7 +75,8 @@
     "@nx/eslint:lint": {
       "inputs": [
         "default",
-        "{workspaceRoot}/.eslintrc.json"
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/eslint.config.js"
       ],
       "cache": true
     }
