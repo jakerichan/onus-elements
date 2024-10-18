@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext, ReactNode } from 'react'
+import { useState, useEffect, useContext, Fragment, ReactNode } from 'react'
 import { Context } from '../OnusElementsProvider'
 import { GetElementProps } from '../../types'
 
 const GetElement = ({ name, children = null }: GetElementProps) => {
-  const { subscribe } = useContext(Context)
+  const { subscribe, getPriorityForName } = useContext(Context)
   const [content, setContent] = useState<ReactNode[]>([])
   if (!subscribe) {
     console.error(
@@ -19,7 +19,11 @@ const GetElement = ({ name, children = null }: GetElementProps) => {
 
   const getContent = () =>
     content.length
-      ? content
+      ? content.map((e, i) => (
+        <Fragment key={`${name}:${getPriorityForName(name)}:${i}`}>
+          {e}
+        </Fragment>
+      ))
       : children
 
   return <>{getContent()}</>

@@ -30,11 +30,10 @@ export const sortByPriority = (aStr: string, bStr: string) => {
  * @param content The content object with priority as the keys and content objects as values
  * @returns {Function} reducer function to compile the deepest content with anything prepended or appended
  */
-export const buildContentStack =
-  (content: ContentPriority) => (acc: unknown[], k: string) => {
-    const { l: location, c: children } = content[k]
-    if (location === POSITION_APPEND) return [...acc, children]
-    if (location === POSITION_PREPEND) return [children, ...acc]
-    if (location === POSITION_DEFAULT) return [children]
-    return acc
-  }
+export const buildContentStack = (content: ContentPriority) => (acc: unknown[], k: string) => {
+  const { l: location, c: children } = content[k]
+  if (location === POSITION_APPEND) return [...acc, children]
+  if (location === POSITION_PREPEND) return [children, ...acc]
+  if (location === POSITION_DEFAULT) return [children]
+  return acc
+}

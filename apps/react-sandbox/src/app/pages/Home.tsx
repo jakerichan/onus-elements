@@ -9,7 +9,7 @@ const Home = () => {
       name: 'breadcrumb',
       priority: 1,
     },
-    <Link className={styles['breadcrumb-item']} to='/'>
+    <Link className={styles['breadcrumb-item']} to="/">
       Home
     </Link>
   )
@@ -17,10 +17,10 @@ const Home = () => {
   return (
     <div>
       This is the generated root route for react-sandbox.
-      <SetElement name='header' priority={1}>
+      <SetElement name="header" priority={1}>
         Home
       </SetElement>
-      <Link to='/page-2'>Click here for page 2.</Link>
+      <Link to="/page-2">Click here for page 2.</Link>
       <Outlet />
     </div>
   )

@@ -16,7 +16,7 @@ describe('OnusCore', () => {
     it('registers an element', () => {
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_APPEND
+        POSITION_APPEND,
       )
       expect(core.getRegistry('test')).toEqual({
         1: { c: 'foobar', l: POSITION_APPEND },
@@ -26,7 +26,7 @@ describe('OnusCore', () => {
   it('unregister', () => {
     core.register(
       { name: 'test', children: 'foobar', priority: 1 },
-      POSITION_APPEND
+      POSITION_APPEND,
     )
     core.unregister('test', 1)
     expect(core.getRegistry('test')).toEqual({})
@@ -39,7 +39,7 @@ describe('OnusCore', () => {
       subscribeSpy.mockClear()
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       expect(subscribeSpy).toHaveBeenCalledTimes(1)
       end()
@@ -49,7 +49,7 @@ describe('OnusCore', () => {
       const subscribeSpy = jest.fn()
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       const end = core.subscribe('test', subscribeSpy)
       expect(subscribeSpy).toHaveBeenCalledTimes(1)
@@ -63,19 +63,19 @@ describe('OnusCore', () => {
 
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar'])
 
       core.register(
         { name: 'test', children: 'grand foobar', priority: 2 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['grand foobar'])
 
       core.register(
         { name: 'test', children: 'zero', priority: 0 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['grand foobar'])
       end()
@@ -87,19 +87,19 @@ describe('OnusCore', () => {
 
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_APPEND
+        POSITION_APPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar'])
 
       core.register(
         { name: 'test', children: 'grand foobar', priority: 2 },
-        POSITION_APPEND
+        POSITION_APPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar', 'grand foobar'])
 
       core.register(
         { name: 'test', children: 'zero', priority: 0 },
-        POSITION_APPEND
+        POSITION_APPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith([
         'zero',
@@ -114,19 +114,19 @@ describe('OnusCore', () => {
 
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_PREPEND
+        POSITION_PREPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar'])
 
       core.register(
         { name: 'test', children: 'grand foobar', priority: 2 },
-        POSITION_PREPEND
+        POSITION_PREPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['grand foobar', 'foobar'])
 
       core.register(
         { name: 'test', children: 'zero', priority: 0 },
-        POSITION_PREPEND
+        POSITION_PREPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith([
         'grand foobar',
@@ -141,19 +141,19 @@ describe('OnusCore', () => {
 
       core.register(
         { name: 'test', children: 'foobar', priority: 1 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar'])
 
       core.register(
         { name: 'test', children: 'grand foobar', priority: 2 },
-        POSITION_APPEND
+        POSITION_APPEND,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar', 'grand foobar'])
 
       core.register(
         { name: 'test', children: 'zero', priority: 0 },
-        POSITION_DEFAULT
+        POSITION_DEFAULT,
       )
       expect(subscribeSpy).toHaveBeenCalledWith(['foobar', 'grand foobar'])
       end()
@@ -165,19 +165,19 @@ describe('OnusCore', () => {
 
     core.register(
       { name: 'test', children: 'foobar', priority: 1 },
-      POSITION_DEFAULT
+      POSITION_DEFAULT,
     )
     expect(watchSpy).toHaveBeenCalledWith('test', ['foobar'])
 
     core.register(
       { name: 'another', children: 12345, priority: 2 },
-      POSITION_DEFAULT
+      POSITION_DEFAULT,
     )
     expect(watchSpy).toHaveBeenCalledWith('another', [12345])
 
     core.register(
       { name: 'another', children: 12, priority: 1 },
-      POSITION_DEFAULT
+      POSITION_DEFAULT,
     )
     expect(watchSpy).toHaveBeenCalledWith('another', [12345])
     end()

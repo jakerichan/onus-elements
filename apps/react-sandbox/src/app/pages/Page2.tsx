@@ -9,7 +9,7 @@ const Page2 = () => {
       name: 'breadcrumb',
       priority: 1,
     },
-    <Link className={styles['breadcrumb-item']} to='/page-2'>
+    <Link className={styles['breadcrumb-item']} to="/page-2">
       Page 2
     </Link>
   )
@@ -19,16 +19,16 @@ const Page2 = () => {
       <aside>Sub navigation</aside>
       <ul>
         <li>
-          <Link to='nested'>Nested</Link>
+          <Link to="nested">Nested</Link>
         </li>
         <li>
-          <Link to='custom'>Custom</Link>
+          <Link to="custom">Custom</Link>
         </li>
         <li>
-          <Link to='third'>Third</Link>
+          <Link to="third">Third</Link>
         </li>
       </ul>
-      <SetElement priority={1} name='header'>
+      <SetElement priority={1} name="header">
         Page 2
       </SetElement>
       Index route still renders

@@ -1,6 +1,13 @@
 {
   "name": "onus-elements-workspace",
   "license": "MIT",
+  "type": "module",
+  "private": true,
+  "packageManager": "yarn@4.5.0",
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "scripts": {
     "preinstall": "npx only-allow yarn",
     "start:react": "nx serve react-sandbox",
@@ -16,12 +23,6 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "workspaces": [
-    "apps/*",
-    "libs/*"
-  ],
-  "packageManager": "yarn@4.5.0",
-  "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "~15.0.0",
     "@angular-eslint/eslint-plugin": "~14.0.4",
@@ -53,6 +54,7 @@
     "@nx/webpack": "20.0.2",
     "@nx/workspace": "20.0.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@stylistic/eslint-plugin": "^2.9.0",
     "@svgr/webpack": "8.1.0",
     "@swc-node/register": "^1.10.9",
     "@swc/cli": "^0.4.1-nightly.20240914",

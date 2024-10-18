@@ -72,7 +72,7 @@ export class OnusCore {
 
   register: Register = (
     { name, children, priority },
-    location = POSITION_DEFAULT
+    location = POSITION_DEFAULT,
   ) => {
     const content = (this.contents[name] = this.contents[name] || {})
     content[priority] = { c: children, l: location }

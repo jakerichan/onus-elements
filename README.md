@@ -93,4 +93,4 @@ Visit [Nx Cloud](https://nx.app/) to learn more.
 
 Add a `.env.local` at the root of the app or repo with the following keys:
 
-`NX_GIPHY_API_KEY` - Should be a valid giphy API key to load random gifs
+`NX_PUBLIC_GIPHY_API_KEY` - Should be a valid giphy API key to load random gifs

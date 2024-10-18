@@ -1,5 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
-
 const name = '@onus-elements/core'
 const srcRoot = 'libs/onus-core'
 
@@ -25,8 +23,8 @@ module.exports = {
       {
         assets: [`${srcRoot}/CHANGELOG.md`, `${srcRoot}/package.json`],
         message:
-          `release(version): Release ${name} ` +
-          '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+          `release(version): Release ${name} `
+          + '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
     ],
   ],
