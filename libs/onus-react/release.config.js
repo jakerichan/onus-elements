@@ -3,8 +3,9 @@ const srcRoot = 'libs/onus-react'
 
 module.exports = {
   extends: 'release.config.base.js',
-  branches: ['main', 'next'],
+  branches: ['main', { name: 'next', prerelease: true }],
   pkgRoot: `dist/${srcRoot}`,
+  // eslint-disable-next-line no-template-curly-in-string
   tagFormat: name + '-v${version}',
   commitPaths: [`${srcRoot}/*`],
   plugins: [
