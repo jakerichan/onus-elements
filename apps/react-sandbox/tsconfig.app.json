@@ -28,5 +28,5 @@
     "**/*.jsx",
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "eslint.config.js"  ]
 }

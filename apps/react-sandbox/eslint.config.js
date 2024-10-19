@@ -2,7 +2,6 @@ import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
 import path from 'path'
 import { fileURLToPath } from 'url'
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import baseConfig from '../../eslint.config.js'
 
 const __filename = fileURLToPath(import.meta.url)
