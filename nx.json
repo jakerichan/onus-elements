@@ -80,6 +80,16 @@
         "{workspaceRoot}/eslint.config.js"
       ],
       "cache": true
+    },
+    "@nx/rollup:rollup": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^default"
+      ]
     }
   },
   "defaultProject": "onus-react",

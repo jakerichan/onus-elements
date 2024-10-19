@@ -6,24 +6,27 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/rollup:rollup",
       "outputs": [
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "libs/onus-core/dist",
         "main": "libs/onus-core/src/index.ts",
+        "outputPath": "libs/onus-core/dist",
         "tsConfig": "libs/onus-core/tsconfig.lib.json",
-        "assets": [
-          "libs/onus-core/*.md"
-        ],
-        "platform": "browser",
-        "deleteOutputPath": true,
+        "compiler": "tsc",
+        "project": "libs/onus-core/package.json",
         "format": [
-          "esm",
-          "cjs"
+          "cjs",
+          "esm"
         ],
-        "thirdParty": true
+        "assets": [
+          {
+            "glob": "libs/onus-core/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "release": {

@@ -13,6 +13,9 @@ const compat = new FlatCompat({
 })
 
 module.exports = [
+  {
+    ignores: ['**/dist']
+  },
   stylistic.configs['recommended-flat'],
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,

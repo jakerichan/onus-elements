@@ -10,15 +10,5 @@
   ],
   "module": "./dist/index.esm.js",
   "main": "./dist/index.cjs.js",
-  "types": "./dist/index.esm.d.ts",
-  "peerDependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "9.13.0",
-    "@testing-library/jest-dom": "^6.6.2",
-    "@testing-library/react": "16.0.1",
-    "react": ">=17.0.0"
-  },
-  "dependencies": {
-    "@onus-elements/core": "workspace:*"
-  }
+  "types": "./dist/index.esm.d.ts"
 }
