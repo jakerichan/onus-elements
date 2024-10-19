@@ -11,13 +11,9 @@ interface ContentEntry {
   c: unknown
 }
 
-interface ContentPriority {
-  [key: string]: ContentEntry
-}
+type ContentPriority = Record<string, ContentEntry>
 
-interface ContentsObject {
-  [key: string]: ContentPriority
-}
+type ContentsObject = Record<string, ContentPriority>
 
 interface OnusEntry {
   priority: number

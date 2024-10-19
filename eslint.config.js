@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 import js from '@eslint/js'
 import nxEslintPlugin from '@nx/eslint-plugin'
+import tseslint from 'typescript-eslint'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -14,6 +15,8 @@ const compat = new FlatCompat({
 
 export default [
   stylistic.configs['recommended-flat'],
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
   {
     plugins: {
       '@nx': nxEslintPlugin,
@@ -48,7 +51,6 @@ export default [
     ],
     rules: {
       ...config.rules,
-      '@typescript-eslint/no-extra-semi': 'error',
       'no-extra-semi': 'off',
     },
   })),
@@ -60,7 +62,6 @@ export default [
     ],
     rules: {
       ...config.rules,
-      '@typescript-eslint/no-extra-semi': 'error',
       'no-extra-semi': 'off',
     },
   })),

@@ -87,6 +87,7 @@ export class OnusCore {
    */
   unregister: Unregister = (name, priority) => {
     const content = this.contents[name]
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     if (content) delete content[priority]
     this.triggerDeepest(name)
   }
