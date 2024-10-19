@@ -7,8 +7,5 @@
   },
   "peerDependencies": {
     "react": ">=17.0.0"
-  },
-  "dependencies": {
-    "@onus-elements/core": "workspace:^"
   }
 }

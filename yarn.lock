@@ -5553,7 +5553,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@onus-elements/core@workspace:^, @onus-elements/core@workspace:libs/onus-core":
+"@onus-elements/core@workspace:libs/onus-core":
   version: 0.0.0-use.local
   resolution: "@onus-elements/core@workspace:libs/onus-core"
   languageName: unknown
@@ -5562,8 +5562,6 @@ __metadata:
 "@onus-elements/react@workspace:libs/onus-react":
   version: 0.0.0-use.local
   resolution: "@onus-elements/react@workspace:libs/onus-react"
-  dependencies:
-    "@onus-elements/core": "workspace:^"
   peerDependencies:
     react: ">=17.0.0"
   languageName: unknown
