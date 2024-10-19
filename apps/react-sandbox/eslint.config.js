@@ -1,17 +1,14 @@
-import { FlatCompat } from '@eslint/eslintrc'
-import js from '@eslint/js'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import baseConfig from '../../eslint.config.js'
+const { FlatCompat } = require('@eslint/eslintrc')
+const js = require('@eslint/js')
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const baseConfig = require('../../eslint.config.js')
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
 })
 
-export default [
+module.exports = [
   ...baseConfig,
   ...compat.extends('plugin:@nx/react'),
   {

@@ -1,28 +1,11 @@
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import baseConfig from '../../eslint.config.js'
+const baseConfig = require('../../eslint.config.js')
 
-export default [
+module.exports = [
   ...baseConfig,
   {
     files: [
       '**/*.ts',
       '**/*.tsx',
-      '**/*.js',
-      '**/*.jsx',
-    ],
-    // Override or add rules here
-    rules: {},
-  },
-  {
-    files: [
-      '**/*.ts',
-      '**/*.tsx',
-    ],
-    // Override or add rules here
-    rules: {},
-  },
-  {
-    files: [
       '**/*.js',
       '**/*.jsx',
     ],
