@@ -2,7 +2,7 @@ const name = '@onus-elements/core'
 const srcRoot = 'libs/onus-core'
 
 module.exports = {
-  extends: 'release.config.base.cjs',
+  extends: 'release.config.base.js',
   branches: ['main'],
   pkgRoot: `dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
