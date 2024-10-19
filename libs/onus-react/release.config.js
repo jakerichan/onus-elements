@@ -1,5 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
-
 const name = '@onus-elements/react'
 const srcRoot = 'libs/onus-react'
 
@@ -20,14 +18,5 @@ module.exports = {
       },
     ],
     '@semantic-release/npm',
-    [
-      '@semantic-release/git',
-      {
-        assets: [`${srcRoot}/CHANGELOG.md`, `${srcRoot}/package.json`],
-        message:
-          `release(version): Release ${name} `
-          + '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
-      },
-    ],
   ],
 }
