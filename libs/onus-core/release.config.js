@@ -4,7 +4,7 @@ const srcRoot = 'libs/onus-core'
 module.exports = {
   extends: 'release.config.base.js',
   branches: ['main', { name: 'next', prerelease: true }],
-  pkgRoot: `dist/${srcRoot}`,
+  pkgRoot: srcRoot,
   tagFormat: name + '-v${version}',
   commitPaths: [`${srcRoot}/*`],
   plugins: [
