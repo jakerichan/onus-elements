@@ -1,6 +1,7 @@
 {
   "name": "@onus-elements/react",
   "version": "1.0.0",
+  "repository": "https://github.com/jakerichan/onus-elements.git",
   "publishConfig": {
     "access": "public"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@onus-elements/core",
   "version": "1.0.0",
-  "types": "./types/index.d.ts",
+  "repository": "https://github.com/jakerichan/onus-elements.git",
   "publishConfig": {
     "access": "public"
   }
