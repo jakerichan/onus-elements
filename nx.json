@@ -1,10 +1,12 @@
 {
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*"
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/tsconfig.base.json"
+    ],
+    "default": [
+      "sharedGlobals"
+    ]
   },
   "generators": {
     "@nx/angular:application": {
