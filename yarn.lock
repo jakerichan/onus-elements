@@ -5782,6 +5782,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@semantic-release/changelog@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "@semantic-release/changelog@npm:6.0.3"
+  dependencies:
+    "@semantic-release/error": "npm:^3.0.0"
+    aggregate-error: "npm:^3.0.0"
+    fs-extra: "npm:^11.0.0"
+    lodash: "npm:^4.17.4"
+  peerDependencies:
+    semantic-release: ">=18.0.0"
+  checksum: 10/99ff9a528ec018699d6a197e12d86a95968dafd204b9aab05c2339b229877e38f7cfcdcafe94422b3082b6eb871d2071e0d034a015f64d9984e41a4e2dac840a
+  languageName: node
+  linkType: hard
+
 "@semantic-release/commit-analyzer@npm:^9.0.2":
   version: 9.0.2
   resolution: "@semantic-release/commit-analyzer@npm:9.0.2"
@@ -18509,6 +18523,7 @@ __metadata:
     "@nx/webpack": "npm:20.0.2"
     "@nx/workspace": "npm:20.0.2"
     "@pmmmwh/react-refresh-webpack-plugin": "npm:^0.5.10"
+    "@semantic-release/changelog": "npm:^6.0.3"
     "@stylistic/eslint-plugin": "npm:^2.9.0"
     "@svgr/webpack": "npm:8.1.0"
     "@swc-node/register": "npm:^1.10.9"
