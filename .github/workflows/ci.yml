@@ -27,10 +27,13 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
 
-      - uses: nrwl/nx-set-shas@v4
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHAs
+        uses: nrwl/nx-set-shas@v4
 
-      - run: npx nx affected -t lint test typecheck
-      - run: yarn build --parallel 3 --exclude=react-sandbox
+      - run: npx nx affected -t lint test typecheck --head $NX_HEAD --base $NX_BASE
+      
+      - run: yarn build --parallel 3 --exclude=react-sandbox --head $NX_HEAD --base $NX_BASE
 
       - name: Release
         if: ${{ success() && (github.event_name != 'pull_request' || (github.event.action == 'closed' && github.event.pull_request.merged == true) || github.ref == 'refs/heads/next') }}
@@ -38,4 +41,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npx nx affected --target release
+          npx nx affected --target release --head $NX_HEAD --base $NX_BASE
