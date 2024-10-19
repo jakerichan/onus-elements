@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, Fragment, ReactNode } from 'react'
 import { Context } from '../OnusElementsProvider'
 import { GetElementProps } from '../../types'
 
-const GetElement = ({ name, children = null }: GetElementProps) => {
+const GetElement = ({ name, children = null }: GetElementProps): ReactNode => {
   const { subscribe, getPriorityForName } = useContext(Context)
   const [content, setContent] = useState<ReactNode[]>([])
   if (!subscribe) {

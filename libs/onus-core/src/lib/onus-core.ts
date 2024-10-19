@@ -98,7 +98,7 @@ export class OnusCore {
    * @param name the name of the content
    * @returns {number} highets priority for given content. Returns -1 when name is not registered
    */
-  getPriorityForName = (name: string) => {
+  getPriorityForName = (name: string): number => {
     const content = this.contents[name]
     if (!content) return -1
     return Number(Object.keys(content).sort(sortByPriority).pop())

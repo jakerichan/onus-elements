@@ -5553,7 +5553,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@onus-elements/core@workspace:libs/onus-core":
+"@onus-elements/core@workspace:*, @onus-elements/core@workspace:libs/onus-core":
   version: 0.0.0-use.local
   resolution: "@onus-elements/core@workspace:libs/onus-core"
   languageName: unknown
@@ -5562,7 +5562,13 @@ __metadata:
 "@onus-elements/react@workspace:libs/onus-react":
   version: 0.0.0-use.local
   resolution: "@onus-elements/react@workspace:libs/onus-react"
+  dependencies:
+    "@onus-elements/core": "workspace:*"
   peerDependencies:
+    "@eslint/eslintrc": ^3.1.0
+    "@eslint/js": 9.13.0
+    "@testing-library/jest-dom": ^6.6.2
+    "@testing-library/react": 16.0.1
     react: ">=17.0.0"
   languageName: unknown
   linkType: soft
@@ -16968,7 +16974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-eslint-parser@npm:^2.1.0":
+"jsonc-eslint-parser@npm:^2.1.0, jsonc-eslint-parser@npm:^2.4.0":
   version: 2.4.0
   resolution: "jsonc-eslint-parser@npm:2.4.0"
   dependencies:
@@ -20047,6 +20053,7 @@ __metadata:
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     jest-preset-angular: "npm:14.1.1"
+    jsonc-eslint-parser: "npm:^2.4.0"
     lint-staged: "npm:^13.1.0"
     nx: "npm:20.0.2"
     react: "npm:18.3.1"

@@ -10,7 +10,7 @@ interface OnusElementsProviderProps extends PropsWithChildren {
 
 // This wrapper is required to be wrapped around any usage of OnusElements
 class OnusElementsProvider extends Component<PropsWithChildren> {
-  private onusCore
+  private onusCore: OnusCoreType
 
   constructor(props: OnusElementsProviderProps) {
     super(props)
@@ -26,7 +26,7 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
   unregister: Unregister = (name, priority) =>
     this.onusCore.unregister(name, priority)
 
-  getPriorityForName = (name: string) => this.onusCore.getPriorityForName(name)
+  getPriorityForName = (name: string): number => this.onusCore.getPriorityForName(name)
 
   override render(): React.ReactNode {
     const { children } = this.props

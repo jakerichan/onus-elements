@@ -27,7 +27,9 @@ module.exports = [
       '**/*.tsx',
     ],
     // Override or add rules here
-    rules: {},
+    rules: {
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+    },
   },
   {
     files: [

@@ -11,7 +11,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/libs/onus-react",
+        "outputPath": "libs/onus-react/dist",
         "tsConfig": "libs/onus-react/tsconfig.lib.json",
         "project": "libs/onus-react/package.json",
         "entryFile": "libs/onus-react/src/index.ts",
@@ -37,7 +37,13 @@
       "executor": "@nx/eslint:lint",
       "outputs": [
         "{options.outputFile}"
-      ]
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.{ts,tsx,js,jsx}",
+          "libs/onus-react/package.json"
+        ]
+      }
     },
     "typecheck": {
       "executor": "nx:run-commands",

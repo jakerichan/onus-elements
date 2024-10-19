@@ -11,7 +11,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/libs/onus-core",
+        "outputPath": "libs/onus-core/dist",
         "main": "libs/onus-core/src/index.ts",
         "tsConfig": "libs/onus-core/tsconfig.lib.json",
         "assets": [

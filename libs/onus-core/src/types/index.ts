@@ -1,5 +1,3 @@
-import { PropsWithChildren } from 'react'
-
 enum RenderPosition {
   Prepend = 2,
   Append = 1,
@@ -48,24 +46,6 @@ export type Unregister = (name: string, priority: number) => void
 export type TriggerDeepest = (name: string) => void
 
 export type FindDeepest = (name: string) => unknown[]
-
-export interface GetElementProps extends PropsWithChildren {
-  name: string
-}
-
-export interface SetElementOptions {
-  name: string
-  priority: number
-  prepend?: boolean
-  append?: boolean
-}
-
-export interface SetElementProps extends PropsWithChildren, SetElementOptions {}
-
-export type UseSetElement = (
-  options: SetElementOptions,
-  content: unknown
-) => void
 
 export {
   ContentEntry,

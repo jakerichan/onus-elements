@@ -9,7 +9,7 @@ const SetElement = ({
   append,
   priority,
   name,
-}: SetElementProps) => {
+}: SetElementProps): null => {
   const location = getLocation({ append, prepend })
   const { register, unregister } = useContext(Context)
 
@@ -25,6 +25,7 @@ const SetElement = ({
       unregister(name, priority)
     }
   }, [children, location, name, priority, register, unregister])
+
   return null
 }
 
