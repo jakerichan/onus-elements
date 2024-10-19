@@ -16,6 +16,7 @@
         "tsConfig": "libs/onus-core/tsconfig.lib.json",
         "compiler": "tsc",
         "project": "libs/onus-core/package.json",
+        "external": [],
         "format": [
           "cjs",
           "esm"
@@ -41,7 +42,13 @@
       "executor": "@nx/eslint:lint",
       "outputs": [
         "{options.outputFile}"
-      ]
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.{ts,tsx,js,jsx}",
+          "libs/onus-core/package.json"
+        ]
+      }
     },
     "typecheck": {
       "executor": "nx:run-commands",

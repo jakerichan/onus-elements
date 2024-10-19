@@ -118,6 +118,7 @@
     "@angular/platform-browser-dynamic": "~15.0.0",
     "@angular/router": "~15.0.0",
     "@swc/helpers": "0.5.13",
+    "compare-versions": "^6.1.1",
     "core-js": "^3.6.5",
     "events": "^3.3.0",
     "react": "18.3.1",

@@ -16,7 +16,9 @@
         "project": "libs/onus-react/package.json",
         "entryFile": "libs/onus-react/src/index.ts",
         "external": [
-          "react/jsx-runtime"
+          "react/jsx-runtime",
+          "react",
+          "react-dom"
         ],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "swc",

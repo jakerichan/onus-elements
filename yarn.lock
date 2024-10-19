@@ -5553,15 +5553,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@onus-elements/core@workspace:libs/onus-core":
+"@onus-elements/core@workspace:*, @onus-elements/core@workspace:libs/onus-core":
   version: 0.0.0-use.local
   resolution: "@onus-elements/core@workspace:libs/onus-core"
+  dependencies:
+    events: "npm:^3.3.0"
   languageName: unknown
   linkType: soft
 
 "@onus-elements/react@workspace:libs/onus-react":
   version: 0.0.0-use.local
   resolution: "@onus-elements/react@workspace:libs/onus-react"
+  dependencies:
+    "@onus-elements/core": "workspace:*"
+  peerDependencies:
+    react: ">=17.0.0"
+    react-dom: ">=17.0.0"
   languageName: unknown
   linkType: soft
 
@@ -10334,6 +10341,13 @@ __metadata:
     array-ify: "npm:^1.0.0"
     dot-prop: "npm:^5.1.0"
   checksum: 10/fb71d70632baa1e93283cf9d80f30ac97f003aabee026e0b4426c9716678079ef5fea7519b84d012cbed938c476493866a38a79760564a9e21ae9433e40e6f0d
+  languageName: node
+  linkType: hard
+
+"compare-versions@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "compare-versions@npm:6.1.1"
+  checksum: 10/9325c0fadfba81afa0ec17e6fc2ef823ba785c693089698b8d9374e5460509f1916a88591644d4cb4045c9a58e47fafbcc0724fe8bf446d2a875a3d6eeddf165
   languageName: node
   linkType: hard
 
@@ -20035,6 +20049,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.10.0"
     babel-jest: "npm:29.7.0"
     commitizen: "npm:^4.2.6"
+    compare-versions: "npm:^6.1.1"
     core-js: "npm:^3.6.5"
     cypress: "npm:^11.0.0"
     cz: "npm:^1.8.2"
