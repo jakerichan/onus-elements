@@ -20087,7 +20087,6 @@ __metadata:
     typescript: "npm:5.6.3"
     typescript-eslint: "npm:^8.10.0"
     url-loader: "npm:^4.1.1"
-    webpack: "npm:5.95.0"
     zone.js: "npm:~0.11.4"
   languageName: unknown
   linkType: soft
@@ -26290,7 +26289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5.95.0, webpack@npm:^5.80.0, webpack@npm:^5.88.0":
+"webpack@npm:^5.80.0, webpack@npm:^5.88.0":
   version: 5.95.0
   resolution: "webpack@npm:5.95.0"
   dependencies:
