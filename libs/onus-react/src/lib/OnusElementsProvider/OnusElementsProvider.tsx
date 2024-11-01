@@ -1,52 +1,63 @@
-import { Component, type ReactNode } from 'react'
+import { createContext, useMemo } from 'react'
 import { OnusCore } from '@onus-elements/core'
 import type { OnusCoreType } from '@onus-elements/core'
 import type { Register, Subscribe, Unregister } from '@onus-elements/core'
-import Context, { type OnusElementsContextValue } from './Context'
 
 export interface OnusElementsProviderProps {
-  children: ReactNode
+  children: React.ReactNode
   core?: OnusCoreType
 }
 
-// This wrapper is required to be wrapped around any usage of OnusElements
-class OnusElementsProvider extends Component<OnusElementsProviderProps> {
-  onusCore: OnusCore
+const OnusElementsProvider = ({ children, core }: OnusElementsProviderProps): JSX.Element => {
+  const onusCore = useMemo(() => core || new OnusCore(), [core])
 
-  constructor(props: OnusElementsProviderProps) {
-    super(props)
-    this.onusCore = props.core || new OnusCore()
-  }
+  const subscribe: Subscribe = (name, callback) => onusCore.subscribe(name, callback)
+  const register: Register = (entry, position) => onusCore.register(entry, position)
+  const unregister: Unregister = (name, priority) => onusCore.unregister(name, priority)
+  const getPriorityForName = (name: string): number => onusCore.getPriorityForName(name)
 
-  subscribe: Subscribe = (name, callback) =>
-    this.onusCore.subscribe(name, callback)
-
-  register: Register = (entry, position) =>
-    this.onusCore.register(entry, position)
-
-  unregister: Unregister = (name, priority) =>
-    this.onusCore.unregister(name, priority)
-
-  getPriorityForName = (name: string): number => this.onusCore.getPriorityForName(name)
-
-  override render(): React.ReactNode {
-    const { children } = this.props
-    return (
-      <Context.Provider
-        value={
-          {
-            core: this.onusCore,
-            register: this.register,
-            subscribe: this.subscribe,
-            unregister: this.unregister,
-            getPriorityForName: this.getPriorityForName,
-          } as OnusElementsContextValue
-        }
-      >
-        {children}
-      </Context.Provider>
-    )
-  }
+  return (
+    <OnusElementsContext.Provider
+      value={{
+        core: onusCore,
+        subscribe,
+        register,
+        unregister,
+        getPriorityForName,
+      }}
+    >
+      {children}
+    </OnusElementsContext.Provider>
+  )
 }
+
+const warn = (name?: string) => {
+  console.warn('Onus-Element provider not found. Called from:', name)
+}
+
+export interface OnusElementsContextValue {
+  core: OnusCore | null
+  subscribe: Subscribe
+  register: Register
+  unregister: Unregister
+  getPriorityForName: (name: string) => number
+}
+
+export const OnusElementsContext = createContext<OnusElementsContextValue>({
+  core: null,
+  subscribe: (name) => {
+    warn(`GetElement named ${name}`)
+    return warn
+  },
+  register: (entry, position) =>
+    warn(
+      `SetElement or useSetElement named ${entry.name}, position ${position}`
+    ),
+  unregister: (name, priority) =>
+    warn(
+      `Unmounting a SetElement or useSetElement named ${name}, priority: ${priority}`
+    ),
+  getPriorityForName: () => -1,
+})
 
 export default OnusElementsProvider

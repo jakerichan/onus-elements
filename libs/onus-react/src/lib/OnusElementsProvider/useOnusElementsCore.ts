@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import Context from './Context'
+import { OnusElementsContext } from './OnusElementsProvider'
 import type { OnusCoreType } from '@onus-elements/core'
 
 const useOnusElementsCore = (): OnusCoreType | null => {
-  const contextValue = useContext(Context)
+  const contextValue = useContext(OnusElementsContext)
   return contextValue.core
 }
 
