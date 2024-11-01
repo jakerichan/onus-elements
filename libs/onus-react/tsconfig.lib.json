@@ -12,6 +12,7 @@
   ],
   "exclude": [
     "jest.config.ts",
+    "setup-jest.ts",
     "**/*.spec.ts",
     "**/*.test.ts",
     "**/*.spec.tsx",

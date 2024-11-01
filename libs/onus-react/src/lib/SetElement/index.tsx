@@ -1,7 +1,11 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, type ReactNode } from 'react'
 import { getLocation } from '@onus-elements/core'
-import { Context } from '../OnusElementsProvider'
-import { SetElementProps } from '../../types'
+import { OnusElementsContext } from '../OnusElementsProvider'
+import type { SetElementOptions } from '../useSetElement'
+
+export interface SetElementProps extends SetElementOptions {
+  children: ReactNode
+}
 
 const SetElement = ({
   children = null,
@@ -11,7 +15,7 @@ const SetElement = ({
   name,
 }: SetElementProps): null => {
   const location = getLocation({ append, prepend })
-  const { register, unregister } = useContext(Context)
+  const { register, unregister } = useContext(OnusElementsContext)
 
   if (!register)
     console.error(

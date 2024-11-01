@@ -1,9 +1,13 @@
-import { useState, useEffect, useContext, Fragment, ReactNode } from 'react'
-import { Context } from '../OnusElementsProvider'
-import { GetElementProps } from '../../types'
+import { useState, useEffect, useContext, Fragment, type ReactNode } from 'react'
+import { OnusElementsContext } from '../OnusElementsProvider'
+
+export interface GetElementProps {
+  name: string
+  children?: ReactNode
+}
 
 const GetElement = ({ name, children = null }: GetElementProps): ReactNode => {
-  const { subscribe, getPriorityForName } = useContext(Context)
+  const { subscribe, getPriorityForName } = useContext(OnusElementsContext)
   const [content, setContent] = useState<ReactNode[]>([])
   if (!subscribe) {
     console.error(

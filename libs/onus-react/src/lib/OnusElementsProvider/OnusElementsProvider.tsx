@@ -1,20 +1,18 @@
-import { Component, PropsWithChildren } from 'react'
+import { Component, type ReactNode } from 'react'
 import { OnusCore } from '@onus-elements/core'
-import type { OnusCore as OnusCoreType } from '@onus-elements/core'
+import type { OnusCoreType } from '@onus-elements/core'
 import type { Register, Subscribe, Unregister } from '@onus-elements/core'
-import Context, { type OnusElementsContext } from './Context'
+import Context, { type OnusElementsContextValue } from './Context'
 
-interface OnusElementsProviderProps extends PropsWithChildren {
-  core: OnusCoreType
+export interface OnusElementsProviderProps {
+  children: ReactNode
+  core?: OnusCoreType
 }
 
 // This wrapper is required to be wrapped around any usage of OnusElements
-class OnusElementsProvider extends Component<PropsWithChildren> {
-  private onusCore: OnusCoreType
-
-  constructor(props: OnusElementsProviderProps) {
-    super(props)
-    this.onusCore = props.core || new OnusCore()
+class OnusElementsProvider extends Component<OnusElementsProviderProps> {
+  get onusCore(): OnusCoreType {
+    return this.props.core || new OnusCore()
   }
 
   subscribe: Subscribe = (name, callback) =>
@@ -34,11 +32,12 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
       <Context.Provider
         value={
           {
+            core: this.onusCore,
             register: this.register,
             subscribe: this.subscribe,
             unregister: this.unregister,
             getPriorityForName: this.getPriorityForName,
-          } as OnusElementsContext
+          } as OnusElementsContextValue
         }
       >
         {children}
@@ -46,7 +45,5 @@ class OnusElementsProvider extends Component<PropsWithChildren> {
     )
   }
 }
-
-export { Context }
 
 export default OnusElementsProvider

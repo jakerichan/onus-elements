@@ -1,18 +1,20 @@
-import type { Register, Subscribe, Unregister } from '@onus-elements/core'
+import type { OnusCore, Register, Subscribe, Unregister } from '@onus-elements/core'
 import { createContext } from 'react'
 
 const warn = (name?: string) => {
   console.warn('Onus-Element provider not found. Called from:', name)
 }
 
-export interface OnusElementsContext {
+export interface OnusElementsContextValue {
+  core: OnusCore | null
   subscribe: Subscribe
   register: Register
   unregister: Unregister
   getPriorityForName: (name: string) => number
 }
 
-const Context = createContext<OnusElementsContext>({
+const Context = createContext<OnusElementsContextValue>({
+  core: null,
   subscribe: (name) => {
     warn(`GetElement named ${name}`)
     return warn
