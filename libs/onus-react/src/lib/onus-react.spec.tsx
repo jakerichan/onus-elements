@@ -1,11 +1,12 @@
-import { PropsWithChildren } from 'react'
+import type { ReactNode } from 'react'
 import { render, cleanup } from '@testing-library/react'
 import OnusElementsProvider from './OnusElementsProvider'
 import GetElement from './GetElement'
 import SetElement from './SetElement'
 import useSetElement from './useSetElement'
 
-interface TestProps extends PropsWithChildren {
+interface TestProps {
+  children: ReactNode
   name?: string
   priority: number
   append?: boolean
@@ -148,7 +149,7 @@ describe('GetElement / SetElement', () => {
   })
 
   it('renders next lower priority when the highest unmounts', () => {
-    const App = ({ children }: PropsWithChildren) => (
+    const App = ({ children }: { children?: ReactNode }) => (
       <OnusElementsProvider>
         <div data-testid="get-element">
           <GetElement name="test" />
@@ -339,7 +340,7 @@ describe('GetElement / SetElement', () => {
   })
 
   it('renders new children with prop update', () => {
-    const App = ({ children }: PropsWithChildren) => (
+    const App = ({ children }: { children?: ReactNode }) => (
       <OnusElementsProvider>
         <div data-testid="get-element">
           <GetElement name="test" />

@@ -11,8 +11,11 @@ export interface OnusElementsProviderProps {
 
 // This wrapper is required to be wrapped around any usage of OnusElements
 class OnusElementsProvider extends Component<OnusElementsProviderProps> {
-  get onusCore(): OnusCoreType {
-    return this.props.core || new OnusCore()
+  onusCore: OnusCore
+
+  constructor(props: OnusElementsProviderProps) {
+    super(props)
+    this.onusCore = props.core || new OnusCore()
   }
 
   subscribe: Subscribe = (name, callback) =>
