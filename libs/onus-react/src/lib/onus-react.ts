@@ -4,6 +4,7 @@ export { default as SetElement } from './SetElement'
 export { default as useSetElement } from './useSetElement'
 export {
   OnusElementsContext,
+  useOnusElementsCore,
   default as OnusElementsProvider,
 } from './OnusElementsProvider'
 export type {
