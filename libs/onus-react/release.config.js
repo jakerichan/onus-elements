@@ -1,12 +1,11 @@
-/* eslint-disable no-template-curly-in-string */
-
 const name = '@onus-elements/react'
 const srcRoot = 'libs/onus-react'
 
 module.exports = {
   extends: 'release.config.base.js',
-  branches: ['main'],
-  pkgRoot: `dist/${srcRoot}`,
+  branches: ['main', { name: 'next', prerelease: true }],
+  pkgRoot: srcRoot,
+  // eslint-disable-next-line no-template-curly-in-string
   tagFormat: name + '-v${version}',
   commitPaths: [`${srcRoot}/*`],
   plugins: [
@@ -19,15 +18,6 @@ module.exports = {
         changelogFile: `${srcRoot}/CHANGELOG.md`,
       },
     ],
-    '@semantic-release/npm',
-    [
-      '@semantic-release/git',
-      {
-        assets: [`${srcRoot}/CHANGELOG.md`, `${srcRoot}/package.json`],
-        message:
-          `release(version): Release ${name} ` +
-          '${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
-      },
-    ],
+    'semantic-release-yarn',
   ],
 }

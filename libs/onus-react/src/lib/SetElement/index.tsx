@@ -1,7 +1,11 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, type ReactNode } from 'react'
 import { getLocation } from '@onus-elements/core'
-import { Context } from '../OnusElementsProvider'
-import { SetElementProps } from '../../types'
+import { OnusElementsContext } from '../OnusElementsProvider'
+import type { SetElementOptions } from '../useSetElement'
+
+export interface SetElementProps extends SetElementOptions {
+  children: ReactNode
+}
 
 const SetElement = ({
   children = null,
@@ -9,9 +13,9 @@ const SetElement = ({
   append,
   priority,
   name,
-}: SetElementProps) => {
+}: SetElementProps): null => {
   const location = getLocation({ append, prepend })
-  const { register, unregister } = useContext(Context)
+  const { register, unregister } = useContext(OnusElementsContext)
 
   if (!register)
     console.error(
@@ -19,12 +23,13 @@ const SetElement = ({
     )
 
   useEffect(() => {
-    if (!register) return
+    if (!register) return undefined
     register({ children, name, priority }, location)
     return () => {
       unregister(name, priority)
     }
   }, [children, location, name, priority, register, unregister])
+
   return null
 }
 

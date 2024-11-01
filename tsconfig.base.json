@@ -10,16 +10,30 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@onus-elements/core": ["libs/onus-core/src/index.ts"],
-      "@onus-elements/core/types": ["libs/onus-core/types/index.ts"],
-      "@onus-elements/react": ["libs/onus-react/src/index.ts"],
-      "onus-elements": ["libs/onus-elements/src/index.ts"]
+      "@onus-elements/core": [
+        "libs/onus-core/src/index.ts"
+      ],
+      "@onus-elements/core/types": [
+        "libs/onus-core/types/index.ts"
+      ],
+      "@onus-elements/react": [
+        "libs/onus-react/src/index.ts"
+      ],
+      "onus-elements": [
+        "libs/onus-elements/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

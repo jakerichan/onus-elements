@@ -1,7 +1,6 @@
-/* eslint-disable */
 export default {
   displayName: 'onus-react',
-  preset: '../../jest.preset.js',
+  preset: '../../jest.preset.cjs',
   transform: {
     '^.+\\.[tj]sx?$': [
       '@swc/jest',
@@ -11,4 +10,4 @@ export default {
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/onus-react',
-};
+}

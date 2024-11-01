@@ -8,7 +8,7 @@ import {
   TriggerDeepest,
   Unregister,
   Watch,
-} from '../../types'
+} from '../types'
 
 export class OnusCore {
   private contents: ContentsObject = {}
@@ -72,7 +72,7 @@ export class OnusCore {
 
   register: Register = (
     { name, children, priority },
-    location = POSITION_DEFAULT
+    location = POSITION_DEFAULT,
   ) => {
     const content = (this.contents[name] = this.contents[name] || {})
     content[priority] = { c: children, l: location }
@@ -87,6 +87,7 @@ export class OnusCore {
    */
   unregister: Unregister = (name, priority) => {
     const content = this.contents[name]
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     if (content) delete content[priority]
     this.triggerDeepest(name)
   }
@@ -97,7 +98,7 @@ export class OnusCore {
    * @param name the name of the content
    * @returns {number} highets priority for given content. Returns -1 when name is not registered
    */
-  getPriorityForName = (name: string) => {
+  getPriorityForName = (name: string): number => {
     const content = this.contents[name]
     if (!content) return -1
     return Number(Object.keys(content).sort(sortByPriority).pop())

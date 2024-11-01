@@ -3,18 +3,31 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/onus-core/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/libs/onus-core",
         "main": "libs/onus-core/src/index.ts",
+        "outputPath": "libs/onus-core/dist",
         "tsConfig": "libs/onus-core/tsconfig.lib.json",
-        "assets": ["libs/onus-core/*.md"],
-        "platform": "browser",
-        "deleteOutputPath": false,
-        "format": ["esm"]
+        "compiler": "tsc",
+        "project": "libs/onus-core/package.json",
+        "external": [],
+        "format": [
+          "cjs",
+          "esm"
+        ],
+        "assets": [
+          {
+            "glob": "libs/onus-core/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "release": {
@@ -26,20 +39,35 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/onus-core/**/*.ts"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.{ts,tsx,js,jsx}",
+          "libs/onus-core/package.json"
+        ]
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "tsc -p tsconfig.lib.json --noEmit"
+        ],
+        "cwd": "{projectRoot}",
+        "forwardAllArgs": false
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "libs/onus-core/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/onus-core/jest.config.ts"
       }
     }
-  },
-  "tags": []
+  }
 }

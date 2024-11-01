@@ -6,17 +6,26 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/libs/onus-react",
+        "outputPath": "libs/onus-react/dist",
         "tsConfig": "libs/onus-react/tsconfig.lib.json",
         "project": "libs/onus-react/package.json",
         "entryFile": "libs/onus-react/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "external": [
+          "react/jsx-runtime",
+          "react",
+          "react-dom"
+        ],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "swc",
-        "format": ["esm"],
+        "format": [
+          "esm",
+          "cjs"
+        ],
         "assets": [
           {
             "glob": "libs/onus-react/README.md",
@@ -27,18 +36,34 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/onus-react/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.{ts,tsx,js,jsx}",
+          "libs/onus-react/package.json"
+        ]
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "tsc -p tsconfig.lib.json --noEmit"
+        ],
+        "cwd": "{projectRoot}",
+        "forwardAllArgs": false
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "libs/onus-react/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/onus-react/jest.config.ts"
       }
     },
     "release": {

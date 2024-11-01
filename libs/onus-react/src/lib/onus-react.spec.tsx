@@ -1,11 +1,12 @@
-import { PropsWithChildren } from 'react'
+import type { ReactNode } from 'react'
 import { render, cleanup } from '@testing-library/react'
 import OnusElementsProvider from './OnusElementsProvider'
 import GetElement from './GetElement'
 import SetElement from './SetElement'
 import useSetElement from './useSetElement'
 
-interface TestProps extends PropsWithChildren {
+interface TestProps {
+  children: ReactNode
   name?: string
   priority: number
   append?: boolean
@@ -46,11 +47,11 @@ describe('GetElement / SetElement', () => {
   it('GetElement accepts children as a default', () => {
     const App = () => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test'>Default</GetElement>
+        <div data-testid="get-element">
+          <GetElement name="test">Default</GetElement>
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook'>Default</GetElement>
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook">Default</GetElement>
         </div>
       </OnusElementsProvider>
     )
@@ -62,8 +63,8 @@ describe('GetElement / SetElement', () => {
   it('GetElement can live without a SetElement', () => {
     const App = () => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
       </OnusElementsProvider>
     )
@@ -75,14 +76,14 @@ describe('GetElement / SetElement', () => {
   it('inserts children of SetElement into GetElement', () => {
     const App = () => (
       <OnusElementsProvider>
-        <article data-testid='set-element'>
+        <article data-testid="set-element">
           <Test priority={0}>Test</Test>
         </article>
-        <article data-testid='get-element'>
-          <GetElement name='test' />
+        <article data-testid="get-element">
+          <GetElement name="test" />
         </article>
-        <article data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <article data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </article>
       </OnusElementsProvider>
     )
@@ -94,11 +95,11 @@ describe('GetElement / SetElement', () => {
   it('uses biggest priority value regardless of order', () => {
     const { getByTestId } = render(
       <OnusElementsProvider>
-        <article data-testid='get-element'>
-          <GetElement name='test' />
+        <article data-testid="get-element">
+          <GetElement name="test" />
         </article>
-        <article data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <article data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </article>
         <Test priority={2}>Two</Test>
         <Test priority={3}>Three</Test>
@@ -112,11 +113,11 @@ describe('GetElement / SetElement', () => {
   it('uses double digit priority values appropriately', () => {
     const { getByTestId } = render(
       <OnusElementsProvider>
-        <article data-testid='get-element'>
-          <GetElement name='test' />
+        <article data-testid="get-element">
+          <GetElement name="test" />
         </article>
-        <article data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <article data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </article>
         <Test priority={12}>Twelve</Test>
         <Test priority={3}>Three</Test>
@@ -131,11 +132,11 @@ describe('GetElement / SetElement', () => {
   it('extreme priority values work', () => {
     const { getByTestId } = render(
       <OnusElementsProvider>
-        <article data-testid='get-element'>
-          <GetElement name='test' />
+        <article data-testid="get-element">
+          <GetElement name="test" />
         </article>
-        <article data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <article data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </article>
         <Test priority={1332949343}>Huge</Test>
         <Test priority={3}>Three</Test>
@@ -148,13 +149,13 @@ describe('GetElement / SetElement', () => {
   })
 
   it('renders next lower priority when the highest unmounts', () => {
-    const App = ({ children }: PropsWithChildren) => (
+    const App = ({ children }: { children?: ReactNode }) => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </div>
         <Test priority={0}>Zero</Test>
         {children}
@@ -182,11 +183,11 @@ describe('GetElement / SetElement', () => {
       showTwo?: boolean
     }) => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </div>
         {showTwo ? <Test priority={2}>Two</Test> : null}
         <Test priority={0}>Zero</Test>
@@ -208,19 +209,19 @@ describe('GetElement / SetElement', () => {
   it('renders multiple GetElement components', () => {
     const App = () => (
       <OnusElementsProvider>
-        <div data-testid='first'>
-          <GetElement name='test' />
+        <div data-testid="first">
+          <GetElement name="test" />
         </div>
-        <div data-testid='first--hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="first--hook">
+          <GetElement name="test--hook" />
         </div>
         <Test priority={0}>Zero</Test>
         <Test priority={1}>One</Test>
-        <div data-testid='second'>
-          <GetElement name='test' />
+        <div data-testid="second">
+          <GetElement name="test" />
         </div>
-        <div data-testid='second--hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="second--hook">
+          <GetElement name="test--hook" />
         </div>
       </OnusElementsProvider>
     )
@@ -235,15 +236,15 @@ describe('GetElement / SetElement', () => {
   it('renders correct element when using multiple SetElement names', () => {
     const App = () => (
       <OnusElementsProvider>
-        <div data-testid='test'>
-          <GetElement name='test' />
+        <div data-testid="test">
+          <GetElement name="test" />
         </div>
-        <div data-testid='foo'>
-          <GetElement name='foo' />
+        <div data-testid="foo">
+          <GetElement name="foo" />
         </div>
         <Test priority={0}>Zero</Test>
         <Test priority={1}>One</Test>
-        <SetElement name='foo' priority={2}>
+        <SetElement name="foo" priority={2}>
           <span>FooBar</span>
         </SetElement>
       </OnusElementsProvider>
@@ -257,11 +258,11 @@ describe('GetElement / SetElement', () => {
   it('appends rather than replacing element', () => {
     const App = ({ showOne }: { showOne?: boolean }) => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </div>
         <Test priority={2} append>
           Two
@@ -282,11 +283,11 @@ describe('GetElement / SetElement', () => {
   it('prepends rather than replacing element', () => {
     const App = ({ showOne }: { showOne?: boolean }) => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </div>
         <Test priority={2} prepend>
           Two
@@ -307,22 +308,26 @@ describe('GetElement / SetElement', () => {
   it('replaces children in the same priority', () => {
     const App = ({ showZero }: { showZero?: boolean }) => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </div>
-        {showZero ? (
-          <Test priority={0}>
-            <span>Zero</span>
-          </Test>
-        ) : null}
-        {!showZero ? (
-          <Test priority={0}>
-            <span>One</span>
-          </Test>
-        ) : null}
+        {showZero
+          ? (
+              <Test priority={0}>
+                <span>Zero</span>
+              </Test>
+            )
+          : null}
+        {!showZero
+          ? (
+              <Test priority={0}>
+                <span>One</span>
+              </Test>
+            )
+          : null}
       </OnusElementsProvider>
     )
 
@@ -335,13 +340,13 @@ describe('GetElement / SetElement', () => {
   })
 
   it('renders new children with prop update', () => {
-    const App = ({ children }: PropsWithChildren) => (
+    const App = ({ children }: { children?: ReactNode }) => (
       <OnusElementsProvider>
-        <div data-testid='get-element'>
-          <GetElement name='test' />
+        <div data-testid="get-element">
+          <GetElement name="test" />
         </div>
-        <div data-testid='get-element-hook'>
-          <GetElement name='test--hook' />
+        <div data-testid="get-element-hook">
+          <GetElement name="test--hook" />
         </div>
         <Test priority={0}>{children}</Test>
       </OnusElementsProvider>
@@ -360,22 +365,22 @@ describe('GetElement / SetElement', () => {
       <section>
         <article>
           <OnusElementsProvider>
-            <article data-testid='get-element-1'>
-              <GetElement name='test' />
+            <article data-testid="get-element-1">
+              <GetElement name="test" />
             </article>
-            <article data-testid='get-element-1-hook'>
-              <GetElement name='test--hook' />
+            <article data-testid="get-element-1-hook">
+              <GetElement name="test--hook" />
             </article>
             <Test priority={1}>One</Test>
           </OnusElementsProvider>
         </article>
         <article>
           <OnusElementsProvider>
-            <article data-testid='get-element-2'>
-              <GetElement name='test' />
+            <article data-testid="get-element-2">
+              <GetElement name="test" />
             </article>
-            <article data-testid='get-element-2-hook'>
-              <GetElement name='test--hook' />
+            <article data-testid="get-element-2-hook">
+              <GetElement name="test--hook" />
             </article>
             <Test priority={1}>Two</Test>
           </OnusElementsProvider>

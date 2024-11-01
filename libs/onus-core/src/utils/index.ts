@@ -1,4 +1,4 @@
-import { ContentPriority, GetLocation } from '../../types'
+import { ContentPriority, GetLocation } from '../types'
 
 export const POSITION_PREPEND = 2
 export const POSITION_APPEND = 1
@@ -16,7 +16,7 @@ export const getLocation: GetLocation = ({ append, prepend }) => {
  * @param bStr
  * @returns {number (-1|0|1)}
  */
-export const sortByPriority = (aStr: string, bStr: string) => {
+export const sortByPriority = (aStr: string, bStr: string): 0 | -1 | 1 => {
   const a = Number(aStr)
   const b = Number(bStr)
   if (a > b) return 1
@@ -30,11 +30,10 @@ export const sortByPriority = (aStr: string, bStr: string) => {
  * @param content The content object with priority as the keys and content objects as values
  * @returns {Function} reducer function to compile the deepest content with anything prepended or appended
  */
-export const buildContentStack =
-  (content: ContentPriority) => (acc: unknown[], k: string) => {
-    const { l: location, c: children } = content[k]
-    if (location === POSITION_APPEND) return [...acc, children]
-    if (location === POSITION_PREPEND) return [children, ...acc]
-    if (location === POSITION_DEFAULT) return [children]
-    return acc
-  }
+export const buildContentStack = (content: ContentPriority) => (acc: unknown[], k: string): unknown[] => {
+  const { l: location, c: children } = content[k]
+  if (location === POSITION_APPEND) return [...acc, children]
+  if (location === POSITION_PREPEND) return [children, ...acc]
+  if (location === POSITION_DEFAULT) return [children]
+  return acc
+}
